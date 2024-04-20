@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monopoly</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="socket.js"></script>
+    <script src="init.js" defer></script>
+    <script src="game.js" defer></script>
+</head>
+<body>
+    <div id="newGame">
+        <div class="fenetre" id="waiting">
+            <h1>Veuillez patienter...</h1>
+        </div>
+
+        <div class="fenetre" id="playerIsDisconnected" style="display: none;">
+            <h1>Qui etes-vous ?</h1>
+        </div>
+        
+        <div class="fenetre" id="enterPseudo" style="display: none;">
+            <input type="text" name="pseudo" id="inputPseudo" placeholder="Entrer votre pseudo">
+            <button id="pseudoPlayButton" onclick="enterPseudo()">Jouer</button>
+        </div>
+        
+        <div class="fenetre" id="playerDisconnected" style="display: none;">
+            <h1></h1>
+        </div>
+
+        <div class="fenetre" id="gameIsFull" style="display: none;">
+            <h1>Desole, la partie est deja complete.</h1>
+        </div>
+    </div>
+
+    <div id="cartes" style="display: none;">
+        <div id="carteProp" style="display: none;">
+            <div class="head">
+                <h1></h1>
+            </div>
+            <div class="text">
+                <span>Prix d'achat :</span>
+                <span classe="prix" data-type="prix"></span>
+            </div>
+            <div class="text">
+                <span>Valeur hypothécaire :</span>
+                <span class="prix" data-type="mortgage"></span>
+            </div>
+    
+            <hr>
+    
+            <div class="text">
+                <span>Loyer :</span>
+                <span class="prix" data-type="rent" data-rent=0></span>
+            </div>
+            <div class="text">
+                <span>Loyer avec un <br> groupe de couleur :</span>
+                <span class="prix" data-type="rent" data-rent=1></span>
+            </div>
+            <div class="text">
+                <span>Loyer avec 1 maison :</span>
+                <span class="prix" data-type="rent" data-rent=2></span>
+            </div>
+            <div class="text">
+                <span>Loyer avec 2 maison :</span>
+                <span class="prix" data-type="rent" data-rent=3></span>
+            </div>
+            <div class="text">
+                <span>Loyer avec 3 maison :</span>
+                <span class="prix" data-type="rent" data-rent=4></span>
+            </div>
+            <div class="text">
+                <span>Loyer avec 4 maison :</span>
+                <span class="prix" data-type="rent" data-rent=5></span>
+            </div>
+            <div class="text">
+                <span>Loyer avec hotêl :</span>
+                <span class="prix" data-type="rent" data-rent=6></span>
+            </div>
+    
+            <hr>
+    
+            <div class="text">
+                <span>Prix d'une maison :</span>
+                <span class="prix" data-type="prixMaison"></span>
+            </div>
+        </div>
+
+        <div id="carteStation" style="display: none;">
+            <div class="head">
+                <img src="station.png" alt="station">
+                <h1></h1>
+            </div>
+            <div class="text">
+                <span>Prix d'achat :</span>
+                <span classe="prix" data-type="prix">200€</span>
+            </div>
+            <div class="text">
+                <span>Valeur hypothécaire :</span>
+                <span class="prix" data-type="mortgage">100€</span>
+            </div>
+    
+            <hr>
+    
+            <div class="text">
+                <span>Loyer :</span>
+                <span class="prix" data-type="rent" data-rent=0>25€</span>
+            </div>
+            <div class="text">
+                <span>Si vous avez 2 gares :</span>
+                <span class="prix" data-type="rent" data-rent=1>50€</span>
+            </div>
+            <div class="text">
+                <span>Si vous avez 3 gares :</span>
+                <span class="prix" data-type="rent" data-rent=2>100€</span>
+            </div>
+            <div class="text">
+                <span>Si vous avez 4 gares :</span>
+                <span class="prix" data-type="rent" data-rent=3>200€</span>
+            </div>
+
+        </div>
+
+        <div id="carteCompany" style="display: none;">
+            <div class="head">
+                <img src="" alt="company">
+                <h1></h1>
+            </div>
+            <div class="text">
+                <span>Prix d'achat :</span>
+                <span classe="prix" data-type="prix">150€</span>
+            </div>
+            <div class="text">
+                <span>Valeur hypothécaire :</span>
+                <span class="prix" data-type="mortgage">75€</span>
+            </div>
+    
+            <hr>
+
+            <div class="text">
+                Avec 1 carte de compagnie, le loyer est 4 fois le montant indiqué par les dés.
+            </div>
+            <div class="text">
+                Avec 2 cartes de compagnie, le loyer est 10 fois le montant indiqué par les dés. 
+            </div>
+        </div>
+
+        
+        <div id="cartesBoutons">
+            <div id="fermerCarte" onclick="document.getElementById('cartes').style.display = 'none'">
+                Fermer
+            </div>
+            <button id="confirmButton" style="display: none;" onclick="confirmBuy()">Acheter</button>
+            <button id="denyButton" style="display: none;" onclick="denyBuy()">Mettre aux encheres</button>
+        </div>
+    </div>
+
+    <div id="plateau">
+        <div id="logo">
+            <img src="monopoly.png" alt="Monopoly">
+        </div>
+
+        <div class="player active" data-num="0">
+            <div class="pseudo">Joueur1</div>
+            <div class="balance">1500€</div>
+        </div>
+        <div class="player" data-num="1">
+            <div class="pseudo">Joueur2</div>
+            <div class="balance">1500€</div>
+        </div>
+        <div class="player" data-num="2">
+            <div class="pseudo">Joueur3</div>
+            <div class="balance">1500€</div>
+        </div>
+        <div class="player" data-num="3">
+            <div class="pseudo">Joueur4</div>
+            <div class="balance">1500€</div>
+        </div>
+
+        <div class="pion" data-num="0"></div>
+        <div class="pion" data-num="1"></div>
+        <div class="pion" data-num="2"></div>
+        <div class="pion" data-num="3"></div>
+      
+
+        <button id="rollDices" onclick="rollDices()" style="display: none;">Lancer les des</button>
+        <button id="endTurn" onclick="endTurn()" style="display: none;">Finir le tour</button>
+    </div>
+</body>
+</html>

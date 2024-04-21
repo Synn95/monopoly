@@ -51,16 +51,19 @@ Player.prototype.setName = function(name) {
 Player.prototype.rollDices = function() {
     this.lastScore[0] = Math.floor(Math.random() * 6) +1
     this.lastScore[1] = Math.floor(Math.random() * 6) +1
+    io.emit("resultRollDice", this.lastScore)
+
     if(this.lastScore[0] == this.lastScore[1]) {
         this.numberOfDoubles += 1
     }
 
     if(this.numberOfDoubles == 3) {
+        io.emit("tooManyDoubles")
         Jail.prototype.sendToJail(this)
         if(this.caseId < Jail.prototype.getJailId()) {
-            io.emit("sendToJail", Player.prototype.getActivePlayer(), Jail.prototype.getJailId, false)
+            io.emit("sendToJail", Player.prototype.getActivePlayer(), Jail.prototype.getJailId(), false)
         } else {
-            io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId, true)
+            io.emit("sendToJail", Player.prototype.getActivePlayer(), Jail.prototype.getJailId(), true)
         }
     } else {
         this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
@@ -148,8 +151,9 @@ Player.prototype.actionCase = function(caseDest) {
                 if(caseDest.owner === null) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
-                    this.pay(caseDest.getRent())
-                    caseDest.owner.earn(caseDest.getRent())
+                    let rent = caseDest.getRent()
+                    this.pay(rent)
+                    caseDest.owner.earn(rent)
                 }
                 break
             case "station":
@@ -174,19 +178,44 @@ Player.prototype.actionCase = function(caseDest) {
                 let randChance = Math.floor(Math.random() * chance.length)
     
                 io.emit("chance", chance[randChance].description())
-                chance[randChance].action(this)
+                let retChance = chance[randChance].action(this)
+                if(retChance != undefined) {
+                    switch(retChance) {
+                        case "gotojail":
+                            if(this.idCase < Jail.prototype.getJailId()) {
+                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), false)
+                            } else {
+                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), true)
+                            }
+                            break
+                    }
+                }
                 break
             case "community":
                 console.log("7")
                 let randCommunity = Math.floor(Math.random() * communityCards.length)
     
                 io.emit("community", communityCards[randCommunity].description)
-                communityCards[randCommunity].action(this)
+                let retCommunity = communityCards[randCommunity].action(this)
+
+                if(retCommunity != undefined) {
+                    switch(retCommunity) {
+                        case "gotojail":
+                            if(this.idCase < Jail.prototype.getJailId()) {
+                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), true)
+                            } else {
+                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), false)
+                            }
+                            break
+                        case "start":
+                            io.emit("movePlayer", this.getActivePlayer(), 0, false)
+                    }
+                }
                 break
             case "gotojail":
                 console.log("8")
                 Jail.prototype.sendToJail(this)
-                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId, true)
+                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), true)
                 break
             case "parc":
                 console.log("9")
@@ -207,13 +236,13 @@ Player.prototype.colorGroup = function(color) {
         if(element.type == color || element.color == color) {
             totalCouleur++
 
-            if(this.deck.indexOf(element) != -1) {
+            if(element.owner == this) {
                 nbPossede++
             }
         }
     });
 
-    return (nbPossede, totalCouleur)
+    return Array(nbPossede, totalCouleur)
 }
 
 Player.prototype.getPlayerList = function() {return playerList}
@@ -433,7 +462,6 @@ io.on("connection", (socket) => {
         console.log("roolDices : " + activePlayer.name)
         if(socket.id == activePlayer.socket) {
             activePlayer.rollDices()
-            io.emit("resultRollDice", activePlayer.lastScore)
         }
     })
 
@@ -444,6 +472,7 @@ io.on("connection", (socket) => {
 
     socket.on("endTurn", function() {
         console.log("endTurn")
+        playerList[Player.prototype.getActivePlayer()].numberOfDoubles = 0
         Player.prototype.nextActivePlayer()
         io.emit("activePlayer", Player.prototype.getActivePlayer(), false)
     })
@@ -453,8 +482,8 @@ io.on("connection", (socket) => {
     socket.on("testChance", function() {
         console.log("testChance")
         let activePlayer = playerList[Player.prototype.getActivePlayer()]
-        activePlayer.goTo(7)
-        activePlayer.actionCase(plateau[7])
+        activePlayer.goTo(2)
+        activePlayer.actionCase(plateau[2])
     })
 })
 

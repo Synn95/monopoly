@@ -15,6 +15,7 @@ const communityCards = [
         "description": "Rendez-vous à la case Départ, mais ne recevez pas votre salaire.",
         "action": function(player) {
             player.idCase = 0
+            return "start"
         }
     },
     {
@@ -72,9 +73,10 @@ const communityCards = [
         }
     },
     {
-        "desctiption": "Aller en prison. Rendez-vous directement à la prison. Ne franchissez pas par la case départ, ne touchez pas 200€",
+        "description": "Aller en prison. Rendez-vous directement à la prison. Ne franchissez pas par la case départ, ne touchez pas 200€",
         "action": function(player) {
             Jail.prototype.sendToJail(player)
+            return "gotojail"
         }
     },
     {
@@ -104,8 +106,8 @@ const communityCards = [
     {
         "description": "Vous avez été élue président du comité. Payez à chaque joueur 50€",
         "action": function(player) {
-            player.pay(50 * Player.prototype.getplayerList().length)
-            Player.playerList.forEach(element => {
+            player.pay(50 * player.getPlayerList().length)
+            player.getPlayerList().forEach(element => {
                 element.earn(50)
             });
         }
@@ -113,11 +115,11 @@ const communityCards = [
     {
         "description": "C'est votre anniversaire ! Recevez 10€ de chaque joueur",
         "action": function(player) {
-            Player.prototype.getPlayerList().forEach(element => {
+            player.getPlayerList().forEach(element => {
                 element.pay(10)
             });
 
-            player.earn(Player.playerList.length * 10)
+            player.earn(player.getPlayerList().length * 10)
         }
     }
 ]

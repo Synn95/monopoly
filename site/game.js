@@ -72,12 +72,12 @@ async function movePlayer(playerId, caseDest, backward) {
                 await sleep(100)
             }
         } else if(player.pos < caseDest){
-            for(let i = player.pos ; i > 0 ; i--) {
+            for(let i = player.pos ; i >= 0 ; i--) {
                 document.querySelector("#case-"+i +" .casePion").appendChild(pion)
                 await sleep(100)
             }
     
-            for(let i = cases.length ; i >= caseDest ; i--) {
+            for(let i = cases.length-1 ; i >= caseDest ; i--) {
                 document.querySelector("#case-"+i +" .casePion").appendChild(pion)
                 await sleep(100)
             }
@@ -112,10 +112,12 @@ socket.on("resultRollDice", function(score) {
     } else if(idCaseDest >= cases.length) {
         idCaseDest -= cases.length
     } 
-    movePlayer(activePlayer.id, idCaseDest, false)
 })
 
-socket.on("movePlayer", movePlayer)
+socket.on("movePlayer", function(playerId, idCaseDest, backward) {
+    console.log("movePlayer")
+    movePlayer(playerId, idCaseDest, backward)
+})
 
 socket.on("earn", function(playerId, amount) {
     console.log("earn : " + playerList[playerId].pseudo + " - " + amount)
@@ -163,4 +165,11 @@ socket.on("changeOwner", function(idPlayer, idProperty) {
     closeMenu()
 })
 
-socket.on("sendToJail", movePlayer)
+socket.on("sendToJail", function(playerId, caseDest, backward) {
+    console.log("sendToJail", playerId)
+    movePlayer(playerId, caseDest, backward)
+})
+
+socket.on("tooManyDoubles", function() {
+    console.log("tooManyDoubles")
+})

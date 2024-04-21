@@ -38,6 +38,7 @@ function Property(property) {
 Property.prototype.getRent = function() {
     let rent = 0
     let tauxPossede = this.owner.colorGroup(this.color)
+    console.log("Taux possede : " + tauxPossede)
 
     switch(this.color) {
         case "station":

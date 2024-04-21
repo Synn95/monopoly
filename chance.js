@@ -63,6 +63,7 @@ const chance = [
         },
         "action": function(player) {
             Jail.prototype.sendToJail(player)
+            return "gotojail"
         }
     },
     {

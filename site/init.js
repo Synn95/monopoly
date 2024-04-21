@@ -416,6 +416,10 @@ function setPlayerPseudo(numPlayer, pseudo) {
     document.querySelector('[data-num="' + numPlayer + '"] .pseudo').innerText = pseudo
 }
 
+function setPlayerBalance(numPlayer, balance) {
+    document.querySelector("[data-num='"+numPlayer+"'].player .balance").innerText = balance + "€"
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     //création du plateau et des cases
     creerPlateau()

@@ -83,7 +83,6 @@ Player.prototype.buy = function(property, state) {
         case 0: //player is on the property
             console.log("buy0")
             if(property.owner === null && property.locator == this) {
-                console.log(plateau.indexOf(property))
                 this.currentAction = {"function": "buy", "params": [property, 0]}
                 if(this.money >= property.cost) {
                     io.emit("buy", plateau.indexOf(property))
@@ -158,11 +157,24 @@ Player.prototype.actionCase = function(caseDest) {
                 break
             case "station":
                 console.log("2")
+                if(caseDest.owner === null) {
+                    this.buy(caseDest, 0)
+                } else if(caseDest.owner != this) {
+                    let rent = caseDest.getRent()
+                    this.pay(rent)
+                    caseDest.owner.earn(rent)
+                }
 
                 break
             case "company":
                 console.log("3")
-    
+                if(caseDest.owner === null) {
+                    this.buy(caseDest, 0)
+                } else if(caseDest.owner != this) {
+                    let rent = caseDest.getRent()
+                    this.pay(rent)
+                    caseDest.owner.earn(rent)
+                }
                 break
             case "start":
                 console.log("4")
@@ -264,7 +276,8 @@ Player.prototype.getClientPlayerList = function() {
         clientPlayerList.push({
             "id": playerList.indexOf(player),
             "pseudo": player.name,
-            "pos": player.idCase
+            "pos": player.idCase,
+            "balance": player.money
         })
     })
 
@@ -384,6 +397,7 @@ io.on("connection", (socket) => {
         if(num == -1) {
             if(playerList.length < 4) {
                 socket.emit("numPlayer", playerList.length) //envoyer le numero de joueur
+                socket.emit("askPseudo") //Demander pseudo au client
             } else {
                 socket.emit("numPlayer", -1) //sinon -1
             }

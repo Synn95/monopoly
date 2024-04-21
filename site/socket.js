@@ -56,6 +56,7 @@ socket.on("clientPlayerList", function(clientPlayerList) {
     playerList = clientPlayerList
     playerList.forEach(player => {
         setPlayerPseudo(player.id, player.pseudo)
+        setPlayerBalance(player.id, player.balance)
         movePlayer(player.id, player.pos, false)
     })
 })
@@ -90,7 +91,7 @@ socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur 
     for(let i = 0 ; i < serverPlayerList.length ; i++) {
         if(serverPlayerList[i].socket == null) {
             isDisconnectedPlayer = true
-            playerNameListStr.push(serverPlayerList[i].name)
+            playerNameListStr.push(playerList[i].pseudo)
         }
     }
 

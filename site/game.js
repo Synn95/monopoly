@@ -1,4 +1,5 @@
 let player = null
+let timeoutFunction = null
 
 function sleep(ms) { //Use : await sleep(ms);
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -89,10 +90,33 @@ async function movePlayer(playerId, caseDest, backward) {
     player.pos = caseDest
 } 
 
+function createDisplayCard(innerHTML) {
+    let displayCard = document.createElement("div")
+    displayCard.classList.add("event")
+    displayCard.innerHTML = innerHTML
+    document.getElementById("eventsTransparency").appendChild(displayCard)
+
+    if(timeoutFunction == null) {
+        timeoutFunction = setInterval(showHideDisplayCard, 1200)
+    }
+}
+
+async function showHideDisplayCard() {
+    if(document.getElementById("eventsTransparency").children.length == 1) {
+        clearInterval(timeoutFunction)
+        timeoutFunction = null
+    } else {
+        await sleep(1000)
+        document.querySelector(".event").classList.add("hideEvent") 
+        await sleep(200)
+        document.querySelector(".event").remove()
+    }
+}
+
 socket.on("activePlayer", function(id, hasRolledDices) {
     console.log("activePlayer : " + id, hasRolledDices)
     document.querySelector(".active").classList.remove("active")
-    document.querySelector("[data-num='"+id+"']").classList.add("active")
+    document.querySelector("[data-num='"+id+"'].player").classList.add("active")
     if(id == numPlayer) {
         if(hasRolledDices) {
             document.getElementById("endTurn").style.display = ""
@@ -121,15 +145,35 @@ socket.on("movePlayer", function(playerId, idCaseDest, backward) {
 
 socket.on("earn", function(playerId, amount) {
     console.log("earn : " + playerList[playerId].pseudo + " - " + amount)
+    let innerHTML = '<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' a gagne <span class="earn">' + amount + '€</span></h1>'
+    createDisplayCard(innerHTML)
+
+    let balanceNode = document.querySelector("[data-num='"+playerId+"'].player .balance")
+    let balance = parseInt(balanceNode.innerText.slice(0,-1))
+    balance += amount
+    balanceNode.innerText = balance + "€"
+
+    playerList[playerId].balance = balance
 })
 
 socket.on("pay", function(playerId, amount) {
     console.log("pay : " + playerList[playerId].pseudo + " - " + amount)
+    let innerHTML = '<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' a paye <span class="pay">' + amount + '€</span></h1>'
+    createDisplayCard(innerHTML)
+
+    let balanceNode = document.querySelector("[data-num='"+playerId+"'].player .balance")
+    let balance = parseInt(balanceNode.innerText.slice(0,-1))
+    balance -= amount
+    balanceNode.innerText = balance + "€"
+
+    playerList[playerId].balance = balance
 })
 
 socket.on("chance", function(description) {
     player = getActivePlayer()
     console.log("chance : " + player.pseudo + " - " + description)
+
+    
 })
 
 socket.on("community", function(description) {
@@ -163,13 +207,18 @@ socket.on("changeOwner", function(idPlayer, idProperty) {
     console.log("changeOwner", playerList[idPlayer].pseudo, cases[idProperty])
     cases[idProperty].dataset.owner = idPlayer
     closeMenu()
+
+    createDisplayCard('<div class="pionDisplayCard" data-num="'+ idPlayer +'"></div><h1>' + playerList[idPlayer].pseudo + ' a acquit <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
 })
 
 socket.on("sendToJail", function(playerId, caseDest, backward) {
     console.log("sendToJail", playerId)
     movePlayer(playerId, caseDest, backward)
+
+    createDisplayCard('<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' est envoye en prison</h1>')
 })
 
 socket.on("tooManyDoubles", function() {
     console.log("tooManyDoubles")
+    createDisplayCard('<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' a fait 3 doubles d\'affile</h1>')
 })

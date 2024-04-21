@@ -356,29 +356,29 @@ button, input {
     grid-row: 1/2;
 }
 
-.pion {
+.pion, .pionDisplayCard {
     width: 20px;
     height: 20px;
     border: 1px solid black;
     border-radius: 10px;
 }
 
-.pion[data-num="0"] {
+.pion[data-num="0"], .pionDisplayCard[data-num="0"] {
     background-color: var(--player-1-color);
     bottom: 0px;
     right: 35px;
 }
-.pion[data-num="1"] {
+.pion[data-num="1"], .pionDisplayCard[data-num="1"] {
     background-color: var(--player-2-color);
     bottom: 0px;
     right: 60px;
 }
-.pion[data-num="2"] {
+.pion[data-num="2"], .pionDisplayCard[data-num="2"] {
     background-color: var(--player-3-color);
     bottom: 24px;
     right: 35px;
 }
-.pion[data-num="3"] {
+.pion[data-num="3"], .pionDisplayCard[data-num="3"] {
     background-color: var(--player-4-color);
     bottom: 24px;
     right: 60px;
@@ -387,4 +387,85 @@ button, input {
 #rollDices, #endTurn {
     grid-area: 7 / 5 / 8 / 8;
     font-size: 1.5em;
+}
+
+
+
+#events {
+    position: fixed;
+    z-index: 1;
+    top: 10px;
+    left: 0;
+    max-width: 25%;
+    max-height: 300px;
+}
+
+#eventsTransparency {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+#eventsTransparency::after {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, white);
+}
+
+.event {
+    display: flex;
+    gap: 10px;
+
+    background-color: gainsboro;
+    padding: 20px;
+    font-size: 0.7em;
+    font-family: monopoly;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px 10px;
+    transform: translateX(-110%);
+
+    animation: showInfoCard 200ms ease-in-out forwards;
+}
+
+.hideEvent {
+    animation: hideInfoCard 200ms ease-in-out forwards;
+}
+
+@keyframes showInfoCard {
+    0% {
+        transform: translateX(-110%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes hideInfoCard {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-110%);
+    }
+}
+
+
+
+
+
+.event * {
+    margin: auto 0;
+}
+
+.pay {
+    color: red;
+}
+
+.earn {
+    color: green;
 }

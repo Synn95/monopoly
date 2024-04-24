@@ -32,8 +32,6 @@ socket.on("playerIsDisconnected", function(serverPlayerList) { //lors de la conn
         }
 
         playerIsDisconnected.appendChild(disconnectedPlayer)
-
-        setPlayerPseudo(i, playerList[serverPlayerList[i]].pseudo)
     }
 
     if(serverPlayerList.length < 4) {
@@ -69,17 +67,13 @@ socket.on("broadcastPseudo", function(numPlayer, pseudo) {
     while(i < playerList.length && !trouve) {
         if(playerList[i].id == numPlayer) {
             playerList[i].pseudo = pseudo
+            trouve = true
         }
         i++
     }
-    if(i == playerList.length) {
-        playerList.push({
-            "id": numPlayer,
-            "pseudo": pseudo
-        })
-    }
 
     setPlayerPseudo(numPlayer, pseudo)
+    // createDisplayCard('<div class="pionDisplayCard" data-num="'+ numPlayer +'"></div><h1>' + playerList[numPlayer].pseudo + ' a rejoint la partie</h1>')
 })
 
 socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur se déconnecte

@@ -25,9 +25,12 @@ function closeMenu() {
     document.getElementById("fermerCarte").style.display = ""
     document.getElementById("confirmButton").style.display = "none"
     document.getElementById("denyButton").style.display = "none"
+
+    document.getElementById("carteChance").style.display = "none"
+    document.getElementById("carteCommunity").style.display = "none"
     cartes.style.display = "none"
     cartes.style.height = "355px"
-    cartes.style.width = "220px"
+    cartes.style.width = "355px"
     cartes.style.backgroundColor = ""
 }
 
@@ -40,12 +43,13 @@ function rollDices() {
 function endTurn() {
     socket.emit("endTurn");
     document.getElementById("endTurn").style.display = "none";
+    document.getElementById("buttons").style.display = "none"
 }
 
 async function movePlayer(playerId, caseDest, backward) {
     let player = playerList[playerId]
     let pion = document.querySelector("[data-num='"+playerId+"'].pion")
-    console.log(player.pos, caseDest)
+    console.log(playerId, player.pos, caseDest)
 
     if(!backward) {
         if(player.pos < caseDest) {
@@ -122,6 +126,7 @@ socket.on("activePlayer", function(id, hasRolledDices) {
             document.getElementById("endTurn").style.display = ""
         } else {
             document.getElementById("rollDices").style.display = ""
+            document.getElementById("buttons").style.display = ""
         }
     }
 })
@@ -173,12 +178,14 @@ socket.on("chance", function(description) {
     player = getActivePlayer()
     console.log("chance : " + player.pseudo + " - " + description)
 
-    
+    afficherCarteChance(description)
 })
 
 socket.on("community", function(description) {
     player = getActivePlayer()
     console.log("community : " + player.pseudo + " - " + description)
+
+    afficherCarteCommunity(description)
 })
 
 socket.on("buy", function(idProperty) {
@@ -203,12 +210,14 @@ socket.on("buy", function(idProperty) {
     }
 })
 
-socket.on("changeOwner", function(idPlayer, idProperty) {
+socket.on("changeOwner", function(idPlayer, idProperty, display) {
     console.log("changeOwner", playerList[idPlayer].pseudo, cases[idProperty])
     cases[idProperty].dataset.owner = idPlayer
     closeMenu()
 
-    createDisplayCard('<div class="pionDisplayCard" data-num="'+ idPlayer +'"></div><h1>' + playerList[idPlayer].pseudo + ' a acquit <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+    if(display) {
+        createDisplayCard('<div class="pionDisplayCard" data-num="'+ idPlayer +'"></div><h1>' + playerList[idPlayer].pseudo + ' a acquit <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+    }
 })
 
 socket.on("sendToJail", function(playerId, caseDest, backward) {
@@ -221,4 +230,33 @@ socket.on("sendToJail", function(playerId, caseDest, backward) {
 socket.on("tooManyDoubles", function() {
     console.log("tooManyDoubles")
     createDisplayCard('<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' a fait 3 doubles d\'affile</h1>')
+})
+
+socket.on("addBuild", function(idProperty) {
+    console.log("addbuild :", cases[idProperty])
+    let build = document.createElement("div")
+    let headerCase = cases[idProperty].children[1]
+    if(headerCase.children.length == 4) {
+        Array.from(headerCase.children).forEach(build => {
+            build.remove()
+        })
+        build.classList.add("hotel")
+    } else {
+        build.classList.add("house")
+    }
+    headerCase.appendChild(build)
+})
+
+socket.on("removeBuild", function(idProperty) {
+    console.log("removebuild :", cases[idProperty])
+    let headerCase = cases[idProperty].children[1]
+    if(headerCase.firstChild.classList.contains("hotel")) {
+        
+        for(let i = 0 ; i < 4 ; i++) {
+            let build = document.createElement("div")
+            build.classList.add("house")
+            headerCase.appendChild(build)
+        }
+    } 
+    headerCase.firstChild.remove()
 })

@@ -50,6 +50,7 @@ body {
 
 .headerCase {
     grid-row: 1 / 2;
+    flex-direction: row;
 }
 
 .bodyCase {
@@ -176,7 +177,7 @@ h2 {
 #cartes {
     position: fixed;
     height: 355px;
-    width: 220px;
+    width: 355px;
     z-index: 2;
 
     top: -10px;
@@ -237,6 +238,23 @@ h2 {
     flex-direction: column;
     justify-content: start;
     align-items: center;
+}
+
+#carteChance, #carteCommunity {
+    background-color: white;
+    border: 2px black solid;
+    border-radius: 10px;
+    height: 220px;
+    width: 355px;
+    display: flex;
+    flex-direction: row;
+    margin: auto 0;
+    font-family: "Monopoly";
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    padding: 10px;
 }
 
 
@@ -384,12 +402,32 @@ button, input {
     right: 60px;
 }
 
-#rollDices, #endTurn {
-    grid-area: 7 / 5 / 8 / 8;
-    font-size: 1.5em;
+#buttons {
+    grid-area: 7 / 2 / 8 / 11;
+    display: flex;
+    justify-content: space-around;
 }
 
+#buttons button {
+    max-height: 100%;
+}
 
+#buttons * {
+    cursor: pointer;
+}
+
+img.button {
+    height: 33px;
+    margin: auto;
+    background-color: gainsboro;
+    padding: 10px;
+    border: 1px solid #e9e9ed;
+    border-radius: 7px;
+}
+
+img.button:hover {
+    background-color: #d0d0d7;
+}
 
 #events {
     position: fixed;
@@ -468,4 +506,35 @@ button, input {
 
 .earn {
     color: green;
+}
+
+.house {
+    height: 70%;
+    width: 15%;
+    background-color: green;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.hotel {
+    height: 70%;
+    width: 15%;
+    background-color: red;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.case.canBuyBuild::before {
+    content: "50€";
+    /* content: attr(data-before); */
+    background-color: gainsboro;
+    position: absolute;
+    padding: 10px;
+    justify-self: center;
+    align-self: end;
+    margin: 3px;
+    border-radius: 10px;
+    font-family: monopoly;
+    border: 1px solid black;
+    z-index: 2;
 }

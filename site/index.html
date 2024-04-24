@@ -42,7 +42,7 @@
             </div>
             <div class="text">
                 <span>Prix d'achat :</span>
-                <span classe="prix" data-type="prix"></span>
+                <span class="prix" data-type="cost"></span>
             </div>
             <div class="text">
                 <span>Valeur hypothécaire :</span>
@@ -147,6 +147,16 @@
             </div>
         </div>
 
+        <div id="carteChance" style="display: none;">
+            <img src="./chance.png" alt="chance">
+            <div class="text"></div>
+        </div>
+
+        <div id="carteCommunity" style="display: none;">
+            <img src="./community-chest.png" alt="chance">
+            <div class="text"></div>
+        </div>
+
         
         <div id="cartesBoutons">
             <div id="fermerCarte" onclick="document.getElementById('cartes').style.display = 'none'">
@@ -189,9 +199,14 @@
         <div class="pion" data-num="2"></div>
         <div class="pion" data-num="3"></div>
       
-
-        <button id="rollDices" onclick="rollDices()" style="display: none;">Lancer les des</button>
-        <button id="endTurn" onclick="endTurn()" style="display: none;">Finir le tour</button>
+        <div id="buttons" style="display: none;">
+            <img src="icons8-add-home-64.png" alt="Acheter des maisons" class="button" id="addBuild" title="Acheter des maisons" style="display: none;">
+            <img src="icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger">
+            <button id="rollDices" onclick="rollDices()" style="display: none;">Lancer les des</button>
+            <button id="endTurn" onclick="endTurn()" style="display: none;">Finir le tour</button>
+            <img src="icons8-mortgage-50.png" alt="Hypothéquer" class="button" id="mortgage" title="Hypothéquer">
+            <img src="icons8-remove-home-64.png" alt="Vendre des maisons" class="button" id="removeBuild" title="Vendre des maisons" style="display: none;">
+        </div>
     </div>
 </body>
 </html>

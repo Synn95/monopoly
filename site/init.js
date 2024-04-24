@@ -343,6 +343,7 @@ function afficherCarte(idProperty) {
             prix.forEach(unPrix => {
                 switch(unPrix.dataset.type) {
                     case "cost":
+                        console.log(casesPlateau[idCarte].cost + "€")
                         unPrix.innerText = casesPlateau[idCarte].cost + "€"
                         break
                     case "mortgage":
@@ -388,6 +389,29 @@ function afficherCarte(idProperty) {
             break
     }
 
+    document.getElementById("carteChance").style.display = "none"
+    document.getElementById("carteCommunity").style.display = "none"
+    document.getElementById("cartes").style.display = ""
+}
+
+function afficherCarteChance(description) {
+    carteProp.style.display = "none"
+    carteStation.style.display = "none"
+    carteCompany.style.display = "none"
+
+    document.getElementById("carteChance").style.display = ""
+    document.querySelector("#carteChance .text").innerText = description
+
+    document.getElementById("cartes").style.display = ""
+}
+
+function afficherCarteCommunity(description) {
+    carteProp.style.display = "none"
+    carteStation.style.display = "none"
+    carteCompany.style.display = "none"
+
+    document.getElementById("carteCommunity").style.display = ""
+    document.querySelector("#carteCommunity .text").innerText = description
     document.getElementById("cartes").style.display = ""
 }
 

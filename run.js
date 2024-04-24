@@ -99,7 +99,7 @@ Player.prototype.buy = function(property, state) {
                 this.pay(property.cost)
                 this.deck.push(property)
                 property.owner = this
-                io.emit("changeOwner", activePlayerId, plateau.indexOf(property))
+                io.emit("changeOwner", activePlayerId, plateau.indexOf(property), true)
 
                 if(this.currentAction != null && this.currentAction.function == "buy") {
                     this.currentAction = null
@@ -131,9 +131,11 @@ Player.prototype.goTo = function(idCaseDest) {
         idCaseDest -= plateau.length
     } 
     
-    if(idCaseDest <= this.idCase) {
+    if(idCaseDest < this.idCase) {
         this.earn(200)
-    } 
+    } else if(idCaseDest == 0) {
+        this.earn(400)
+    }
 
     this.idCase = idCaseDest
     plateau[idCaseDest].locator = this
@@ -178,7 +180,7 @@ Player.prototype.actionCase = function(caseDest) {
                 break
             case "start":
                 console.log("4")
-                this.earn(200)
+                // this.earn(200)
                 break
             case "tax":
                 console.log("5")
@@ -378,7 +380,7 @@ io.on("connection", (socket) => {
         }
 
         playerList[i].deck.forEach(property => { //envoyer a tout le monde ses propriétés
-            io.emit("changeOwner", i, plateau.indexOf(property))
+            io.emit("changeOwner", i, plateau.indexOf(property), false)
         })
     }   
 

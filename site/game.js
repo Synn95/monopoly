@@ -5,6 +5,118 @@ function sleep(ms) { //Use : await sleep(ms);
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function afficherCarte(idProperty) {
+    let idCarte = idProperty
+    console.log(idCarte)
+
+    let carteProp = document.getElementById("carteProp")
+    let carteStation = document.getElementById("carteStation")
+    let carteCompany = document.getElementById("carteCompany")
+
+    if(document.getElementById("case-" + idCarte).dataset.owner == numPlayer && getActivePlayer().id == numPlayer) {
+        console.log(true)
+        document.getElementById("mortgageButton").style.display = ""
+        if(document.getElementById("case-" + idCarte).dataset.isMortgage == true) {
+
+        } else {
+            document.getElementById("mortgageButton").dataset.idCarte = idCarte
+        }
+    } else {
+        document.getElementById("mortgageButton").style.display = "none"
+    }
+
+    switch(casesPlateau[idCarte].type)  {
+        case "property":
+            let headProp = carteProp.children.item(0)
+            let prix = Array.from(document.getElementsByClassName("prix"))
+            
+            headProp.style.backgroundColor = casesPlateau[idCarte].color
+            headProp.innerHTML ="<h1>" + casesPlateau[idCarte].name + "</h1>"
+
+            prix.forEach(unPrix => {
+                switch(unPrix.dataset.type) {
+                    case "cost":
+                        unPrix.innerText = casesPlateau[idCarte].cost + "€"
+                        break
+                    case "mortgage":
+                        unPrix.innerText = casesPlateau[idCarte].mortgage + "€"
+                        break
+                    case "rent":
+                        unPrix.innerText = casesPlateau[idCarte].rent[unPrix.dataset.rent] + "€"
+                        break
+                    case "prixMaison":
+                        if(idCarte < 10) {
+                            unPrix.innerText = "50€"
+                        } else if(idCarte < 20) {
+                            unPrix.innerText = "100€"
+                        } else if(idCarte < 30) {
+                            unPrix.innerText = "150€"
+                        } else {
+                            unPrix.innerText = "200€"
+                        }
+                        break
+                }
+            });
+
+            carteCompany.style.display = "none"
+            carteStation.style.display = "none"
+            carteProp.style.display = ""
+            break
+        case "station":
+            let headStation = carteStation.children.item(0)
+            headStation.children.item(1).innerText = casesPlateau[idCarte].name
+
+            carteCompany.style.display = "none"
+            carteProp.style.display = "none"
+            carteStation.style.display = ""
+            break
+        case "company":
+            let headCompany = carteCompany.children.item(0)
+            headCompany.children.item(0).src = casesPlateau[idCarte].src
+            headCompany.children.item(1).innerText = casesPlateau[idCarte].name
+
+            carteProp.style.display = "none"
+            carteStation.style.display = "none"
+            carteCompany.style.display = ""
+            break
+    }
+
+    document.getElementById("carteChance").style.display = "none"
+    document.getElementById("carteCommunity").style.display = "none"
+    document.getElementById("cartes").style.display = ""
+}
+
+function afficherCarteChance(description) {
+    carteProp.style.display = "none"
+    carteStation.style.display = "none"
+    carteCompany.style.display = "none"
+
+    document.getElementById("carteChance").style.display = ""
+    document.querySelector("#carteChance .text").innerText = description
+
+    document.getElementById("cartes").style.display = ""
+}
+
+function afficherCarteCommunity(description) {
+    carteProp.style.display = "none"
+    carteStation.style.display = "none"
+    carteCompany.style.display = "none"
+
+    document.getElementById("carteCommunity").style.display = ""
+    document.querySelector("#carteCommunity .text").innerText = description
+    document.getElementById("cartes").style.display = ""
+}
+
+function showNewGameWindow(window) {
+    let newGame = document.getElementById("newGame")
+    Array.from(newGame.children).forEach(element => {
+        element.style.display = "none"
+    })
+
+    window.style.display = ""
+    newGame.style.display = ""
+}
+
 function getActivePlayer() {
     let id = document.getElementsByClassName("active").item(0).dataset.num
     return playerList[id]
@@ -23,6 +135,7 @@ function denyBuy() {
 function closeMenu() {
     let cartes = document.getElementById("cartes")
     document.getElementById("fermerCarte").style.display = ""
+    document.getElementById("mortgageButton").style.display = "none"
     document.getElementById("confirmButton").style.display = "none"
     document.getElementById("denyButton").style.display = "none"
 
@@ -44,6 +157,7 @@ function endTurn() {
     socket.emit("endTurn");
     document.getElementById("endTurn").style.display = "none";
     document.getElementById("buttons").style.display = "none"
+    closeMenu()
 }
 
 async function movePlayer(playerId, caseDest, backward) {
@@ -117,16 +231,20 @@ async function showHideDisplayCard() {
     }
 }
 
+function mortgage() {
+    socket.emit("clientMortgage", document.getElementById("mortgageButton").dataset.idCarte, numPlayer)
+}
+
 socket.on("activePlayer", function(id, hasRolledDices) {
     console.log("activePlayer : " + id, hasRolledDices)
     document.querySelector(".active").classList.remove("active")
     document.querySelector("[data-num='"+id+"'].player").classList.add("active")
     if(id == numPlayer) {
+        document.getElementById("buttons").style.display = ""
         if(hasRolledDices) {
             document.getElementById("endTurn").style.display = ""
         } else {
             document.getElementById("rollDices").style.display = ""
-            document.getElementById("buttons").style.display = ""
         }
     }
 })
@@ -201,6 +319,7 @@ socket.on("buy", function(idProperty) {
     cartes.style.width = "100%"
     cartes.style.backgroundColor = "rgba(0,0,0,0.4)"
     document.getElementById("fermerCarte").style.display = "none"
+    document.getElementById("mortgageButton").style.display = "none"
 
     if(getActivePlayer().id == numPlayer) {
         confirmButton.dataset.num = idProperty

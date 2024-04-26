@@ -1,5 +1,24 @@
 const socket = io()
 
+function enterPseudo() {
+    let waiting= document.getElementById("waiting")
+    let pseudo = document.getElementById("inputPseudo").value
+
+    if(pseudo == "") {alert("Votre pseudo ne peut pas être vide")}
+    else {
+        socket.emit("pseudo", pseudo)
+        showNewGameWindow(waiting)
+    }
+}
+
+function setPlayerPseudo(numPlayer, pseudo) {
+    document.querySelector('[data-num="' + numPlayer + '"] .pseudo').innerText = pseudo
+}
+
+function setPlayerBalance(numPlayer, balance) {
+    document.querySelector("[data-num='"+numPlayer+"'].player .balance").innerText = balance + "€"
+}
+
 socket.on("numPlayer", function(num) {
     console.log("player number received : " + num)
     if(num != -1) {
@@ -83,9 +102,14 @@ socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur 
     let isDisconnectedPlayer = false
     
     for(let i = 0 ; i < serverPlayerList.length ; i++) {
-        if(serverPlayerList[i].socket == null) {
-            isDisconnectedPlayer = true
-            playerNameListStr.push(playerList[i].pseudo)
+        isDisconnectedPlayer = true
+        let j = 0
+        let trouve = false
+        while(j < playerList.length && !trouve) {
+            if(playerList[j].id == serverPlayerList[i]) {
+                playerNameListStr.push(playerList[j].pseudo)
+            }
+            j++
         }
     }
 
@@ -93,7 +117,7 @@ socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur 
 
     if(isDisconnectedPlayer) {
         showNewGameWindow(document.getElementById("playerDisconnected"))
-    } else if(serverPlayerList.length < 4) {
+    } else if(playerList.length < 4) {
         showNewGameWindow(document.getElementById("waiting"))
     } else {
         document.getElementById("newGame").style.display = "none"

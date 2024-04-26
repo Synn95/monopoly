@@ -162,6 +162,7 @@
             <div id="fermerCarte" onclick="document.getElementById('cartes').style.display = 'none'">
                 Fermer
             </div>
+            <img src="icons8-mortgage-50.png" alt="Hypothéquer" class="button" id="mortgageButton" title="Hypothéquer" onclick="mortgage()">
             <button id="confirmButton" style="display: none;" onclick="confirmBuy()">Acheter</button>
             <button id="denyButton" style="display: none;" onclick="denyBuy()">Mettre aux encheres</button>
         </div>
@@ -200,12 +201,11 @@
         <div class="pion" data-num="3"></div>
       
         <div id="buttons" style="display: none;">
-            <img src="icons8-add-home-64.png" alt="Acheter des maisons" class="button" id="addBuild" title="Acheter des maisons" style="display: none;">
-            <img src="icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger">
-            <button id="rollDices" onclick="rollDices()" style="display: none;">Lancer les des</button>
-            <button id="endTurn" onclick="endTurn()" style="display: none;">Finir le tour</button>
-            <img src="icons8-mortgage-50.png" alt="Hypothéquer" class="button" id="mortgage" title="Hypothéquer">
-            <img src="icons8-remove-home-64.png" alt="Vendre des maisons" class="button" id="removeBuild" title="Vendre des maisons" style="display: none;">
+            <img src="icons8-add-home-64.png" alt="Acheter des maisons" class="button" id="addBuild" title="Acheter des maisons" style="display: none;" onclick="buildMode(0)">
+            <img src="icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger" onclick="trade()">
+            <img src="icons8-dice-60.png" alt="Lancer les dés" class="button" id="rollDices" title="Lancer les dés" onclick="rollDices()" style="display: none;">
+            <img src="icons8-end-60.png" alt="Fin du tour" class="button" id="endTurn" title="Finir le tour" onclick="endTurn()" style="display: none;">
+            <img src="icons8-remove-home-64.png" alt="Vendre des maisons" class="button" id="removeBuild" title="Vendre des maisons" style="display: none;" onclick="buildMode(1)">
         </div>
     </div>
 </body>

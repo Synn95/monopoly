@@ -83,8 +83,8 @@ Player.prototype.buy = function(property, state) {
         case 0: //player is on the property
             console.log("buy0")
             if(property.owner === null && property.locator == this) {
-                this.currentAction = {"function": "buy", "params": [property, 0]}
                 if(this.money >= property.cost) {
+                    this.currentAction = {"function": "buy", "params": [property, 0]}
                     io.emit("buy", plateau.indexOf(property))
                 } else {
                     io.emit("notEnoughToBuy", plateau.indexOf(property))
@@ -445,11 +445,7 @@ io.on("connection", (socket) => {
         }
 
         //on envoie aux autres joueurs la liste des joueurs
-        playerList.forEach(element => {
-            if(element.socket !== null && element.name !== null) {
-                io.to(element.socket).emit("playerDisconnected", Player.prototype.getDisconnectedPlayerIdList())
-            }
-        });
+        io.emit("playerDisconnected", Player.prototype.getDisconnectedPlayerIdList())
     })
 
     socket.on("pseudo", function(pseudo) {
@@ -491,6 +487,10 @@ io.on("connection", (socket) => {
         playerList[Player.prototype.getActivePlayer()].numberOfDoubles = 0
         Player.prototype.nextActivePlayer()
         io.emit("activePlayer", Player.prototype.getActivePlayer(), false)
+    })
+
+    socket.on("clientMortgage", function(idCase, idPlayer) {
+        console.log("clientMortgage", idCase, idPlayer)
     })
 
 

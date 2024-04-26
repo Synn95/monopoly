@@ -185,7 +185,7 @@ h2 {
 }
 
 #cartes img {
-    width: 50%;
+    max-width: 50%;
     margin: 0 auto;
 }
 
@@ -215,7 +215,6 @@ h2 {
     margin: 10px;
 }
 
-
 #cartes .head, #fermerCarte{
     margin: 10px;
     border-radius: 10px;
@@ -238,6 +237,13 @@ h2 {
     flex-direction: column;
     justify-content: start;
     align-items: center;
+}
+
+#mortgageButton {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    border: 2px solid black;
 }
 
 #carteChance, #carteCommunity {

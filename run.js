@@ -380,8 +380,11 @@ io.on("connection", (socket) => {
         }
 
         playerList[i].deck.forEach(property => { //envoyer a tout le monde ses propriétés
-            io.emit("changeOwner", i, plateau.indexOf(property), false)
-        })
+            socket.emit("changeOwner", i, plateau.indexOf(property), false)
+            if(property.nbBuilds == -1) {
+                socket.emit("mortgage", plateau.indexOf(property), true)
+            }
+        }) 
     }   
 
     if(isDisconnectedPlayer) { //Si un joueur s'est déconnecté
@@ -491,6 +494,21 @@ io.on("connection", (socket) => {
 
     socket.on("clientMortgage", function(idCase, idPlayer) {
         console.log("clientMortgage", idCase, idPlayer)
+        let player = Player.prototype.getPlayerById(idPlayer)
+        let casePlateau = plateau[idCase]
+
+        console.log(player.socket == socket.id, casePlateau.owner != null, casePlateau.owner.socket == socket.id)
+        if(player.socket == socket.id && casePlateau.owner != null && casePlateau.owner.socket == socket.id) {
+            if(casePlateau.nbBuilds == 0) {
+                casePlateau.nbBuilds = -1
+                io.emit("mortgage", idCase, true)
+            } else if(casePlateau.nbBuilds == -1) {
+                casePlateau.nbBuilds = 0
+                io.emit("mortgage", idCase, false)
+            }
+        } else {
+            socket.emit("cannotMortgage")
+        }
     })
 
 

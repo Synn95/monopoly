@@ -324,6 +324,13 @@ function applicationDonnees() {
     }
 }
 
+function checkSubmit(e) { //Pour la validation du pseudo avec la touche entrée
+    console.log(e)
+    if(e && e.keyCode == 13) {
+       enterPseudo()
+    }
+ }
+
 document.addEventListener("DOMContentLoaded", function() {
     //création du plateau et des cases
     creerPlateau()

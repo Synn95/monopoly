@@ -544,3 +544,46 @@ img.button:hover {
     border: 1px solid black;
     z-index: 2;
 }
+
+.nord.mortgage::before {
+    content: attr(name);
+    background: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    color: white;
+    text-align: center;
+    font-size: 0.6em;
+}
+
+.nord.mortgage::after {
+    content: "HYPOTHEQUE";
+    transform: rotate(45deg);
+    font-size: 0.5em;
+    color: red;
+    position: relative;
+    bottom: 26px;
+    font-weight: bolder;
+}
+
+.ouest.mortgage::before {
+    content: attr(name);
+    background: black;
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    color: white;
+    text-align: center;
+    font-size: 0.6em;
+    transform: rotate(90deg)
+}
+
+.ouest.mortgage::after {
+    content: "HYPOTHEQUE";
+    transform: rotate(45deg);
+    font-size: 0.5em;
+    color: red;
+    position: absolute;
+    bottom: 26px;
+    font-weight: bolder;
+}

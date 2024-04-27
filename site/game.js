@@ -379,3 +379,20 @@ socket.on("removeBuild", function(idProperty) {
     } 
     headerCase.firstChild.remove()
 })
+
+socket.on("mortgage", function(idCase, mortgage) {
+    console.log("mortgage", idCase, mortgage)
+    let casePlateau = document.getElementById("case-" + idCase)
+    if(mortgage) {
+        casePlateau.classList.add("mortgage")
+        casePlateau.setAttribute("name", casesPlateau[idCase].name)
+        createDisplayCard('<div class="pionDisplayCard" data-num="'+ casePlateau.dataset.owner +'"></div><h1>' + playerList[casePlateau.dataset.owner].pseudo + ' a hypotheque <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+    } else {
+        casePlateau.classList.remove("mortgage")
+        createDisplayCard('<div class="pionDisplayCard" data-num="'+ casePlateau.dataset.owner +'"></div><h1>' + playerList[casePlateau.dataset.owner].pseudo + ' a degage <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+    }
+})
+
+socket.on("cannotMortgage", function() {
+    createDisplayCard('<h1>Impossible d\'hypothequer : vous devez d\'abord vendre tous vos batiments</h1>')
+})

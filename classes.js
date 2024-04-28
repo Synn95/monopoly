@@ -21,16 +21,19 @@ function Property(property) {
             this.color = property.color
             this.cost = property.cost
             this.rent = property.rent
+            this.mortgage = property.mortgage
             break
         case "station":
             this.color = "station"
             this.cost = 200
             this.rent = null
+            this.mortgage = 100
             break
         case "company":
             this.color = "company"
             this.cost = 150
             this.rent = null
+            this.mortgage = 75
             break
     }
 }

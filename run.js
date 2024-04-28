@@ -151,7 +151,7 @@ Player.prototype.actionCase = function(caseDest) {
                 console.log("1")
                 if(caseDest.owner === null) {
                     this.buy(caseDest, 0)
-                } else if(caseDest.owner != this) {
+                } else if(caseDest.owner != this && caseDest.nbBuilds != -1) {
                     let rent = caseDest.getRent()
                     this.pay(rent)
                     caseDest.owner.earn(rent)
@@ -382,7 +382,7 @@ io.on("connection", (socket) => {
         playerList[i].deck.forEach(property => { //envoyer a tout le monde ses propriétés
             socket.emit("changeOwner", i, plateau.indexOf(property), false)
             if(property.nbBuilds == -1) {
-                socket.emit("mortgage", plateau.indexOf(property), true)
+                socket.emit("mortgage", plateau.indexOf(property), true, false)
             }
         }) 
     }   
@@ -501,10 +501,11 @@ io.on("connection", (socket) => {
         if(player.socket == socket.id && casePlateau.owner != null && casePlateau.owner.socket == socket.id) {
             if(casePlateau.nbBuilds == 0) {
                 casePlateau.nbBuilds = -1
-                io.emit("mortgage", idCase, true)
+                io.emit("mortgage", idCase, true, true)
+                io.emit("earn", idPlayer, plateau[i].mortgage)
             } else if(casePlateau.nbBuilds == -1) {
                 casePlateau.nbBuilds = 0
-                io.emit("mortgage", idCase, false)
+                io.emit("mortgage", idCase, false, true)
             }
         } else {
             socket.emit("cannotMortgage")

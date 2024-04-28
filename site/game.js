@@ -66,6 +66,8 @@ function afficherCarte(idProperty) {
             let headStation = carteStation.children.item(0)
             headStation.children.item(1).innerText = casesPlateau[idCarte].name
 
+            carteStation.querySelector("[data-type='mortgage']").innerText = "100€"
+
             carteCompany.style.display = "none"
             carteProp.style.display = "none"
             carteStation.style.display = ""
@@ -74,6 +76,8 @@ function afficherCarte(idProperty) {
             let headCompany = carteCompany.children.item(0)
             headCompany.children.item(0).src = casesPlateau[idCarte].src
             headCompany.children.item(1).innerText = casesPlateau[idCarte].name
+
+            carteCompany.querySelector("[data-type='mortgage']").innerText = "75€"
 
             carteProp.style.display = "none"
             carteStation.style.display = "none"
@@ -380,14 +384,33 @@ socket.on("removeBuild", function(idProperty) {
     headerCase.firstChild.remove()
 })
 
-socket.on("mortgage", function(idCase, mortgage) {
+socket.on("mortgage", function(idCase, mortgage, display) {
     console.log("mortgage", idCase, mortgage)
     let casePlateau = document.getElementById("case-" + idCase)
     if(mortgage) {
+        if(display) {
+            createDisplayCard('<div class="pionDisplayCard" data-num="'+ casePlateau.dataset.owner +'"></div><h1>' + playerList[casePlateau.dataset.owner].pseudo + ' a hypotheque <span style="color: '+ casesPlateau[idCase].color + '">' + casesPlateau[idCase].name + '</span></h1>')
+        }
+
         casePlateau.classList.add("mortgage")
-        casePlateau.setAttribute("name", casesPlateau[idCase].name)
-        createDisplayCard('<div class="pionDisplayCard" data-num="'+ casePlateau.dataset.owner +'"></div><h1>' + playerList[casePlateau.dataset.owner].pseudo + ' a hypotheque <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+
+        // let mortgageSign = document.createElement("div")
+        // mortgageSign.classList.add("mortgage")
+        // mortgageSign.style.gridArea = casePlateau.style.gridArea
+        // mortgageSign.id = "mortgage-" + idCase
+        // mortgageSign.style.zIndex = 1
+
+        // let name = document.createElement("h1")
+        // name.innerText = casesPlateau[idCase].name
+
+        // let mortgageText = document.createElement("h2")
+        // mortgageText.innerText = "HYPOTHEQUE"
+
+        // mortgageSign.appendChild(name)
+        // mortgageSign.appendChild(mortgageText)
+        // document.getElementById("plateau").appendChild(mortgageSign)
     } else {
+        // document.getElementById("mortgage-" + idCase).remove()
         casePlateau.classList.remove("mortgage")
         createDisplayCard('<div class="pionDisplayCard" data-num="'+ casePlateau.dataset.owner +'"></div><h1>' + playerList[casePlateau.dataset.owner].pseudo + ' a degage <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
     }

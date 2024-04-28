@@ -33,8 +33,9 @@ function creerPlateau() {
         casePlateau.classList.add("sud")
         casePlateau.id = "case-" + i
 
-        casePlateau.style.gridRow = "-1 / -2"
-        casePlateau.style.gridColumn = (-j-1) + " / " + (-j-2)
+        casePlateau.style.gridArea = " -1 / " + (-j-1) + " / -2 / " + (-j-2) 
+        // casePlateau.style.gridRow = "-1 / -2"
+        // casePlateau.style.gridColumn = (-j-1) + " / " + (-j-2)
         
         //creation des div pour les pions
         
@@ -57,8 +58,9 @@ function creerPlateau() {
         casePlateau.classList.add("ouest")
         casePlateau.id = "case-" + i
 
-        casePlateau.style.gridColumn = "0 / 1"
-        casePlateau.style.gridRow = (-j-1) + " / " + (-j-2)
+        casePlateau.style.gridArea = (-j-1) + " / 1 / " + (-j-2) + " / 2"
+        // casePlateau.style.gridColumn = "0 / 1"
+        // casePlateau.style.gridRow = (-j-1) + " / " + (-j-2)
         
         
         //creation des div pour les pions
@@ -80,8 +82,9 @@ function creerPlateau() {
         casePlateau.classList.add("nord")
         casePlateau.id = "case-" + i
 
-        casePlateau.style.gridRow = "0 / 1"
-        casePlateau.style.gridColumn = (j+1) + " / " + (j+2)
+        casePlateau.style.gridArea = " 0 / " + (j+1) + " / 1 / " + (j+2) 
+        // casePlateau.style.gridRow = "0 / 1"
+        // casePlateau.style.gridColumn = (j+1) + " / " + (j+2)
         
         
         //creation des div pour les pions
@@ -103,8 +106,9 @@ function creerPlateau() {
         casePlateau.classList.add("est")
         casePlateau.id = "case-" + i
 
-        casePlateau.style.gridColumn = "-1 / -2"
-        casePlateau.style.gridRow = (j+1) + " / " + (j+2)
+        casePlateau.style.gridArea = (j+1) + " / -1 / " + (j+2) + " / -2"
+        // casePlateau.style.gridColumn = "-1 / -2"
+        // casePlateau.style.gridRow = (j+1) + " / " + (j+2)
         
         
         //creation du div pour les pions

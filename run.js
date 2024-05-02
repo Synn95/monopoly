@@ -8,6 +8,8 @@ const {Property, Tax, Jail, Parc} = require("./classes.js")
 const plateau = require("./plateau.js")
 const communityCards = require("./communityCards.js")
 const chance = require("./chance.js");
+const { emitKeypressEvents } = require("readline");
+const { on } = require("events");
 
 let playerList = new Array()
 let activePlayerId = 0
@@ -104,6 +106,9 @@ Player.prototype.buy = function(property, state) {
                 if(this.currentAction != null && this.currentAction.function == "buy") {
                     this.currentAction = null
                 }
+
+                io.to(this.socket).emit("canBuild", this.canBuild())
+                
             }
 
     }
@@ -131,7 +136,7 @@ Player.prototype.goTo = function(idCaseDest) {
         idCaseDest -= plateau.length
     } 
     
-    if(idCaseDest < this.idCase) {
+    if(idCaseDest <= this.idCase && idCaseDest != 0) {
         this.earn(200)
     } else if(idCaseDest == 0) {
         this.earn(400)
@@ -250,13 +255,30 @@ Player.prototype.colorGroup = function(color) {
         if(element.type == color || element.color == color) {
             totalCouleur++
 
-            if(element.owner == this) {
+            if(element.owner == this && element.nbBuilds != -1) {
                 nbPossede++
             }
         }
     });
 
     return Array(nbPossede, totalCouleur)
+}
+
+Player.prototype.canBuild = function() {
+    let canBuild = false
+    let i = 0
+    while(i < this.deck.length && !canBuild) {
+        let colorPropertyRate = this.colorGroup(this.deck[i].color)
+        console.log(this.deck[i].name, this.deck[i].color != "station", this.deck[i].color != "company", colorPropertyRate[0] == colorPropertyRate[1])
+        canBuild = canBuild || (
+            this.deck[i].color != "station" && 
+            this.deck[i].color != "company" && 
+            colorPropertyRate[0] == colorPropertyRate[1]
+        )
+        i++
+    }
+
+    return canBuild
 }
 
 Player.prototype.getPlayerList = function() {return playerList}
@@ -454,8 +476,11 @@ io.on("connection", (socket) => {
     socket.on("pseudo", function(pseudo) {
         console.log("pseudo received : " + pseudo)
         let numPlayer = playerList.length
-        let _ = new Player(socket.id, pseudo, numPlayer)
+        let player = new Player(socket.id, pseudo, numPlayer)
+
         socket.emit("numPlayer", numPlayer)
+        socket.emit("canBuild", player.canBuild())
+
         io.emit("broadcastPseudo", numPlayer, pseudo)
         io.emit("clientPlayerList", Player.prototype.getClientPlayerList())
 
@@ -501,15 +526,75 @@ io.on("connection", (socket) => {
         if(player.socket == socket.id && casePlateau.owner != null && casePlateau.owner.socket == socket.id) {
             if(casePlateau.nbBuilds == 0) {
                 casePlateau.nbBuilds = -1
+                player.earn(plateau[idCase].mortgage)
                 io.emit("mortgage", idCase, true, true)
-                io.emit("earn", idPlayer, plateau[i].mortgage)
             } else if(casePlateau.nbBuilds == -1) {
                 casePlateau.nbBuilds = 0
+                player.pay(plateau[idCase].mortgage*1.1)
                 io.emit("mortgage", idCase, false, true)
             }
+            socket.emit("canBuild", player.canBuild())
         } else {
             socket.emit("cannotMortgage")
         }
+    })
+
+    socket.on("askBuild", function(idProperty, buildMode) {
+        let property = plateau[idProperty]
+        let player = Player.prototype.getPlayerBySocket(socket.id)
+        let canBuild = true
+        let buildPrice = 0
+
+        
+        if(Player.prototype.getPlayerList().indexOf(player) == Player.prototype.getActivePlayer() 
+            && player.colorGroup(property.color)) {
+                console.log("canbuild1")
+    
+                if(idProperty <= 10) {
+                    buildPrice = 50
+                } else if(idProperty <= 20) {
+                    buildPrice = 100
+                } else if(idProperty <= 30) {
+                    buildPrice = 150
+                } else {
+                    buildPrice = 200
+                }
+                
+                let i = 0
+                if(buildMode == 1) {
+                    console.log("canbuild2")
+                    buildPrice /= 2
+                    while(i < plateau.length && canBuild) {
+                        console.log(plateau[i])
+                        // console.log(i, plateau[i].color, plateau[i].nbBuilds, property.color, property.nbBuilds)
+                        console.log(plateau[i].color == property.color, plateau[i].nbBuilds <= property.nbBuilds, plateau[i].nbBuilds >= property.nbBuilds-1)
+                        if(plateau[i].color == property.color 
+                            && !(plateau[i].nbBuilds <= property.nbBuilds 
+                            && plateau[i].nbBuilds >= property.nbBuilds-1)) {
+                                console.log("canbuild3")
+                                canBuild = false
+                        }
+                        i++
+                    }
+                } else if(buildMode == 0) {
+                    console.log("canbuild5")
+                    while(i < plateau.length && canBuild) {
+                        if(plateau[i].color == property.color 
+                            && !(plateau[i].nbBuilds >= property.nbBuilds 
+                            && plateau[i].nbBuilds <= property.nbBuilds+1)) {
+                                console.log("canbuild6")
+                                canBuild = false
+                        }
+                        i++
+                    }
+                }
+        } else {
+            console.log("canbuild9")
+            canBuild = false
+        }
+
+        socket.emit("answerBuild", idProperty, canBuild , buildPrice, buildMode)
+
     })
 
 

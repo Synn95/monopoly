@@ -167,16 +167,19 @@ function endTurn() {
 async function movePlayer(playerId, caseDest, backward) {
     let player = playerList[playerId]
     let pion = document.querySelector("[data-num='"+playerId+"'].pion")
+    let oldPlayerPos = player.pos
     console.log(playerId, player.pos, caseDest)
 
+    player.pos = caseDest
+
     if(!backward) {
-        if(player.pos < caseDest) {
-            for(let i = player.pos ; i <= caseDest ; i++) {
+        if(oldPlayerPos < caseDest) {
+            for(let i = oldPlayerPos ; i <= caseDest ; i++) {
                 document.querySelector("#case-"+i +" .casePion").appendChild(pion)
                 await sleep(100)
             }
-        } else if(player.pos > caseDest) {
-            for(let i = player.pos ; i < cases.length ; i++) {
+        } else if(oldPlayerPos > caseDest) {
+            for(let i = oldPlayerPos ; i < cases.length ; i++) {
                 document.querySelector("#case-"+i +" .casePion").appendChild(pion)
                 await sleep(100)
             }
@@ -189,13 +192,13 @@ async function movePlayer(playerId, caseDest, backward) {
             document.querySelector("#case-"+caseDest +" .casePion").appendChild(pion)
         }
     } else {
-        if(player.pos > caseDest) {
-            for(let i = player.pos ; i >= caseDest ; i--) {
+        if(oldPlayerPos > caseDest) {
+            for(let i = oldPlayerPos ; i >= caseDest ; i--) {
                 document.querySelector("#case-"+i +" .casePion").appendChild(pion)
                 await sleep(100)
             }
-        } else if(player.pos < caseDest){
-            for(let i = player.pos ; i >= 0 ; i--) {
+        } else if(oldPlayerPos < caseDest){
+            for(let i = oldPlayerPos ; i >= 0 ; i--) {
                 document.querySelector("#case-"+i +" .casePion").appendChild(pion)
                 await sleep(100)
             }
@@ -208,8 +211,6 @@ async function movePlayer(playerId, caseDest, backward) {
             document.querySelector("#case-"+caseDest +" .casePion").appendChild(pion)
         }
     }
-
-    player.pos = caseDest
 } 
 
 function createDisplayCard(innerHTML) {
@@ -237,6 +238,42 @@ async function showHideDisplayCard() {
 
 function mortgage() {
     socket.emit("clientMortgage", document.getElementById("mortgageButton").dataset.idCarte, numPlayer)
+}
+
+function buildMode(mode) {
+    document.getElementById("addBuild").style.background = ""
+    document.getElementById("removeBuild").style.background = ""
+    if(mode == 0) {
+        document.getElementById("addBuild").style.background = "#06c100"
+        
+    } else if(mode == 1) {
+        document.getElementById("removeBuild").style.background = "#06c100"
+    }
+
+    for(let i = 0 ; i < casesPlateau.length ; i++) {
+        if(casesPlateau[i].type == "property") {
+            socket.emit("askBuild", i, mode)
+        }
+    }
+}
+
+function answerBuild(idProperty, canBuild, buildPrice, buildMode) {
+    console.log("answerBuild", idProperty, canBuild, buildPrice, buildMode)
+    let uneCase = document.getElementById("case-" + idProperty)
+    if(canBuild) {
+        uneCase.setAttribute("buildPrice", buildPrice)
+        if(buildMode == 1) {
+            uneCase.classList.add("canBuyBuild")
+            uneCase.addEventListener("click", function() {
+                console.log("sell build", uneCase)
+            })
+        } else {
+            uneCase.addEventListener("click", function() {
+                console.log("buy build", uneCase)
+            })
+
+        }
+    }
 }
 
 socket.on("activePlayer", function(id, hasRolledDices) {
@@ -354,6 +391,19 @@ socket.on("tooManyDoubles", function() {
     console.log("tooManyDoubles")
     createDisplayCard('<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' a fait 3 doubles d\'affile</h1>')
 })
+
+socket.on("canBuild", function(canBuild) {
+    console.log("canBuild", canBuild)
+    if(canBuild) {
+        document.getElementById("removeBuild").style.display = ""
+        document.getElementById("addBuild").style.display = ""
+    } else {
+        document.getElementById("removeBuild").style.display = "none"
+        document.getElementById("addBuild").style.display = "none"
+    }
+})
+
+socket.on("answerBuild", answerBuild)
 
 socket.on("addBuild", function(idProperty) {
     console.log("addbuild :", cases[idProperty])

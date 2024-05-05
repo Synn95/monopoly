@@ -178,7 +178,7 @@ h2 {
     position: fixed;
     height: 355px;
     width: 355px;
-    z-index: 2;
+    z-index: 3;
 
     top: -10px;
     padding: 20px;
@@ -531,7 +531,7 @@ img.button:hover {
 }
 
 .case.canBuyBuild::before {
-    content: "50€";
+    content: attr("buildPrice");
     /* content: attr(data-before); */
     background-color: gainsboro;
     position: absolute;
@@ -542,7 +542,7 @@ img.button:hover {
     border-radius: 10px;
     font-family: monopoly;
     border: 1px solid black;
-    z-index: 2;
+    z-index: 3;
 }
 
 .mortgage .bodyCase{

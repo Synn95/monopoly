@@ -162,9 +162,18 @@ function applicationDonnees() {
                 cases[i].appendChild(headProperty)
                 cases[i].appendChild(bodyProperty)
                 cases[i].classList.add("property")
+                cases[i].dataset.color = casesPlateau[i].color
 
                 cases[i].addEventListener("click", function() {
-                    afficherCarte(i)
+                    if(cases[i].classList.contains("canBuyBuild")) {
+                        console.log("buy build")
+                        socket.emit("buyBuild", i)
+                    } else if(cases[i].classList.contains("canSellBuild")) {
+                        console.log("sell build")
+                        socket.emit("sellBuild", i)
+                    } else {
+                        afficherCarte(i)
+                    }
                 })
 
                 

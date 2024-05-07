@@ -261,20 +261,18 @@ function answerBuild(idProperty, canBuild, buildPrice, buildMode) {
     console.log("answerBuild", idProperty, canBuild, buildPrice, buildMode)
     let uneCase = document.getElementById("case-" + idProperty)
     if(canBuild) {
-        uneCase.setAttribute("buildPrice", buildPrice)
+        uneCase.setAttribute("buildPrice", buildPrice)  
         if(buildMode == 1) {
-            uneCase.classList.add("canBuyBuild")
-            uneCase.addEventListener("click", function() {
-                console.log("sell build", uneCase)
-            })
+            uneCase.classList.add("canSellBuild")
         } else {
-            uneCase.addEventListener("click", function() {
-                console.log("buy build", uneCase)
-            })
+            uneCase.classList.add("canBuyBuild")
 
         }
+    } else {
+        uneCase.classList.remove("canSellBuild")
+        uneCase.classList.remove("canBuyBuild")
     }
-}
+} 
 
 socket.on("activePlayer", function(id, hasRolledDices) {
     console.log("activePlayer : " + id, hasRolledDices)
@@ -405,33 +403,63 @@ socket.on("canBuild", function(canBuild) {
 
 socket.on("answerBuild", answerBuild)
 
-socket.on("addBuild", function(idProperty) {
+socket.on("addBuild", function(idProperty, isInit) {
     console.log("addbuild :", cases[idProperty])
     let build = document.createElement("div")
     let headerCase = cases[idProperty].children[1]
+    let colorGroup = document.querySelectorAll("[data-color=" + document.getElementById("case-"+idProperty).dataset.color)
+
+
     if(headerCase.children.length == 4) {
+        if(!isInit) {
+            createDisplayCard('<div class="pionDisplayCard" data-num="'+ cases[idProperty].dataset.owner +'"></div><h1>' + playerList[cases[idProperty].dataset.owner].pseudo + ' a achete un hotel sur <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+        }
+
         Array.from(headerCase.children).forEach(build => {
             build.remove()
         })
         build.classList.add("hotel")
     } else {
+        if(!isInit) {
+            createDisplayCard('<div class="pionDisplayCard" data-num="'+ cases[idProperty].dataset.owner +'"></div><h1>' + playerList[cases[idProperty].dataset.owner].pseudo + ' a achete une maison sur <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+        }
+
         build.classList.add("house")
     }
     headerCase.appendChild(build)
+
+    if(!isInit) {
+        colorGroup.forEach(element => {
+            socket.emit("askBuild", element.id.slice(5), 0)
+        });
+    }
 })
 
-socket.on("removeBuild", function(idProperty) {
+socket.on("removeBuild", function(idProperty, isInit) {
     console.log("removebuild :", cases[idProperty])
     let headerCase = cases[idProperty].children[1]
+    let colorGroup = document.querySelectorAll("[data-color=" + document.getElementById("case-"+idProperty).dataset.color)
+
     if(headerCase.firstChild.classList.contains("hotel")) {
+        if(!isInit) {
+            createDisplayCard('<div class="pionDisplayCard" data-num="'+ cases[idProperty].dataset.owner +'"></div><h1>' + playerList[cases[idProperty].dataset.owner].pseudo + ' a vendu un hotel sur <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+        }
         
         for(let i = 0 ; i < 4 ; i++) {
             let build = document.createElement("div")
             build.classList.add("house")
             headerCase.appendChild(build)
         }
-    } 
+    } else  if(!isInit) {
+        createDisplayCard('<div class="pionDisplayCard" data-num="'+ cases[idProperty].dataset.owner +'"></div><h1>' + playerList[cases[idProperty].dataset.owner].pseudo + ' a vendu une maison sur <span style="color: '+ casesPlateau[idProperty].color + '">' + casesPlateau[idProperty].name + '</span></h1>')
+    }
     headerCase.firstChild.remove()
+
+    if(!isInit) {
+        colorGroup.forEach(element => {
+            socket.emit("askBuild", element.id.slice(5), 1)
+        });
+    }
 })
 
 socket.on("mortgage", function(idCase, mortgage, display) {

@@ -13,6 +13,7 @@ function Property(property) {
     this.name = property.name
     //this.case = idCase
     this.nbBuilds = 0
+    this.canBuild = false
     this.owner = null
     this.locator = null
 

@@ -50,6 +50,13 @@ body {
 
 .headerCase {
     grid-row: 1 / 2;
+}
+
+.ouest .headerCase, .est .headerCase {
+    flex-direction: column;
+}
+
+.nord .headerCase, .sud .headerCase {
     flex-direction: row;
 }
 
@@ -178,7 +185,7 @@ h2 {
     position: fixed;
     height: 355px;
     width: 355px;
-    z-index: 3;
+    z-index: 4;
 
     top: -10px;
     padding: 20px;
@@ -315,7 +322,7 @@ h2 {
 
 #newGame {
     position: fixed;
-    z-index: 3;
+    z-index: 5;
     background-color: rgba(0,0,0,0.4);
     height: 110%;
     width: 100%;
@@ -437,7 +444,7 @@ img.button:hover {
 
 #events {
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     top: 10px;
     left: 0;
     max-width: 25%;
@@ -515,11 +522,19 @@ img.button:hover {
 }
 
 .house {
-    height: 70%;
-    width: 15%;
     background-color: green;
     border: 1px solid black;
     margin: auto;
+}
+
+.ouest .house, .est .house {
+    height: 15%;
+    width: 70%;
+}
+
+.nord .house, .sud .house {
+    height: 70%;
+    width: 15%;
 }
 
 .hotel {
@@ -530,9 +545,8 @@ img.button:hover {
     margin: auto;
 }
 
-.case.canBuyBuild::before {
-    content: attr("buildPrice");
-    /* content: attr(data-before); */
+.case.canBuyBuild::before, .case.canSellBuild::before {
+    content: attr(buildPrice);
     background-color: gainsboro;
     position: absolute;
     padding: 10px;

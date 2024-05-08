@@ -243,6 +243,7 @@ function mortgage() {
 function buildMode(mode) {
     document.getElementById("addBuild").style.background = ""
     document.getElementById("removeBuild").style.background = ""
+    document.getElementById("trade").style.background = ""
     if(mode == 0) {
         document.getElementById("addBuild").style.background = "#06c100"
         
@@ -272,7 +273,189 @@ function answerBuild(idProperty, canBuild, buildPrice, buildMode) {
         uneCase.classList.remove("canSellBuild")
         uneCase.classList.remove("canBuyBuild")
     }
-} 
+}
+
+function closeTradeWin() {
+    let tradeWin = document.getElementById("tradeWin")
+    let choosePlayer = document.getElementById("choosePlayer")
+    let choosePossessions = document.getElementById("choosePossessions")
+    
+    tradeWin.style.display = "none"
+    choosePlayer.style.display = "none"
+    choosePossessions.style.display = "none"
+
+    Array.from(document.querySelectorAll("#choosePlayer .player")).forEach(i => {
+        i.remove()
+    })
+
+    Array.from(document.querySelectorAll(".aPossession")).forEach(aPossession => {
+        aPossession.remove()
+    })
+
+    document.getElementById("trade").style.background = ""
+}
+
+function tradeChoosePlayer() {
+    let tradeWin = document.getElementById("tradeWin")
+    let choosePlayer = document.getElementById("choosePlayer")
+
+    document.getElementById("addBuild").style.background = ""
+    document.getElementById("removeBuild").style.background = ""
+    document.getElementById("trade").style.background = "#06c100"
+
+    tradeWin.style.display = ""
+    choosePlayer.style.display = ""
+
+    playerList.forEach(player => {
+        if(playerList.indexOf(player) != numPlayer) {
+            let playerElement = document.createElement("div")
+            playerElement.classList.add("player")
+            playerElement.dataset.num = playerList.indexOf(player)
+            playerElement.innerText = player.pseudo
+
+            playerElement.addEventListener("click", function() {
+                choosePlayer.style.display = "none"
+
+                Array.from(document.querySelectorAll("#choosePlayer .player")).forEach(i => {
+                    i.remove()
+                })
+
+                tradeChoosePossessions(playerElement.dataset.num)
+            })
+
+            choosePlayer.appendChild(playerElement)
+        }
+    })
+}
+
+function tradeChoosePossessions(idPlayer) {
+    let tradeWin = document.getElementById("tradeWin")
+    let choosePossessions = document.getElementById("choosePossessions")
+    let thisPlayerPosses = document.querySelector("[data-player=this].possessions")
+    let otherPlayerPosses = document.querySelector("[data-player=other].possessions")
+
+    document.getElementById("addBuild").style.background = ""
+    document.getElementById("removeBuild").style.background = ""
+    document.getElementById("trade").style.background = "#06c100"
+
+    tradeWin.style.display = ""
+    choosePossessions.style.display = ""
+
+    thisPlayerPosses.querySelector(".player").dataset.num = numPlayer
+    thisPlayerPosses.querySelector(".player > div").innerText = playerList[numPlayer].pseudo
+    otherPlayerPosses.querySelector(".player").dataset.num = idPlayer
+    otherPlayerPosses.querySelector(".player > div").innerText = playerList[idPlayer].pseudo
+
+    cases.forEach(uneCase => {
+        if(uneCase.dataset.owner == numPlayer) {
+            let property = document.createElement("div")
+            
+            property.classList.add("aPossession")
+            property.style.border = "3px solid"
+            if(uneCase.dataset.color) {
+                property.style.borderColor = uneCase.dataset.color
+            } else {
+                property.style.borderColor = "black"
+            }
+
+            property.innerText = uneCase.querySelector("h1").innerText
+            property.dataset.selected = "false"
+            property.dataset.propId = uneCase.id.slice(5)
+
+            property.addEventListener("click", function() {
+                if(property.dataset.selected == "false") {
+                    property.style.background = "green"
+                    property.dataset.selected = "true"
+                } else {
+                    property.style.background = ""
+                    property.dataset.selected = "false"
+                }
+            })
+
+            thisPlayerPosses.appendChild(property)
+        } else if(uneCase.dataset.owner == idPlayer) {
+            let property = document.createElement("div")
+            
+            property.classList.add("aPossession")
+            property.style.border = "3px solid"
+            if(uneCase.dataset.color) {
+                property.style.borderColor = uneCase.dataset.color
+            } else {
+                property.style.borderColor = "black"
+            }
+
+            property.innerText = uneCase.querySelector("h1").innerText
+            property.dataset.selected = "false"
+
+            property.addEventListener("click", function() {
+                if(property.dataset.selected == "false") {
+                    property.style.background = "green"
+                    property.dataset.selected = "true"
+                } else {
+                    property.style.background = ""
+                    property.dataset.selected = "false"
+                }
+            })
+
+            otherPlayerPosses.appendChild(property)
+        }
+    })
+}
+
+function checkMaxAmount(idPlayer, isThisPlayer) {
+    if(isThisPlayer) {
+        let thisPlayerBlance = document.getElementById("thisPlayerBalance")
+        if(playerList[idPlayer].balance < thisPlayerBlance.value) {
+            thisPlayerBlance.value = playerList[idPlayer].balance
+        }
+    } else {
+        let otherPlayerBalance = document.getElementById("otherPlayerBalance")
+
+        if(playerList[idPlayer].balance < otherPlayerBalance.value) {
+            otherPlayerBalance.value = playerList[idPlayer].balance
+        }
+    }
+}
+
+function offerTrade() {
+    let tradeWin = document.getElementById("tradeWin")
+    let choosePossessions = document.getElementById("choosePossessions")
+    let waitTradeAnswer = document.getElementById("waitTradeAnswer")
+
+    let idPlayer = document.querySelector('[data-player=other].possessions .player').dataset.num
+    
+    document.getElementById("addBuild").style.background = ""
+    document.getElementById("removeBuild").style.background = ""
+    document.getElementById("trade").style.background = "#06c100"
+
+    tradeWin.style.display = ""
+    choosePossessions.style.display = "none"
+    waitTradeAnswer.style.display = ""
+
+    let thisPlayerProperties = Array()
+    let otherPlayerProperties = Array()
+
+    Array.from(document.querySelectorAll("[data-player=this].possessions [data-selected=true].aPossession")).forEach(prop => {
+        thisPlayerProperties.push(prop.dataset.propId)
+    })
+    Array.from(document.querySelectorAll("[data-player=other].possessions [data-selected=true].aPossession")).forEach(prop => {
+        otherPlayerProperties.push(prop.dataset.propId)
+    })
+
+    let trade = {
+        "this": {
+            "money": document.querySelector("thisPlayerBalance").value,
+            "properties": thisPlayerProperties
+        },
+        "other": {
+            "money": document.querySelector("otherPlayerBalance").value,
+            "properties": otherPlayerProperties
+        }
+    }
+
+    waitTradeAnswer.querySelector("h1").innerText = "En attente de la réponse de " + playerList[idPlayer].pseudo
+    socket.emit("offerTrade", idPlayer, trade)
+}
 
 socket.on("activePlayer", function(id, hasRolledDices) {
     console.log("activePlayer : " + id, hasRolledDices)

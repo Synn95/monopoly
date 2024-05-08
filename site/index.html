@@ -35,6 +35,37 @@
         </div>
     </div>
 
+    <div id="tradeWin" style="display: none;">
+        <img src="icons8-close-48.png" alt="close" id="closeTradeWin" onclick="closeTradeWin()">
+        <div id="choosePlayer" class="fenetre" style="display: none;">
+            <h1>Selectionnez un autre joueur</h1>
+        </div>
+
+        <div id="choosePossessions" class="fenetre" style="display: none;">
+            <h1>Selectionnez les biens a echanger</h1>
+            <div id="possessionsLists">
+                <div class="possessions" data-player="this">
+                    <div class="player">
+                        <div></div>
+                        <input id="thisPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkMaxAmount(this.parentNode.dataset.num, true)">
+                    </div>
+                </div>
+                <div class="verticalLine"></div>
+                <div class="possessions" data-player="other">
+                    <div class="player">
+                        <div></div>
+                        <input id="otherPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkMaxAmount(this.parentNode.dataset.num, false)">
+                    </div>
+                </div>
+            </div>
+            <button onclick="offerTrade()">Proposer un echange</button>
+        </div>
+
+        <div id="waitTradeAnswer">
+            <h1></h1>
+        </div>
+    </div>
+
     <div id="cartes" style="display: none;">
         <div id="carteProp" style="display: none;">
             <div class="head">
@@ -202,7 +233,7 @@
       
         <div id="buttons" style="display: none;">
             <img src="icons8-add-home-64.png" alt="Acheter des maisons" class="button" id="addBuild" title="Acheter des maisons" style="display: none;" onclick="buildMode(0)">
-            <img src="icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger" onclick="trade()">
+            <img src="icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger" onclick="tradeChoosePlayer()">
             <img src="icons8-dice-60.png" alt="Lancer les dés" class="button" id="rollDices" title="Lancer les dés" onclick="rollDices()" style="display: none;">
             <img src="icons8-end-60.png" alt="Fin du tour" class="button" id="endTurn" title="Finir le tour" onclick="endTurn()" style="display: none;">
             <img src="icons8-remove-home-64.png" alt="Vendre des maisons" class="button" id="removeBuild" title="Vendre des maisons" style="display: none;" onclick="buildMode(1)">

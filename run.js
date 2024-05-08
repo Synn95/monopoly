@@ -650,14 +650,29 @@ io.on("connection", (socket) => {
         }
     })
 
+    socket.on("offerTrade", function(otherPlayerId, trade) {
+        let playerList = Player.prototype.getPlayerList()
+        let initPlayer = Player.prototype.getPlayerBySocket(socket.id)
+        let otherPlayer = Player.prototype.getPlayerById(otherPlayerId)
+        let isMoneyValid = otherPlayer.money >= trade.other.money && trade.other.money >= 0
+            && initPlayer.money >= trade.this.money && trade.this.money >= 0
+        let isThisPlayerPossessionsValid = true
+        let isOtherPlayerPossessionsValid = true
 
+        for(let i = 0 ; i < trade.this.properties.length && isThisPlayerPossessionsValid ; i++) {
+            let prop = trade.this.properties[i]
+            isThisPlayerPossessionsValid = plateau[prop].owner == initPlayer
+        }
+        for(let i = 0 ; i < trade.other.properties.length && isOtherPlayerPossessionsValid ; i++) {
+            let prop = trade.other.properties[i]
+            isOtherPlayerPossessionsValid = plateau[prop].owner == otherPlayer
+        }
 
-    socket.on("testChance", function() {
-        console.log("testChance")
-        let activePlayer = playerList[Player.prototype.getActivePlayer()]
-        activePlayer.goTo(2)
-        activePlayer.actionCase(plateau[2])
+        
+        
     })
+
+    
 })
 
 module.exports = Player

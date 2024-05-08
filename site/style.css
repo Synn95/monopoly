@@ -15,6 +15,13 @@
     --player-4-color: #31e72b;
 }
 
+.verticalLine {
+    border-left: 4px solid black;
+    height: 30%;
+    margin: 0 15px;
+    padding: 15% 0px;
+}
+
 body {
     display: flex;
     align-items: center;
@@ -331,7 +338,7 @@ h2 {
     flex-direction: column;
 }
 
-#newGame h1 {
+#newGame h1, #tradeWin h1 {
     margin: 10px;
     text-align: center;
     font-family: monopoly;
@@ -356,14 +363,96 @@ button, input {
 }
 
 
-#plateauPions {
-    display: grid;
-    grid-template-columns: 1.5fr repeat(9, 1fr) 1.5fr;
-    grid-template-rows: 1.5fr repeat(9, 1fr) 1.5fr;
-
-    position: absolute;
-    z-index: 1;
+#tradeWin {
+    position: fixed;
+    z-index: 3;
+    background-color: rgba(0,0,0,0.4);
+    height: 110%;
+    width: 100%;
+    top: -10px;
+    display: flex;
+    flex-direction: column;
 }
+
+#closeTradeWin {
+    height: 60px;
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+}
+
+#choosePlayer, #choosePossessions {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#choosePlayer .player {
+    padding: 20px;
+    margin: 5px;
+    font-size: larger;
+    cursor: pointer;
+    width: 40%;
+    text-align: center;
+}
+
+#choosePlayer .player:hover {
+    border-color: white;
+    color: white;
+}
+
+#choosePossessions {
+    min-height: 50%;
+    justify-content: space-between;
+}
+
+#choosePossessions .possessions{
+    max-height: 80%;
+    width: 45%;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#possessionsLists {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    height: 100%;
+}
+
+#possessionsLists .player {
+    text-align: center;
+    padding: 10px;
+    font-size: 1.5em;
+    font-weight: bolder;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#possessionsLists .player input {
+    font-size: 1em;
+    width: 30%;
+    margin: 0;
+}
+
+.aPossession {
+    text-align: center;
+    font-family: Coolvetica;
+    font-size: larger;
+    border-radius: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.aPossession:hover {
+    background: rgba(0,0,0,0.4);
+}
+
 
 .casePion {
     grid-row: 2 / 3 ;

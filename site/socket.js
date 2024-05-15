@@ -41,6 +41,10 @@ socket.on("playerIsDisconnected", function(serverPlayerList) { //lors de la conn
     console.log(serverPlayerList)
     let playerIsDisconnected = document.getElementById("playerIsDisconnected")
 
+    Array.from(document.getElementsByClassName("disconnectedPlayer")).forEach(playerNode => {
+        playerNode.remove()
+    })
+
     for(let i = 0 ; i < serverPlayerList.length ; i++) {
         let disconnectedPlayer = document.createElement("button")
         disconnectedPlayer.classList.add("disconnectedPlayer")
@@ -117,7 +121,7 @@ socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur 
 
     if(isDisconnectedPlayer) {
         showNewGameWindow(document.getElementById("playerDisconnected"))
-    } else if(playerList.length < 4) {
+    } else if(playerList.length < 2) {
         showNewGameWindow(document.getElementById("waiting"))
     } else {
         document.getElementById("newGame").style.display = "none"

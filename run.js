@@ -315,6 +315,8 @@ Player.prototype.nextActivePlayer = function() {
     }
 }
 
+Player.prototype.currentTrade = null
+
 
 /*
 function getPropertyByIdCase(id) {
@@ -650,28 +652,69 @@ io.on("connection", (socket) => {
         }
     })
 
-    socket.on("offerTrade", function(otherPlayerId, trade) {
+    socket.on("offerTrade", function(trade) {
+        console.log("offerTrade", trade)
+
         let playerList = Player.prototype.getPlayerList()
-        let initPlayer = Player.prototype.getPlayerBySocket(socket.id)
+        let otherPlayerId = trade.other.id
+        let initPlayerId = trade.init.id
+        let initPlayer = Player.prototype.getPlayerById(initPlayerId)
         let otherPlayer = Player.prototype.getPlayerById(otherPlayerId)
         let isMoneyValid = otherPlayer.money >= trade.other.money && trade.other.money >= 0
-            && initPlayer.money >= trade.this.money && trade.this.money >= 0
-        let isThisPlayerPossessionsValid = true
+            && initPlayer.money >= trade.init.money && trade.init.money >= 0
+        let isInitPlayerPossessionsValid = true
         let isOtherPlayerPossessionsValid = true
 
-        for(let i = 0 ; i < trade.this.properties.length && isThisPlayerPossessionsValid ; i++) {
-            let prop = trade.this.properties[i]
-            isThisPlayerPossessionsValid = plateau[prop].owner == initPlayer
+        for(let i = 0 ; i < trade.init.properties.length && isInitPlayerPossessionsValid ; i++) {
+            let prop = trade.init.properties[i]
+            isInitPlayerPossessionsValid = plateau[prop].owner == initPlayer
         }
         for(let i = 0 ; i < trade.other.properties.length && isOtherPlayerPossessionsValid ; i++) {
             let prop = trade.other.properties[i]
             isOtherPlayerPossessionsValid = plateau[prop].owner == otherPlayer
         }
 
-        
+        if(isMoneyValid && isInitPlayerPossessionsValid && isOtherPlayerPossessionsValid) {
+            Player.prototype.currentTrade = trade
+            for(let i = 0 ; i < playerList.length ; i++) {
+                if(i == otherPlayerId) {
+                    io.to(playerList[i].socket).emit("trade", trade, initPlayerId, otherPlayerId, true)
+                } else {
+                    io.to(playerList[i].socket).emit("trade", trade, initPlayerId, otherPlayerId, false)
+                }
+            }
+        }
         
     })
+    
+    socket.on("acceptTrade", function(idPlayer) {
+        console.log("acceptTrade1", idPlayer)
+        let trade = Player.prototype.currentTrade
+        let initPlayer = Player.prototype.getPlayerById(trade.init.id)
+        let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
 
+        if(idPlayer == trade.other.id) {
+            io.emit("tradeAccepted", trade.init.id, trade.other.id)
+
+            if(trade.init.money > trade.other.money) {
+                initPlayer.pay(trade.init.money - trade.other.money)
+                otherPlayer.earn(trade.init.money - trade.other.money)
+            } else {
+                initPlayer.earn(trade.init.money - trade.other.money)
+                otherPlayer.pay(trade.init.money - trade.other.money)
+            }
+
+            trade.init.properties.forEach(i => {
+                plateau[i].owner = otherPlayer
+                io.emit("changeOwner", otherPlayer, i, true)
+            });
+
+            trade.other.properties.forEach(i => {
+                plateau[i].owner = initPlayer
+                io.emit("changeOwner", initPlayer, i, true)
+            })
+        }
+    })
     
 })
 

@@ -44,10 +44,10 @@
         <div id="choosePossessions" class="fenetre" style="display: none;">
             <h1>Selectionnez les biens a echanger</h1>
             <div id="possessionsLists">
-                <div class="possessions" data-player="this">
+                <div class="possessions" data-player="init">
                     <div class="player">
                         <div></div>
-                        <input id="thisPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkMaxAmount(this.parentNode.dataset.num, true)">
+                        <input id="initPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkMaxAmount(this.parentNode.dataset.num, true)">
                     </div>
                 </div>
                 <div class="verticalLine"></div>
@@ -61,8 +61,28 @@
             <button onclick="offerTrade()">Proposer un echange</button>
         </div>
 
-        <div id="waitTradeAnswer">
+        <div id="waitTradeAnswer" class="fenetre" style="display: none;">
             <h1></h1>
+            <div id="possessionsLists">
+                <div class="possessions" data-player="init">
+                    <div class="player">
+                        <div></div>
+                        <input id="initPlayerBalance" type="number" min="0" step="1" value="0" readonly>
+                    </div>
+                </div>
+                <div class="verticalLine"></div>
+                <div class="possessions" data-player="other">
+                    <div class="player">
+                        <div></div>
+                        <input id="otherPlayerBalance" type="number" min="0" step="1" value="0" readonly>
+                    </div>
+                </div>
+            </div>
+            <div id="tradeButtons" style="display: none;">
+                <button id="acceptTrade" onclick="acceptTrade()">Accepter</button>
+                <button id="offerNewTrade" onclick="offerNewTrade()">Nouvel echange</button>
+                <button id="denyTrade" onclick="denyTrade()">Refuser</button>
+            </div>
         </div>
     </div>
 

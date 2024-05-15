@@ -365,7 +365,7 @@ button, input {
 
 #tradeWin {
     position: fixed;
-    z-index: 3;
+    z-index: 4;
     background-color: rgba(0,0,0,0.4);
     height: 110%;
     width: 100%;
@@ -381,7 +381,7 @@ button, input {
     cursor: pointer;
 }
 
-#choosePlayer, #choosePossessions {
+#choosePlayer, #choosePossessions, #waitTradeAnswer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -402,12 +402,12 @@ button, input {
     color: white;
 }
 
-#choosePossessions {
+#choosePossessions, #waitTradeAnswer {
     min-height: 50%;
     justify-content: space-between;
 }
 
-#choosePossessions .possessions{
+.possessions {
     max-height: 80%;
     width: 45%;
     overflow-y: scroll;
@@ -446,11 +446,13 @@ button, input {
     font-size: larger;
     border-radius: 20px;
     padding: 5px;
-    cursor: pointer;
+
+    border: solid 3px;
 }
 
-.aPossession:hover {
+#choosePossessions .aPossession:hover {
     background: rgba(0,0,0,0.4);
+    cursor: pointer;
 }
 
 

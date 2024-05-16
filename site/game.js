@@ -322,7 +322,7 @@ function tradeChoosePlayer() {
                     i.remove()
                 })
 
-                tradeChoosePossessions(playerElement.dataset.num)
+                tradeChoosePossessions(playerElement.dataset.num, false, null)
             })
 
             choosePlayer.appendChild(playerElement)
@@ -330,7 +330,7 @@ function tradeChoosePlayer() {
     })
 }
 
-function tradeChoosePossessions(idPlayer, isNewOffer) {
+function tradeChoosePossessions(idPlayer, isNewOffer, trade) {
     let tradeWin = document.getElementById("tradeWin")
     let choosePossessions = document.getElementById("choosePossessions")
     let initPlayerPosses = document.querySelector("[data-player=init].possessions")
@@ -344,9 +344,19 @@ function tradeChoosePossessions(idPlayer, isNewOffer) {
     choosePossessions.style.display = ""
     if(isNewOffer) {
         document.getElementById("closeTradeWin").style.display = "none"
+        document.querySelector("#choosePossessions #initPlayerBalance").value = trade.other.money
+        document.querySelector("#choosePossessions #otherPlayerBalance").value = trade.init.money
     } else {
         document.getElementById("closeTradeWin").style.display = ""
     }
+
+    otherPlayerPosses.querySelectorAll(".aPossession").forEach(element => {
+        element.remove()
+    })
+
+    initPlayerPosses.querySelectorAll(".aPossession").forEach(element => {
+        element.remove()
+    })
 
     initPlayerPosses.querySelector(".player").dataset.num = numPlayer
     initPlayerPosses.querySelector(".player > div").innerText = playerList[numPlayer].pseudo
@@ -367,6 +377,10 @@ function tradeChoosePossessions(idPlayer, isNewOffer) {
             property.innerText = uneCase.querySelector("h1").innerText
             property.dataset.selected = "false"
             property.dataset.propId = uneCase.id.slice(5)
+
+            if(isNewOffer && trade.other.properties.includes(property.dataset.propId)) {
+                property.dataset.selected = "true"
+            }
 
             property.addEventListener("click", function() {
                 if(property.dataset.selected == "false") {
@@ -393,12 +407,14 @@ function tradeChoosePossessions(idPlayer, isNewOffer) {
             property.dataset.selected = "false"
             property.dataset.propId = uneCase.id.slice(5)
 
+            if(isNewOffer && trade.init.properties.includes(property.dataset.propId)) {
+                property.dataset.selected = "true"
+            }
+
             property.addEventListener("click", function() {
                 if(property.dataset.selected == "false") {
-                    property.style.background = "green"
                     property.dataset.selected = "true"
                 } else {
-                    property.style.background = ""
                     property.dataset.selected = "false"
                 }
             })
@@ -447,6 +463,13 @@ function offerTrade() {
         otherPlayerProperties.push(prop.dataset.propId)
     })
 
+    if(choosePossessions.querySelector("#initPlayerBalance").value == "") {
+        choosePossessions.querySelector("#initPlayerBalance").value = 0
+    }
+    if(choosePossessions.querySelector("#otherPlayerBalance").value == "") {
+        choosePossessions.querySelector("#otherPlayerBalance").value = 0
+    }
+
     let trade = {
         "init": {
             "id": numPlayer,
@@ -463,7 +486,7 @@ function offerTrade() {
     socket.emit("offerTrade", trade)
 }
 
-function showCurrentOffreTrade(trade, initPlayer, otherPlayer) {
+function showCurrentOffreTrade(trade, initPlayer, otherPlayer, isOtherPlayer) {
     let tradeWin = document.getElementById("tradeWin")
     let closeTradeWin = document.getElementById("closeTradeWin")
     let waitTradeAnswer = document.getElementById("waitTradeAnswer")
@@ -488,6 +511,14 @@ function showCurrentOffreTrade(trade, initPlayer, otherPlayer) {
     initPlayerMoneyNode.value = trade.init.money
     initPlayerPossesNode.querySelector(".player").dataset.num = initPlayer
     initPlayerPossesNode.querySelector(".player > div").innerText = playerList[initPlayer].pseudo
+
+    otherPlayerPossesNode.querySelectorAll(".aPossession").forEach(element => {
+        element.remove()
+    })
+
+    initPlayerPossesNode.querySelectorAll(".aPossession").forEach(element => {
+        element.remove()
+    })
 
     trade.other.properties.forEach(propId => {
         let prop = casesPlateau[propId]
@@ -520,14 +551,24 @@ function showCurrentOffreTrade(trade, initPlayer, otherPlayer) {
     
         initPlayerPossesNode.appendChild(propertyDiv)
     })
+
+    if(isOtherPlayer && otherPlayer == numPlayer) {
+        document.getElementById("tradeButtons").style.display = ""
+    } else {
+        document.getElementById("tradeButtons").style.display = "none"
+    }
 }
 
 function acceptTrade() {
-    socket.emit("acceptTrade", numPlayer)
+    socket.emit("acceptTrade")
 }
 
 function offerNewTrade() {
-    
+    socket.emit("offerNewTrade")
+}
+
+function denyTrade() {
+    socket.emit("denyTrade")
 }
 
 
@@ -757,15 +798,11 @@ socket.on("cannotMortgage", function() {
 
 socket.on("trade", function(trade, initPlayer, otherPlayer, isOtherPlayer) {
     console.log("trade", trade, initPlayer, otherPlayer, isOtherPlayer)
-    showCurrentOffreTrade(trade, initPlayer, otherPlayer)
-
-    if(isOtherPlayer && otherPlayer == numPlayer) {
-        document.getElementById("tradeButtons").style.display = ""
-    }
+    showCurrentOffreTrade(trade, initPlayer, otherPlayer, isOtherPlayer)
 })
 
-socket.on("tradeAccepted", function(initPlayer, otherPlayer) {
-    console.log("tradeAccepted", initPlayer, otherPlayer)
+socket.on("tradeAccepted", function(initPlayerId, otherPlayerId) {
+    console.log("tradeAccepted", initPlayerId, otherPlayerId)
     let tradeWin = document.getElementById("tradeWin")
     let choosePlayer = document.getElementById("choosePlayer")
     let choosePossessions = document.getElementById("choosePossessions")
@@ -776,8 +813,31 @@ socket.on("tradeAccepted", function(initPlayer, otherPlayer) {
     choosePlayer.style.display = "none"
     choosePossessions.style.display = "none"
 
-    createDisplayCard('<div class="pionDisplayCard" data-num="'+ initPlayer +'"></div> \
-        <div class="pionDisplayCard" data-num="'+ otherPlayer +'"></div> \
-        <h1>' + playerList[otherPlayer].pseudo + ' a accepte un echange avec ' + playerList[initPlayer].pseudo + '</h1>'
+    createDisplayCard('<div class="pionDisplayCard" data-num="'+ initPlayerId +'"></div> \
+        <div class="pionDisplayCard" data-num="'+ otherPlayerId +'"></div> \
+        <h1>' + playerList[otherPlayerId].pseudo + ' a accepte un echange avec ' + playerList[initPlayerId].pseudo + '</h1>'
     );
+})
+
+socket.on("tradeDenied", function(initPlayerId, otherPlayerId) {
+    console.log("tradeDenied", initPlayerId, otherPlayerId)
+    let tradeWin = document.getElementById("tradeWin")
+    let choosePlayer = document.getElementById("choosePlayer")
+    let choosePossessions = document.getElementById("choosePossessions")
+
+    document.getElementById("trade").style.background = ""
+
+    tradeWin.style.display = "none"
+    choosePlayer.style.display = "none"
+    choosePossessions.style.display = "none"
+
+    createDisplayCard('<div class="pionDisplayCard" data-num="'+ initPlayerId +'"></div> \
+        <div class="pionDisplayCard" data-num="'+ otherPlayerId +'"></div> \
+        <h1>' + playerList[otherPlayerId].pseudo + ' a refuse l\'echange avec ' + playerList[initPlayerId].pseudo + '</h1>'
+    );
+})
+
+socket.on("tradeForNewOffer", function(trade) {
+    document.getElementById("waitTradeAnswer").style.display = "none"
+    tradeChoosePossessions(trade.init.id, true, trade)
 })

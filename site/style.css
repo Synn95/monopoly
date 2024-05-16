@@ -450,6 +450,10 @@ button, input {
     border: solid 3px;
 }
 
+.aPossession[data-selected=true] {
+    background-color: green;
+}
+
 #choosePossessions .aPossession:hover {
     background: rgba(0,0,0,0.4);
     cursor: pointer;

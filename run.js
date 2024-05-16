@@ -11,9 +11,6 @@ const chance = require("./chance.js");
 const { emitKeypressEvents } = require("readline");
 const { on } = require("events");
 
-let playerList = new Array()
-let activePlayerId = 0
-
 function Player(socket, name, num) {
     this.socket = socket
     this.name = name
@@ -281,8 +278,8 @@ Player.prototype.canBuild = function() {
     return canBuild
 }
 
-Player.prototype.getPlayerList = function() {return playerList}
-Player.prototype.getActivePlayer = function() {return activePlayerId}
+Player.prototype.getPlayerList = new Array()
+Player.prototype.getActivePlayer = 0
 Player.prototype.getDisconnectedPlayerIdList = function() {
     let disconnectedPlayerList = Array()
 
@@ -687,13 +684,13 @@ io.on("connection", (socket) => {
         
     })
     
-    socket.on("acceptTrade", function(idPlayer) {
-        console.log("acceptTrade1", idPlayer)
+    socket.on("acceptTrade", function() {
+        console.log("acceptTrade")
         let trade = Player.prototype.currentTrade
         let initPlayer = Player.prototype.getPlayerById(trade.init.id)
         let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
 
-        if(idPlayer == trade.other.id) {
+        if(socket.id == otherPlayer.socket) {
             io.emit("tradeAccepted", trade.init.id, trade.other.id)
 
             if(trade.init.money > trade.other.money) {
@@ -715,6 +712,30 @@ io.on("connection", (socket) => {
             })
         }
     })
+
+    socket.on("offerNewTrade", function() {
+        console.log("offerNewTrade")
+
+        let trade = Player.prototype.currentTrade
+        let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
+
+        if(socket.id == otherPlayer.socket) {
+            socket.emit("tradeForNewOffer", trade)
+        }
+    })
+
+    socket.on("denyTrade", function() {
+        console.log("denyTrade")
+
+        let trade = Player.prototype.currentTrade
+        let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
+
+        if(socket.id == otherPlayer.socket) {
+            socket.emit("tradeDenied", trade.init.id, trade.other.id)
+            trade = null
+            console.log(Player.prototype.currentTrade)
+        }
+    }) 
     
 })
 

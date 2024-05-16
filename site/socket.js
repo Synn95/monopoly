@@ -100,8 +100,7 @@ socket.on("broadcastPseudo", function(numPlayer, pseudo) {
 })
 
 socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur se déconnecte
-    console.log("playerDisconnected")
-    console.log(serverPlayerList)
+    console.log("playerDisconnected", serverPlayerList)
     let playerNameListStr = Array()
     let isDisconnectedPlayer = false
     
@@ -119,11 +118,13 @@ socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur 
 
     document.querySelector("#playerDisconnected h1").innerText = "En attente d'une reconnexion de " + playerNameListStr.toString()
 
-    if(isDisconnectedPlayer) {
-        showNewGameWindow(document.getElementById("playerDisconnected"))
-    } else if(playerList.length < 2) {
-        showNewGameWindow(document.getElementById("waiting"))
-    } else {
-        document.getElementById("newGame").style.display = "none"
+    if(numPlayer != -1) {
+        if(isDisconnectedPlayer) {
+            showNewGameWindow(document.getElementById("playerDisconnected"))
+        } else if(playerList.length < 2) {
+            showNewGameWindow(document.getElementById("waiting"))
+        } else {
+            document.getElementById("newGame").style.display = "none"
+        }
     }
 })

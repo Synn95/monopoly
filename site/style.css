@@ -692,3 +692,38 @@ img.button:hover {
     bottom: initial;
     transform: translate(-25px, 25px)
 }
+
+#cartesEncheres {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+}
+
+#auctionTimer {
+    background: white;
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    top: 10px;
+    left: 25px;
+}
+
+#currentBid {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#inputBid, #submitBid {
+    width: 20%;
+}
+
+#deniedAuction {
+    border-radius: 20px;
+    background-color: #ff8080;
+    color: red;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+}

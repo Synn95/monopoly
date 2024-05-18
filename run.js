@@ -4,12 +4,12 @@ const { Server } = require("socket.io");
 const host = '0.0.0.0';
 const port = 8000;
 
-const {Property, Tax, Jail, Parc} = require("./classes.js")
+const {Property, Tax, Jail, Parc, Auction} = require("./classes.js")
 const plateau = require("./plateau.js")
 const communityCards = require("./communityCards.js")
 const chance = require("./chance.js");
 const { emitKeypressEvents } = require("readline");
-const { on } = require("events");
+const { on, prototype } = require("events");
 
 function Player(socket, name, num) {
     this.socket = socket
@@ -23,18 +23,18 @@ function Player(socket, name, num) {
     this.nbFreePrisonCards = 0
     this.currentAction = null
 
-    playerList.splice(num, 0, this)
+    Player.prototype.playerList.splice(num, 0, this)
 
-    console.log(playerList)
+    console.log(Player.prototype.playerList)
 }
 
 Player.prototype.getPlayerById = function(id) {
-    return playerList[id]
+    return Player.prototype.playerList[id]
 }
 
 Player.prototype.getPlayerBySocket = function(socket) {
-    let playerRet
-    playerList.forEach(player => {
+    let playerRet = null
+    Player.prototype.playerList.forEach(player => {
         if(player.socket === socket) {
             playerRet = player
         }
@@ -60,9 +60,9 @@ Player.prototype.rollDices = function() {
         io.emit("tooManyDoubles")
         Jail.prototype.sendToJail(this)
         if(this.caseId < Jail.prototype.getJailId()) {
-            io.emit("sendToJail", Player.prototype.getActivePlayer(), Jail.prototype.getJailId(), false)
+            io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), false)
         } else {
-            io.emit("sendToJail", Player.prototype.getActivePlayer(), Jail.prototype.getJailId(), true)
+            io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
         }
     } else {
         this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
@@ -89,7 +89,7 @@ Player.prototype.buy = function(property, state) {
                     io.emit("notEnoughToBuy", plateau.indexOf(property))
                 }
             } else {
-                console.log("ERROR : player cannot buy this property", this, property)
+                this.buy(property, 2)
             }
             break
         case 1: //player want to buy it
@@ -98,7 +98,7 @@ Player.prototype.buy = function(property, state) {
                 this.pay(property.cost)
                 this.deck.push(property)
                 property.owner = this
-                io.emit("changeOwner", activePlayerId, plateau.indexOf(property), true)
+                io.emit("changeOwner", Player.prototype.activePlayer, plateau.indexOf(property), true)
 
                 if(this.currentAction != null && this.currentAction.function == "buy") {
                     this.currentAction = null
@@ -107,6 +107,11 @@ Player.prototype.buy = function(property, state) {
                 io.to(this.socket).emit("canBuild", this.canBuild())
                 
             }
+            break
+        case 2:
+            let auction = new Auction(property)
+            awaitAuctionEnd(auction)
+            io.emit("initiateAuction", plateau.indexOf(property), Math.floor(property.cost / 2))
 
     }
 }
@@ -114,7 +119,7 @@ Player.prototype.buy = function(property, state) {
 Player.prototype.pay = function(amount) {
     if(amount <= this.money) {
         this.money -= amount
-        io.emit("pay", playerList.indexOf(this), amount)
+        io.emit("pay", Player.prototype.playerList.indexOf(this), amount)
     } else {
         console.error(`Player.pay : Pas assez d'argent pour ${this.name}`)
     }
@@ -122,7 +127,7 @@ Player.prototype.pay = function(amount) {
 
 Player.prototype.earn = function(amount) {
     this.money += amount
-    io.emit("earn", playerList.indexOf(this), amount)
+    io.emit("earn", Player.prototype.playerList.indexOf(this), amount)
 }
 
 Player.prototype.goTo = function(idCaseDest) {
@@ -141,7 +146,7 @@ Player.prototype.goTo = function(idCaseDest) {
 
     this.idCase = idCaseDest
     plateau[idCaseDest].locator = this
-    io.emit("movePlayer", playerList.indexOf(this), idCaseDest, false)
+    io.emit("movePlayer", Player.prototype.playerList.indexOf(this), idCaseDest, false)
 }
 
 Player.prototype.actionCase = function(caseDest) {
@@ -278,14 +283,14 @@ Player.prototype.canBuild = function() {
     return canBuild
 }
 
-Player.prototype.getPlayerList = new Array()
-Player.prototype.getActivePlayer = 0
+Player.prototype.playerList = new Array()
+Player.prototype.activePlayer = 0
 Player.prototype.getDisconnectedPlayerIdList = function() {
     let disconnectedPlayerList = Array()
 
-    playerList.forEach(player => {
+    Player.prototype.playerList.forEach(player => {
         if(player.socket === null) {
-            disconnectedPlayerList.push(playerList.indexOf(player))
+            disconnectedPlayerList.push(Player.prototype.playerList.indexOf(player))
         }
     });
 
@@ -293,9 +298,9 @@ Player.prototype.getDisconnectedPlayerIdList = function() {
 }
 Player.prototype.getClientPlayerList = function() {
     let clientPlayerList = Array()
-    playerList.forEach(player => {
+    Player.prototype.playerList.forEach(player => {
         clientPlayerList.push({
-            "id": playerList.indexOf(player),
+            "id": Player.prototype.playerList.indexOf(player),
             "pseudo": player.name,
             "pos": player.idCase,
             "balance": player.money
@@ -305,10 +310,10 @@ Player.prototype.getClientPlayerList = function() {
     return clientPlayerList
 }
 Player.prototype.nextActivePlayer = function() {
-    if(activePlayerId < playerList.length-1) {
-        activePlayerId++
+    if(Player.prototype.activePlayer < Player.prototype.playerList.length-1) {
+        Player.prototype.activePlayer++
     } else {
-        activePlayerId = 0
+        Player.prototype.activePlayer = 0
     }
 }
 
@@ -326,6 +331,26 @@ function getPropertyByIdCase(id) {
     return i
 }
 */
+
+
+async function awaitAuctionEnd(auction) {
+    console.log("start timer")
+    auction.timer().then(() => {
+        console.log("end of timer")
+    
+        if(auction.lastPlayer != null) {
+            auction.lastPlayer.pay(auction.bid)
+            auction.property.owner = auction.lastPlayer
+        
+            io.emit("endAuction", Player.prototype.playerList.indexOf(auction.lastPlayer), auction.bid)
+            io.emit("changeOwner", Player.prototype.playerList.indexOf(auction.lastPlayer), plateau.indexOf(auction.property), true)
+        } else {
+            io.emit("endAuction", null, plateau.indexOf(auction.property), 0)
+        }
+    
+        Auction.prototype.currentAuction = null
+    })
+}
 
 
 
@@ -389,7 +414,7 @@ server.listen(port, host, () => {
 });
 
 io.on("connection", (socket) => {
-    let playerList = Player.prototype.getPlayerList()
+    let playerList = Player.prototype.playerList
     let isDisconnectedPlayer = false
     console.log("user connected : " + socket.id)
     
@@ -422,7 +447,8 @@ io.on("connection", (socket) => {
     }
     
     socket.on("numDisconnectedPlayer", function(num) { //le client dit quel joueur déconnecté il est, ou un nouveau
-        let activePlayer = playerList[Player.prototype.getActivePlayer()] 
+        let activePlayerId = Player.prototype.activePlayer
+        let activePlayer = playerList[activePlayerId] 
         console.log("numDisconnectedPlayer : " + num)
         if(num == -1) {
             if(playerList.length < 4) {
@@ -441,10 +467,10 @@ io.on("connection", (socket) => {
             }
         }
 
-        if(Player.prototype.getActivePlayer() < playerList.length) {
-            socket.emit("activePlayer", Player.prototype.getActivePlayer(), playerList[Player.prototype.getActivePlayer()].hasRolledDices)
+        if(activePlayerId < playerList.length) {
+            socket.emit("activePlayer", activePlayerId, activePlayer.hasRolledDices)
         } else {
-            socket.emit("activePlayer", Player.prototype.getActivePlayer(), false)
+            socket.emit("activePlayer", activePlayerId, false)
         }
         
         playerList.forEach(element => {
@@ -462,19 +488,23 @@ io.on("connection", (socket) => {
                     break
             }
         }
+
+        let trade = Player.prototype.currentTrade
+        if(trade != null) {
+            socket.emit("trade", trade)
+        }
     })
 
     socket.on("disconnect", function() {
         console.log("user disconnected : ")
-        for(let i = 0 ; i < playerList.length ; i++) {
-            if(playerList[i].socket !== null && playerList[i].socket == socket.id) {
-                console.log(socket.id + " - " + playerList[i].name)
-                playerList[i].socket = null //on supprime juste la connexion du joueur
-            }
+        let player = Player.prototype.getPlayerBySocket(socket.id)
+        if(player !== null) {
+            player.socket = null
+
+            //on envoie aux autres joueurs la liste des joueurs
+            io.emit("playerDisconnected", Player.prototype.getDisconnectedPlayerIdList())
         }
 
-        //on envoie aux autres joueurs la liste des joueurs
-        io.emit("playerDisconnected", Player.prototype.getDisconnectedPlayerIdList())
     })
 
     socket.on("pseudo", function(pseudo) {
@@ -488,11 +518,13 @@ io.on("connection", (socket) => {
         io.emit("broadcastPseudo", numPlayer, pseudo)
         io.emit("clientPlayerList", Player.prototype.getClientPlayerList())
 
-        if(Player.prototype.getActivePlayer() < playerList.length) {
-            socket.emit("activePlayer", Player.prototype.getActivePlayer(), playerList[Player.prototype.getActivePlayer()].hasRolledDices)
+        if(Player.prototype.activePlayer < Player.prototype.playerList.length) {
+            socket.emit("activePlayer", Player.prototype.activePlayer, playerList[Player.prototype.activePlayer].hasRolledDices)
         } else {
-            socket.emit("activePlayer", Player.prototype.getActivePlayer(), false)
+            socket.emit("activePlayer", Player.prototype.activePlayer, false)
         }
+
+        
 
         playerList.forEach(element => {
             if(element.socket !== null && element.name !== null) {
@@ -502,7 +534,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("rollDices", function() {
-        let activePlayer = playerList[Player.prototype.getActivePlayer()]
+        let activePlayer = playerList[Player.prototype.activePlayer]
         console.log("roolDices : " + activePlayer.name)
         if(socket.id == activePlayer.socket) {
             activePlayer.rollDices()
@@ -510,15 +542,20 @@ io.on("connection", (socket) => {
     })
 
     socket.on("confirmBuying", function(idPlayer, idProperty) {
-        console.log("confirmBuying : ", playerList[idPlayer], plateau[idProperty])
-        playerList[idPlayer].buy(plateau[idProperty], 1)
+        console.log("confirmBuying : ", Player.prototype.playerList[idPlayer], plateau[idProperty])
+        Player.prototype.playerList[idPlayer].buy(plateau[idProperty], 1)
+    })
+
+    socket.on("denyBuying", function(idPlayer, idProperty) {
+        console.log("denyBuying : ", Player.prototype.playerList[idPlayer], plateau[idProperty])
+        Player.prototype.playerList[idPlayer].buy(plateau[idProperty], 2)
     })
 
     socket.on("endTurn", function() {
         console.log("endTurn")
-        playerList[Player.prototype.getActivePlayer()].numberOfDoubles = 0
+        playerList[Player.prototype.activePlayer].numberOfDoubles = 0
         Player.prototype.nextActivePlayer()
-        io.emit("activePlayer", Player.prototype.getActivePlayer(), false)
+        io.emit("activePlayer", Player.prototype.activePlayer, false)
     })
 
     socket.on("clientMortgage", function(idCase, idPlayer) {
@@ -551,7 +588,7 @@ io.on("connection", (socket) => {
         let buildPrice = 0
 
         
-        if(Player.prototype.getPlayerList().indexOf(player) == Player.prototype.getActivePlayer() 
+        if(Player.prototype.playerList.indexOf(player) == Player.prototype.activePlayer 
             && colorGroupRes[0] == colorGroupRes[1]) {
     
                 if(idProperty <= 10) {
@@ -652,7 +689,7 @@ io.on("connection", (socket) => {
     socket.on("offerTrade", function(trade) {
         console.log("offerTrade", trade)
 
-        let playerList = Player.prototype.getPlayerList()
+        let playerList = Player.prototype.playerList
         let otherPlayerId = trade.other.id
         let initPlayerId = trade.init.id
         let initPlayer = Player.prototype.getPlayerById(initPlayerId)
@@ -731,11 +768,29 @@ io.on("connection", (socket) => {
         let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
 
         if(socket.id == otherPlayer.socket) {
-            socket.emit("tradeDenied", trade.init.id, trade.other.id)
+            io.emit("tradeDenied", trade.init.id, trade.other.id)
             trade = null
             console.log(Player.prototype.currentTrade)
         }
     }) 
+
+    socket.on("inputAuction", function(bid) {
+        let auction = Auction.prototype.currentAuction
+        let player = Player.prototype.getPlayerBySocket(socket.id)        
+
+        console.log("inputAuction", bid, auction, player)
+
+        console.log(auction.bid, bid, player.money, bid, auction.bid < bid, player.money >= bid)
+        if(auction.bid < bid && player.money >= bid) {
+            auction.lastPlayer = player
+            auction.bid = bid
+            auction.timeLeft = 10
+            io.emit("newAuction", Player.prototype.playerList.indexOf(player), bid)
+        } else {
+            socket.emit("deniedAuction")
+        }
+        io.emit("syncAuctionTimer", auction.timeLeft)
+    })
     
 })
 

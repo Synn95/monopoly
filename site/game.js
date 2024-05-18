@@ -5,13 +5,22 @@ function sleep(ms) { //Use : await sleep(ms);
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function afficherCarte(idProperty) {
+function afficherCarte(idProperty, canClose) {
     let idCarte = idProperty
     console.log(idCarte)
 
     let carteProp = document.getElementById("carteProp")
     let carteStation = document.getElementById("carteStation")
     let carteCompany = document.getElementById("carteCompany")
+
+    if(!canClose) {
+        let cartes = document.getElementById("cartes")
+        cartes.style.height = "100%"
+        cartes.style.width = "100%"
+        cartes.style.backgroundColor = "rgba(0,0,0,0.4)"
+        document.getElementById("fermerCarte").style.display = "none"
+        document.getElementById("mortgageButton").style.display = "none"
+    }
 
     if(document.getElementById("case-" + idCarte).dataset.owner == numPlayer && getActivePlayer().id == numPlayer) {
         console.log(true)
@@ -95,6 +104,7 @@ function afficherCarteChance(description) {
     carteStation.style.display = "none"
     carteCompany.style.display = "none"
 
+    document.getElementById("mortgageButton").style.display = "none"
     document.getElementById("carteChance").style.display = ""
     document.querySelector("#carteChance .text").innerText = description
 
@@ -106,8 +116,10 @@ function afficherCarteCommunity(description) {
     carteStation.style.display = "none"
     carteCompany.style.display = "none"
 
+    document.getElementById("mortgageButton").style.display = "none"
     document.getElementById("carteCommunity").style.display = ""
     document.querySelector("#carteCommunity .text").innerText = description
+
     document.getElementById("cartes").style.display = ""
 }
 
@@ -424,7 +436,7 @@ function tradeChoosePossessions(idPlayer, isNewOffer, trade) {
     })
 }
 
-function checkMaxAmount(idPlayer, isInitPlayer) {
+function checkTradeAmount(idPlayer, isInitPlayer) {
     if(isInitPlayer) {
         let initPlayerBlance = document.getElementById("initPlayerBalance")
         if(playerList[idPlayer].balance < initPlayerBlance.value) {
@@ -486,7 +498,7 @@ function offerTrade() {
     socket.emit("offerTrade", trade)
 }
 
-function showCurrentOffreTrade(trade, initPlayer, otherPlayer, isOtherPlayer) {
+function showCurrentOffreTrade(trade) {
     let tradeWin = document.getElementById("tradeWin")
     let closeTradeWin = document.getElementById("closeTradeWin")
     let waitTradeAnswer = document.getElementById("waitTradeAnswer")
@@ -496,6 +508,9 @@ function showCurrentOffreTrade(trade, initPlayer, otherPlayer, isOtherPlayer) {
     let initPlayerMoneyNode = waitTradeAnswer.querySelector("#initPlayerBalance")
     let otherPlayerPossesNode = waitTradeAnswer.querySelector("[data-player=other].possessions")
     let initPlayerPossesNode = waitTradeAnswer.querySelector("[data-player=init].possessions")
+
+    let initPlayer = trade.init.id
+    let otherPlayer = trade.other.id
 
     tradeWin.style.display = ""
     waitTradeAnswer.style.display = ""
@@ -552,7 +567,7 @@ function showCurrentOffreTrade(trade, initPlayer, otherPlayer, isOtherPlayer) {
         initPlayerPossesNode.appendChild(propertyDiv)
     })
 
-    if(isOtherPlayer && otherPlayer == numPlayer) {
+    if(otherPlayer == numPlayer) {
         document.getElementById("tradeButtons").style.display = ""
     } else {
         document.getElementById("tradeButtons").style.display = "none"
@@ -571,6 +586,35 @@ function denyTrade() {
     socket.emit("denyTrade")
 }
 
+function checkBidAmount() {
+
+    // let currentBid = document.getElementById("currentBid").dataset.bid
+    let inputtingBid = document.getElementById("inputBid").value
+    if(inputtingBid <= currentBid) {
+        inputtingBid = currentBid + 1
+    }
+}
+
+function inputAuction() {
+    socket.emit("inputAuction", document.getElementById("inputBid").value)
+}
+
+async function auctionTimer() {
+    let timerNode = document.getElementById("auctionTimer")
+    while(timerNode.dataset.time > 0) {
+        await sleep(1000)
+        timerNode.dataset.time--
+
+        timerNode.innerText = timerNode.dataset.time + "s"
+    }
+}
+
+async function deniedAuction() {
+    console.log("deniedAuction")
+    document.getElementById("deniedAuction").style.display = ""
+    await sleep(3000)
+    document.getElementById("deniedAuction").style.display = "none"
+}
 
 socket.on("activePlayer", function(id, hasRolledDices) {
     console.log("activePlayer : " + id, hasRolledDices)
@@ -650,13 +694,9 @@ socket.on("buy", function(idProperty) {
     player = getActivePlayer()
     console.log("buy", player.pseudo, idProperty)
 
+    document.getElementById("cartesBoutons").style.display = ""
+    afficherCarte(idProperty, false)
     
-    afficherCarte(idProperty)
-    cartes.style.height = "100%"
-    cartes.style.width = "100%"
-    cartes.style.backgroundColor = "rgba(0,0,0,0.4)"
-    document.getElementById("fermerCarte").style.display = "none"
-    document.getElementById("mortgageButton").style.display = "none"
 
     if(getActivePlayer().id == numPlayer) {
         confirmButton.dataset.num = idProperty
@@ -796,9 +836,9 @@ socket.on("cannotMortgage", function() {
     createDisplayCard('<h1>Impossible d\'hypothequer : vous devez d\'abord vendre tous vos batiments</h1>')
 })
 
-socket.on("trade", function(trade, initPlayer, otherPlayer, isOtherPlayer) {
-    console.log("trade", trade, initPlayer, otherPlayer, isOtherPlayer)
-    showCurrentOffreTrade(trade, initPlayer, otherPlayer, isOtherPlayer)
+socket.on("trade", function(trade) {
+    console.log("trade", trade)
+    showCurrentOffreTrade(trade)
 })
 
 socket.on("tradeAccepted", function(initPlayerId, otherPlayerId) {
@@ -840,4 +880,53 @@ socket.on("tradeDenied", function(initPlayerId, otherPlayerId) {
 socket.on("tradeForNewOffer", function(trade) {
     document.getElementById("waitTradeAnswer").style.display = "none"
     tradeChoosePossessions(trade.init.id, true, trade)
+})
+
+socket.on("initiateAuction", function(property, initialAmount) {
+    auctionTimer()
+    afficherCarte(property, false)
+    document.getElementById("cartesEncheres").style.display = ""
+    document.getElementById("cartesBoutons").style.display = "none"
+
+    document.getElementById("currentBid").innerText = "Depart : " + initialAmount + "€"
+    document.getElementById("currentBid").dataset.bid = initialAmount
+})
+
+socket.on("deniedAuction", deniedAuction)
+
+socket.on("newAuction", function(idPlayer, amount) {
+    console.log("newAuction", idPlayer, amount)
+    document.getElementById("currentBid").innerText = playerList[idPlayer].pseudo + " : " + amount + "€"
+    document.getElementById("currentBid").dataset.bid = amount
+})
+
+socket.on("syncAuctionTimer", function(time) {
+    document.getElementById("auctionTimer").dataset.time = time
+    console.log("syncAuctionTimer", time)
+})
+
+socket.on("endAuction", function(winningPlayerId, propertyId, amount) {
+    console.log("endAuction", winningPlayerId, propertyId, amount)
+    let property = casesPlateau[propertyId]
+
+    closeMenu()
+    document.getElementById("cartesEncheres").style.display = "none"
+
+    if(winningPlayerId != null) {
+        createDisplayCard(
+            '<div class="pionDisplayCard" data-num="'+ winningPlayerId +'"></div>\
+            <h1>' + playerList[winningPlayerId].pseudo + ' a gagne l\'enchere de \
+                <span style="color: ' + property.color + '">' + property.name +'</span> pour \
+                <span class="earn">' + amount + '€</span>\
+            </h1>'
+        )
+    } else {
+        createDisplayCard(
+            '<h1>Personne n\'a faut d\'enchere pour \
+                <span style="color: ' + property.color + '">' + property.name +'</span>\
+            </h1>'
+        )
+    }
+
+
 })

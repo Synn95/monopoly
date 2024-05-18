@@ -22,7 +22,7 @@
         </div>
         
         <div class="fenetre" id="enterPseudo" style="display: none;">
-            <input type="text" name="pseudo" id="inputPseudo" placeholder="Entrer votre pseudo" onkeypress="checkSubmit(event)">
+            <input type="text" name="pseudo" id="inputPseudo" placeholder="Entrer votre pseudo" onkeypress="checkPseudoSubmit(event)">
             <button id="pseudoPlayButton" onclick="enterPseudo()">Jouer</button>
         </div>
         
@@ -47,14 +47,14 @@
                 <div class="possessions" data-player="init">
                     <div class="player">
                         <div></div>
-                        <input id="initPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkMaxAmount(this.parentNode.dataset.num, true)">
+                        <input id="initPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkTradeAmount(this.parentNode.dataset.num, true)">
                     </div>
                 </div>
                 <div class="verticalLine"></div>
                 <div class="possessions" data-player="other">
                     <div class="player">
                         <div></div>
-                        <input id="otherPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkMaxAmount(this.parentNode.dataset.num, false)">
+                        <input id="otherPlayerBalance" type="number" min="0" step="1" value="0" oninput="checkTradeAmount(this.parentNode.dataset.num, false)">
                     </div>
                 </div>
             </div>
@@ -216,6 +216,14 @@
             <img src="icons8-mortgage-50.png" alt="Hypothéquer" class="button" id="mortgageButton" title="Hypothéquer" onclick="mortgage()">
             <button id="confirmButton" style="display: none;" onclick="confirmBuy()">Acheter</button>
             <button id="denyButton" style="display: none;" onclick="denyBuy()">Mettre aux encheres</button>
+        </div>
+
+        <div id="cartesEncheres" style="display: none;">
+            <h1 id="auctionTimer" data-time=10>10s</h1>
+            <h1 id="currentBid" data-bid=0></h1>
+            <input type="number" name="bid" id="inputBid" min="0" step="1" onkeypress="checkBidSubmit(event)" oninput="checkBidAmount()">
+            <button id="submitBid" onclick="inputAuction()">Enchérir</button>
+            <h2 id="deniedAuction" style="display: none;">Votre enchère n'a pas été prise en compte</h2>
         </div>
     </div>
 

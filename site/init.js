@@ -172,7 +172,7 @@ function applicationDonnees() {
                         console.log("sell build")
                         socket.emit("sellBuild", i)
                     } else {
-                        afficherCarte(i)
+                        afficherCarte(i, true)
                     }
                 })
 
@@ -202,7 +202,7 @@ function applicationDonnees() {
                 cases[i].classList.add("station")
 
                 cases[i].addEventListener("click", function() {
-                    afficherCarte(i)
+                    afficherCarte(i, true)
                 })
 
                 
@@ -227,7 +227,7 @@ function applicationDonnees() {
                 cases[i].classList.add("company")
 
                 cases[i].addEventListener("click", function() {
-                    afficherCarte(i)
+                    afficherCarte(i, true)
                 })
 
                 
@@ -337,12 +337,19 @@ function applicationDonnees() {
     }
 }
 
-function checkSubmit(e) { //Pour la validation du pseudo avec la touche entrée
+function checkPseudoSubmit(e) { //Pour la validation du pseudo avec la touche entrée
     console.log(e)
     if(e && e.keyCode == 13) {
        enterPseudo()
     }
- }
+}
+
+function checkBidSubmit(e) { //Pour la validation du pseudo avec la touche entrée
+    console.log(e)
+    if(e && e.keyCode == 13) {
+       inputAuction()
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     //création du plateau et des cases

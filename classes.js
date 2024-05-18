@@ -148,4 +148,26 @@ Parc.prototype.getParcId = function() {
     return idParc
 }
 
-module.exports = {Property, Tax, Jail, Parc}
+function Auction(property) {
+    this.property = property
+    this.lastPlayer = null
+    this.bid = Math.floor(property.cost / 2)
+    this.timeLeft = 10
+
+    Auction.prototype.currentAuction = this
+}
+
+Auction.prototype.currentAuction = null
+
+Auction.prototype.timer = async function() {
+    while(this.timeLeft > 0) {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.timeLeft--
+        console.log("time left :", this.timeLeft)
+    }
+    console.log("return")
+    return new Promise(callback => {callback()})
+}
+
+
+module.exports = {Property, Tax, Jail, Parc, Auction}

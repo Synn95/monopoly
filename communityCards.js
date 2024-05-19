@@ -70,6 +70,7 @@ const communityCards = [
         "description": "Vous êtes libéré de prison. Cette carte peut être conservée jusqu’à ce qu’elle soit utilisée ou vendue.",
         "action": function(player) {
             player.nbFreePrisonCards += 1
+            return "addNbFreePrisonCard"
         }
     },
     {
@@ -106,8 +107,8 @@ const communityCards = [
     {
         "description": "Vous avez été élue président du comité. Payez à chaque joueur 50€",
         "action": function(player) {
-            player.pay(50 * player.getPlayerList().length)
-            player.getPlayerList().forEach(element => {
+            player.pay(50 * player.playerList.length)
+            player.playerList.forEach(element => {
                 element.earn(50)
             });
         }
@@ -115,11 +116,11 @@ const communityCards = [
     {
         "description": "C'est votre anniversaire ! Recevez 10€ de chaque joueur",
         "action": function(player) {
-            player.getPlayerList().forEach(element => {
+            player.playerList.forEach(element => {
                 element.pay(10)
             });
 
-            player.earn(player.getPlayerList().length * 10)
+            player.earn(player.playerList.length * 10)
         }
     }
 ]

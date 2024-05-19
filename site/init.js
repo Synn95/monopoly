@@ -185,7 +185,7 @@ function applicationDonnees() {
                 let stationCost = document.createElement("h2")
                 let stationImg = document.createElement("img")
                 
-                stationImg.src = "/station.png"
+                stationImg.src = "img/station.png"
         
                 
                 bodyStation.classList.add("bodyCase")
@@ -217,7 +217,7 @@ function applicationDonnees() {
 
                 companyName.innerText = casesPlateau[i].name
                 companyCost.innerText = "150€"
-                companyImg.src = casesPlateau[i].src
+                companyImg.src = "img/" + casesPlateau[i].src
 
                 bodyCompany.appendChild(companyName)
                 bodyCompany.appendChild(companyImg)
@@ -241,7 +241,7 @@ function applicationDonnees() {
                 bodyChance.classList.add("bodyCase")
 
                 chanceName.innerText = "Chance"
-                chanceImg.src = "/chance.png"
+                chanceImg.src = "img/chance.png"
 
                 bodyChance.appendChild(chanceName)
                 bodyChance.appendChild(chanceImg)
@@ -259,7 +259,7 @@ function applicationDonnees() {
                 bodyCommunity.classList.add("bodyCase")
 
                 communityName.innerText = "Caisse de communauté"
-                communityImg.src = "/community-chest.png"
+                communityImg.src = "img/community-chest.png"
 
                 bodyCommunity.appendChild(communityName)
                 bodyCommunity.appendChild(communityImg)
@@ -290,7 +290,7 @@ function applicationDonnees() {
                 let bodyStart = document.createElement("div")
                 let startImg = document.createElement("img")
 
-                startImg.src = "/depart.png"
+                startImg.src = "img/depart.png"
 
                 bodyStart.appendChild(startImg)
                 bodyStart.classList.add("bodyCase")
@@ -302,7 +302,7 @@ function applicationDonnees() {
                 let bodyJail = document.createElement("div")
                 let jailImg = document.createElement("img")
 
-                jailImg.src = "/jail.png"
+                jailImg.src = "img/jail.png"
 
                 bodyJail.appendChild(jailImg)
                 bodyJail.classList.add("bodyCase")
@@ -314,7 +314,7 @@ function applicationDonnees() {
                 let bodyParc = document.createElement("div")
                 let parcImg = document.createElement("img")
 
-                parcImg.src = "/parc-gratuit.png"
+                parcImg.src = "img/parc-gratuit.png"
 
                 bodyParc.appendChild(parcImg)
                 bodyParc.classList.add("bodyCase")
@@ -326,7 +326,7 @@ function applicationDonnees() {
                 let bodyGotojail = document.createElement("div")
                 let gotojailImg = document.createElement("img")
 
-                gotojailImg.src = "/officer.png"
+                gotojailImg.src = "img/officer.png"
 
                 bodyGotojail.appendChild(gotojailImg)
                 bodyGotojail.classList.add("bodyCase")

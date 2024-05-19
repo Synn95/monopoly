@@ -28,6 +28,27 @@ body {
     flex-direction: column;
 }
 
+#dices {
+    position: absolute;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+#dices img {
+    height: 100px;
+    width: 100px;
+}
+
 #plateau {
     background-color: green;
     display: grid;
@@ -608,6 +629,14 @@ img.button:hover {
     margin: auto 0;
 }
 
+.event img {
+    position: absolute;
+    height: 25px;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
 .pay {
     color: red;
 }
@@ -726,4 +755,20 @@ img.button:hover {
     text-align: center;
     margin: auto;
     padding: 10px;
+}
+
+#gatherRemainAmount {
+    position: absolute;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 20px;
 }

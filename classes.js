@@ -120,6 +120,7 @@ function Jail(idCase) {
 Jail.prototype.sendToJail = function(player) {
     if(jailIdCase != -1) {
         player.idCase = jailIdCase
+        player.isJailed = true
         jailedList.push(player)
     }
 }
@@ -151,7 +152,7 @@ Parc.prototype.getParcId = function() {
 function Auction(property) {
     this.property = property
     this.lastPlayer = null
-    this.bid = Math.floor(property.cost / 2)
+    this.bid = Math.floor(property.cost / 2)-1
     this.timeLeft = 10
 
     Auction.prototype.currentAuction = this

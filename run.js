@@ -17,11 +17,13 @@ function Player(socket, name, num) {
     this.money = 1500
     this.deck = new Array()
     this.lastScore = new Array(0, 0)
-    this.hasRolledDices = false
     this.numberOfDoubles = 0
     this.idCase = 0
     this.nbFreePrisonCards = 0
+    this.isJailed = 0
     this.currentAction = null
+    this.hasRolledDices = false
+    this.isBankrupt = false
 
     Player.prototype.playerList.splice(num, 0, this)
 
@@ -64,6 +66,15 @@ Player.prototype.rollDices = function() {
         } else {
             io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
         }
+    } else if(this.isJailed > 0) {
+        if(this.lastScore[0] == this.lastScore[1]) {
+            io.emit("freeFromJailed", Player.prototype.playerList.indexOf(this))
+            this.isJailed = 0
+            this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
+            this.actionCase(plateau[this.idCase])
+        } else {
+
+        }
     } else {
         this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
         this.actionCase(plateau[this.idCase])
@@ -86,7 +97,9 @@ Player.prototype.buy = function(property, state) {
                     this.currentAction = {"function": "buy", "params": [property, 0]}
                     io.emit("buy", plateau.indexOf(property))
                 } else {
-                    io.emit("notEnoughToBuy", plateau.indexOf(property))
+                    let auction = new Auction(property)
+                    awaitAuctionEnd(auction)
+                    io.emit("initiateAuction", plateau.indexOf(property), Math.floor(property.cost / 2))
                 }
             } else {
                 this.buy(property, 2)
@@ -95,16 +108,22 @@ Player.prototype.buy = function(property, state) {
         case 1: //player want to buy it
             console.log("buy1")
             if(property.owner === null && property.locator == this) {
-                this.pay(property.cost)
-                this.deck.push(property)
-                property.owner = this
-                io.emit("changeOwner", Player.prototype.activePlayer, plateau.indexOf(property), true)
+                this.pay(property.cost).then(() => {
+                    this.deck.push(property)
+                    property.owner = this
+                    io.emit("changeOwner", Player.prototype.activePlayer, plateau.indexOf(property), true)
 
-                if(this.currentAction != null && this.currentAction.function == "buy") {
-                    this.currentAction = null
-                }
+                    if(this.currentAction != null && this.currentAction.function == "buy") {
+                        this.currentAction = null
+                    }
 
-                io.to(this.socket).emit("canBuild", this.canBuild())
+                    io.to(this.socket).emit("canBuild", this.canBuild())
+                }).catch(() => {
+                    let auction = new Auction(property)
+                    awaitAuctionEnd(auction)
+                    io.emit("initiateAuction", plateau.indexOf(property), Math.floor(property.cost / 2))
+                })
+                
                 
             }
             break
@@ -116,18 +135,67 @@ Player.prototype.buy = function(property, state) {
     }
 }
 
-Player.prototype.pay = function(amount) {
+Player.prototype.pay = async function(amount) {
+    let result = 0
     if(amount <= this.money) {
         this.money -= amount
         io.emit("pay", Player.prototype.playerList.indexOf(this), amount)
-    } else {
-        console.error(`Player.pay : Pas assez d'argent pour ${this.name}`)
+        result = 1
+    } else if(this.getAssets() >= amount) {
+        this.currentAction = {"function": "gatherMoney", "params": [amount]}
+        io.to(this.socket).emit("gatherMoney", amount)
+        await this.gatherMoney(amount)
+        result = 1
     }
+    return new Promise((success, fail) => {
+        if(result == 1) {
+            success()
+        } else {
+            fail()
+        }
+    })
 }
 
 Player.prototype.earn = function(amount) {
     this.money += amount
     io.emit("earn", Player.prototype.playerList.indexOf(this), amount)
+}
+
+Player.prototype.getAssets = function() {
+    let assets = this.money
+
+    this.deck.forEach(prop => {
+        let idProperty = plateau.indexOf(prop)
+
+        if(idProperty <= 10) {
+            buildPrice = 25
+        } else if(idProperty <= 20) {
+            buildPrice = 50
+        } else if(idProperty <= 30) {
+            buildPrice = 75
+        } else {
+            buildPrice = 100
+        }
+
+        if(prop.nbBuilds > 0) {
+            assets += buildPrice* prop.nbBuilds
+        } else if(prop.nbBuilds > -1) {
+            assets += prop.mortgage
+        }
+    })
+
+    return assets
+}
+
+Player.prototype.gatherMoney =  function(amount) {
+    return new Promise(() => {
+        let currentMoney = this.money
+        while(currentMoney < amount) {
+            currentMoney = this.money
+        }
+
+        console.log("money gathered")
+    })
 }
 
 Player.prototype.goTo = function(idCaseDest) {
@@ -160,8 +228,9 @@ Player.prototype.actionCase = function(caseDest) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this && caseDest.nbBuilds != -1) {
                     let rent = caseDest.getRent()
-                    this.pay(rent)
-                    caseDest.owner.earn(rent)
+                    this.pay(rent).then(() => {
+                        caseDest.owner.earn(rent)
+                    }).catch(this.bankrupcy)
                 }
                 break
             case "station":
@@ -170,8 +239,9 @@ Player.prototype.actionCase = function(caseDest) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
                     let rent = caseDest.getRent()
-                    this.pay(rent)
-                    caseDest.owner.earn(rent)
+                    this.pay(rent).then(() => {
+                        caseDest.owner.earn(rent)
+                    }).catch(this.bankrupcy)
                 }
 
                 break
@@ -181,8 +251,9 @@ Player.prototype.actionCase = function(caseDest) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
                     let rent = caseDest.getRent()
-                    this.pay(rent)
-                    caseDest.owner.earn(rent)
+                    this.pay(rent).then(() => {
+                        caseDest.owner.earn(rent)
+                    }).catch(this.bankrupcy)
                 }
                 break
             case "start":
@@ -191,8 +262,9 @@ Player.prototype.actionCase = function(caseDest) {
                 break
             case "tax":
                 console.log("5")
-                this.pay(caseDest.getRent())
-                plateau[Parc.prototype.getParcId()].incrementParcBalance(caseDest.getRent())
+                this.pay(caseDest.getRent()).then(() => {
+                    plateau[Parc.prototype.getParcId()].incrementParcBalance(caseDest.getRent())
+                }).catch(this.bankrupcy)
                 break
             case "chance":
                 console.log("6")
@@ -204,9 +276,9 @@ Player.prototype.actionCase = function(caseDest) {
                     switch(retChance) {
                         case "gotojail":
                             if(this.idCase < Jail.prototype.getJailId()) {
-                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), false)
+                                io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), false)
                             } else {
-                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), true)
+                                io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
                             }
                             break
                     }
@@ -223,20 +295,23 @@ Player.prototype.actionCase = function(caseDest) {
                     switch(retCommunity) {
                         case "gotojail":
                             if(this.idCase < Jail.prototype.getJailId()) {
-                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), true)
+                                io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
                             } else {
-                                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), false)
+                                io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), false)
                             }
                             break
                         case "start":
-                            io.emit("movePlayer", this.getActivePlayer(), 0, false)
+                            io.emit("movePlayer", Player.prototype.activePlayer, 0, false)
+                            break
+                        case "addNbFreePrisonCard":
+                            io.emit("updateFreePrisonCards",  Player.prototype.activePlayer, this.nbFreePrisonCards)
                     }
                 }
                 break
             case "gotojail":
                 console.log("8")
                 Jail.prototype.sendToJail(this)
-                io.emit("sendToJail", this.getActivePlayer(), Jail.prototype.getJailId(), true)
+                io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
                 break
             case "parc":
                 console.log("9")
@@ -283,8 +358,7 @@ Player.prototype.canBuild = function() {
     return canBuild
 }
 
-Player.prototype.playerList = new Array()
-Player.prototype.activePlayer = 0
+
 Player.prototype.getDisconnectedPlayerIdList = function() {
     let disconnectedPlayerList = Array()
 
@@ -303,7 +377,9 @@ Player.prototype.getClientPlayerList = function() {
             "id": Player.prototype.playerList.indexOf(player),
             "pseudo": player.name,
             "pos": player.idCase,
-            "balance": player.money
+            "balance": player.money,
+            "nbFreePrisonCards": player.nbFreePrisonCards,
+            "isJailed": player.isJailed
         })
     })
 
@@ -317,8 +393,26 @@ Player.prototype.nextActivePlayer = function() {
     }
 }
 
-Player.prototype.currentTrade = null
+Player.prototype.bankrupcy = function() {
+    io.send("bankrupcy", Player.prototype.playerList.indexOf(this))
+    this.isBankrupt = true
 
+    let nbBankrupcy = 0
+    Player.prototype.playerList.forEach(player => {
+        if(player.isBankrupt) {
+            nbBankrupcy++
+        }
+    })
+
+    if(nbBankrupcy == Player.prototype.playerList.length - 1) {
+        io.send("gameOver")
+        io.close()
+    }
+}
+
+Player.prototype.currentTrade = null
+Player.prototype.playerList = new Array()
+Player.prototype.activePlayer = 0
 
 /*
 function getPropertyByIdCase(id) {
@@ -339,11 +433,12 @@ async function awaitAuctionEnd(auction) {
         console.log("end of timer")
     
         if(auction.lastPlayer != null) {
-            auction.lastPlayer.pay(auction.bid)
-            auction.property.owner = auction.lastPlayer
-        
-            io.emit("endAuction", Player.prototype.playerList.indexOf(auction.lastPlayer), auction.bid)
-            io.emit("changeOwner", Player.prototype.playerList.indexOf(auction.lastPlayer), plateau.indexOf(auction.property), true)
+            auction.lastPlayer.pay(auction.bid).then(() => {
+                auction.property.owner = auction.lastPlayer
+            
+                io.emit("endAuction", Player.prototype.playerList.indexOf(auction.lastPlayer), auction.bid)
+                io.emit("changeOwner", Player.prototype.playerList.indexOf(auction.lastPlayer), plateau.indexOf(auction.property), true)
+            }).catch(auction.lastPlayer.bankrupcy)
         } else {
             io.emit("endAuction", null, plateau.indexOf(auction.property), 0)
         }
@@ -468,9 +563,9 @@ io.on("connection", (socket) => {
         }
 
         if(activePlayerId < playerList.length) {
-            socket.emit("activePlayer", activePlayerId, activePlayer.hasRolledDices)
+            socket.emit("activePlayer", activePlayerId, activePlayer.hasRolledDices, activePlayer.isJailed)
         } else {
-            socket.emit("activePlayer", activePlayerId, false)
+            socket.emit("activePlayer", activePlayerId, false, activePlayer.isJailed)
         }
         
         playerList.forEach(element => {
@@ -519,9 +614,12 @@ io.on("connection", (socket) => {
         io.emit("clientPlayerList", Player.prototype.getClientPlayerList())
 
         if(Player.prototype.activePlayer < Player.prototype.playerList.length) {
-            socket.emit("activePlayer", Player.prototype.activePlayer, playerList[Player.prototype.activePlayer].hasRolledDices)
+            socket.emit("activePlayer", Player.prototype.activePlayer,
+                playerList[Player.prototype.activePlayer].hasRolledDices,
+                playerList[Player.prototype.activePlayer].isJailed
+            )
         } else {
-            socket.emit("activePlayer", Player.prototype.activePlayer, false)
+            socket.emit("activePlayer", Player.prototype.activePlayer, false, playerList[Player.prototype.activePlayer].isJailed)
         }
 
         
@@ -555,7 +653,7 @@ io.on("connection", (socket) => {
         console.log("endTurn")
         playerList[Player.prototype.activePlayer].numberOfDoubles = 0
         Player.prototype.nextActivePlayer()
-        io.emit("activePlayer", Player.prototype.activePlayer, false)
+        io.emit("activePlayer", Player.prototype.activePlayer, false, playerList[Player.prototype.activePlayer].isJailed)
     })
 
     socket.on("clientMortgage", function(idCase, idPlayer) {
@@ -570,9 +668,14 @@ io.on("connection", (socket) => {
                 player.earn(plateau[idCase].mortgage)
                 io.emit("mortgage", idCase, true, true)
             } else if(casePlateau.nbBuilds == -1) {
-                casePlateau.nbBuilds = 0
-                player.pay(plateau[idCase].mortgage*1.1)
-                io.emit("mortgage", idCase, false, true)
+                if(player.money >= plateau[idCase].mortgage*1.1) {
+                    casePlateau.nbBuilds = 0
+                    player.pay(plateau[idCase].mortgage*1.1).then(() => {
+                        io.emit("mortgage", idCase, false, true)
+                    }).catch(player.bankrupcy)
+                } else {
+                    socket.emit("notEnoughMoney")
+                }
             }
             socket.emit("canBuild", player.canBuild())
         } else {
@@ -588,7 +691,8 @@ io.on("connection", (socket) => {
         let buildPrice = 0
 
         
-        if(Player.prototype.playerList.indexOf(player) == Player.prototype.activePlayer 
+        if(Player.prototype.playerList.indexOf(player) == Player.prototype.activePlayer
+            && player.isJailed == 0
             && colorGroupRes[0] == colorGroupRes[1]) {
     
                 if(idProperty <= 10) {
@@ -678,11 +782,16 @@ io.on("connection", (socket) => {
         }
 
         if(property.owner == player && property.canBuild && property.nbBuilds < 5) {
-            property.nbBuilds++
-            property.canBuild = false
-
-            io.emit("addBuild", idProperty, false)
-            player.pay(buildPrice)
+            if(player.money >= buildPrice) {
+                player.pay(buildPrice).then(() => {
+                    property.nbBuilds++
+                    property.canBuild = false
+        
+                    io.emit("addBuild", idProperty, false)
+                })
+            } else {
+                socket.emit("notEnoughMoney")
+            }
         }
     })
 
@@ -717,6 +826,8 @@ io.on("connection", (socket) => {
                     io.to(playerList[i].socket).emit("trade", trade, initPlayerId, otherPlayerId, false)
                 }
             }
+        } else {
+            io.emit("tradeError")
         }
         
     })

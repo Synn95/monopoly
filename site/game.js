@@ -83,7 +83,7 @@ function afficherCarte(idProperty, canClose) {
             break
         case "company":
             let headCompany = carteCompany.children.item(0)
-            headCompany.children.item(0).src = casesPlateau[idCarte].src
+            headCompany.children.item(0).src = "img/" + casesPlateau[idCarte].src
             headCompany.children.item(1).innerText = casesPlateau[idCarte].name
 
             carteCompany.querySelector("[data-type='mortgage']").innerText = "75€"
@@ -227,8 +227,19 @@ async function movePlayer(playerId, caseDest, backward) {
 
 function createDisplayCard(innerHTML) {
     let displayCard = document.createElement("div")
+    let closeDisplayCard = document.createElement("img")
+
     displayCard.classList.add("event")
     displayCard.innerHTML = innerHTML
+
+    closeDisplayCard.src = "img/icons8-close-48.png"
+    closeDisplayCard.addEventListener("click", async function() {
+        document.querySelector(".event").classList.add("hideEvent") 
+        await sleep(200)
+        document.querySelector(".event").remove()
+    })
+
+    displayCard.appendChild(closeDisplayCard)
     document.getElementById("eventsTransparency").appendChild(displayCard)
 
     if(timeoutFunction == null) {
@@ -616,30 +627,46 @@ async function deniedAuction() {
     document.getElementById("deniedAuction").style.display = "none"
 }
 
-socket.on("activePlayer", function(id, hasRolledDices) {
+socket.on("activePlayer", function(id, hasRolledDices, isJailed) {
     console.log("activePlayer : " + id, hasRolledDices)
     document.querySelector(".active").classList.remove("active")
     document.querySelector("[data-num='"+id+"'].player").classList.add("active")
+
+    playerList[id].isJailed = isJailed
+
     if(id == numPlayer) {
         document.getElementById("buttons").style.display = ""
         if(hasRolledDices) {
             document.getElementById("endTurn").style.display = ""
         } else {
             document.getElementById("rollDices").style.display = ""
+            if(isJailed > 0) {
+                document.getElementById("payFreePrison").style.display = ""
+                document.getElementById("addBuild").style.display = "none"
+                document.getElementById("removeBuild").style.display = "none"
+                if(playerList[id].nbFreePrisonCard > 0) {
+                    document.getElementById("useFreeCard").style.display = ""
+                }
+            }
         }
     }
 })
 
-socket.on("resultRollDice", function(score) {
+socket.on("resultRollDice", async function(score) {
     let activePlayer = getActivePlayer()
-    let idCaseDest = score[0] + score[1] + activePlayer.pos
     console.log("ResultRollDice : " + score, activePlayer)
 
-    if(idCaseDest < 0) {
-        idCaseDest += cases.length
-    } else if(idCaseDest >= cases.length) {
-        idCaseDest -= cases.length
-    } 
+    let dices = document.getElementById("dices")
+    let firstDice = document.getElementById("firstDice")
+    let secondDice = document.getElementById("secondDice")
+
+    firstDice.src = "img/icons8-dice" + score[0] + "-96.png"
+    secondDice.src = "img/icons8-dice" + score[1] + "-96.png"
+
+    dices.style.display = ""
+    await sleep(2000)
+    dices.style.display = "none"
+
 })
 
 socket.on("movePlayer", function(playerId, idCaseDest, backward) {
@@ -671,6 +698,22 @@ socket.on("pay", function(playerId, amount) {
     balanceNode.innerText = balance + "€"
 
     playerList[playerId].balance = balance
+})
+
+socket.on("notEnoughMoney", function() {
+    createDisplayCard('<h1>Vous n\'avez pas assez d\'argent')
+})
+
+socket.on("gatherMoney", function(amount) {
+    let gatherRemainAmount = document.getElementById("gathreRemainAmount")
+    gatherRemainAmount.innerHTML = "<h1>Vous devez encore collecter " + amount + "€</h1>"
+    gatherRemainAmount.style.display = ""
+
+    cases.forEach(uneCase => {
+        if(uneCase.dataset.owner == numPlayer) {
+
+        }
+    })
 })
 
 socket.on("chance", function(description) {
@@ -721,6 +764,11 @@ socket.on("sendToJail", function(playerId, caseDest, backward) {
     movePlayer(playerId, caseDest, backward)
 
     createDisplayCard('<div class="pionDisplayCard" data-num="'+ playerId +'"></div><h1>' + playerList[playerId].pseudo + ' est envoye en prison</h1>')
+})
+
+socket.on("updateFreePrisonCard", function(idPlayer, newCardCount) {
+    console.log("updateFreePrisonCard", idPlayer, newCardCount)
+    playerList[idPlayer].nbFreePrisonCard = newCardCount  
 })
 
 socket.on("tooManyDoubles", function() {
@@ -880,6 +928,20 @@ socket.on("tradeDenied", function(initPlayerId, otherPlayerId) {
 socket.on("tradeForNewOffer", function(trade) {
     document.getElementById("waitTradeAnswer").style.display = "none"
     tradeChoosePossessions(trade.init.id, true, trade)
+})
+
+socket.on("tradeError", function() {
+    let tradeWin = document.getElementById("tradeWin")
+    let choosePlayer = document.getElementById("choosePlayer")
+    let choosePossessions = document.getElementById("choosePossessions")
+
+    document.getElementById("trade").style.background = ""
+
+    tradeWin.style.display = "none"
+    choosePlayer.style.display = "none"
+    choosePossessions.style.display = "none"
+
+    createDisplayCard('<h1>Une erreur s\'est produite lors de l\'echange. Veuillez reessayer.')
 })
 
 socket.on("initiateAuction", function(property, initialAmount) {

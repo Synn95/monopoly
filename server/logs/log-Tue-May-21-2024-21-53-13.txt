@@ -1,0 +1,9 @@
+Tue-May-21-2024-21-53-13
+[21:53:13] Server is running on http://0.0.0.0:8000 
+[21:53:13] user connected : MhpwfJWNJ3KDiC-TAAAC 
+[21:53:13] user connected : QVhgec0jyi2JMhg1AAAD 
+[21:53:29] user disconnected :  
+[21:53:30] user disconnected :  
+[21:53:31] user connected : g6wFcwWZ7d5CTPyNAAAF 
+[21:53:32] user connected : gWjQ0ssrlVhkpXy1AAAH 
+[21:53:32] pseudo received : Alex 

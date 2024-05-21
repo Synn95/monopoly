@@ -1,0 +1,39 @@
+Fri-May-31-2024-19-52-49
+[19:52:49] Server is running on http://0.0.0.0:8000 
+[19:52:49] user connected : Noscb661Njn1GHSQAAAC 
+[19:52:49] user connected : ZkoleLSaxaG8dF-oAAAD 
+[19:52:51] pseudo received : Nathan 
+[19:52:51] Player = Noscb661Njn1GHSQAAAC:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:52:52] pseudo received : alex 
+[19:52:52] Player = Noscb661Njn1GHSQAAAC:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = ZkoleLSaxaG8dF-oAAAD:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:52:54] roolDices : Nathan 
+[19:52:54] goto Player = Noscb661Njn1GHSQAAAC:Nathan ; 200€ ; 0 cards ; 3 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 6
+	 
+[19:52:54] actionCase Player = Noscb661Njn1GHSQAAAC:Nathan ; 200€ ; 0 cards ; 3 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : Noscb661Njn1GHSQAAAC-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:52:54] Player is on property 
+[19:52:54] buy 
+[19:52:54] buy0 
+[19:52:54] confirmBuying :  Player = Noscb661Njn1GHSQAAAC:Nathan ; 200€ ; 0 cards ; 3 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : Noscb661Njn1GHSQAAAC-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:52:54] buy 
+[19:52:54] buy1 
+[19:52:54] Player is paying 
+[19:52:54] Player = Noscb661Njn1GHSQAAAC:Nathan ; 200€ ; 0 cards ; 3 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	  : -100 
+[19:52:54] Rue de Vaugirard true
+	 true
+	 false
+	 
+[19:52:56] user disconnected :  
+[19:52:56] user connected : GPubjq0HF6KTyGj0AAAF 
+[19:52:58] numDisconnectedPlayer : 0 
+[19:52:58] Rue de Vaugirard true
+	 true
+	 false
+	 

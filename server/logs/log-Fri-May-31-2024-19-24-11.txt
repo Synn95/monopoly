@@ -1,0 +1,119 @@
+Fri-May-31-2024-19-24-11
+[19:24:12] Server is running on http://0.0.0.0:8000 
+[19:24:12] user connected : GzxungrNPfeATn9dAAAB 
+[19:24:13] user disconnected :  
+[19:24:14] user connected : 0Mjrh4ajdKT18u7PAAAD 
+[19:24:14] user connected : aBkwaLPA17ld-GlMAAAG 
+[19:24:16] pseudo received : Nathan 
+[19:24:16] Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:24:17] pseudo received : alex 
+[19:24:17] Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = aBkwaLPA17ld-GlMAAAG:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:24:18] roolDices : Nathan 
+[19:24:18] goto Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 200€ ; 0 cards ; 5 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 11
+	 
+[19:24:18] actionCase Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 200€ ; 0 cards ; 5 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; locator : 0Mjrh4ajdKT18u7PAAAD-Nathan ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[19:24:18] Player is on property 
+[19:24:18] buy 
+[19:24:18] buy0 
+[19:24:19] confirmBuying :  Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 200€ ; 0 cards ; 5 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; locator : 0Mjrh4ajdKT18u7PAAAD-Nathan ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[19:24:19] buy 
+[19:24:19] buy1 
+[19:24:19] Player is paying 
+[19:24:19] Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 200€ ; 0 cards ; 5 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -140 
+[19:24:19] Boulevard de La Villette true
+	 true
+	 false
+	 
+[19:24:20] endTurn 
+[19:24:22] roolDices : alex 
+[19:24:22] goto Player = aBkwaLPA17ld-GlMAAAG:alex ; 200€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 3
+	 
+[19:24:22] actionCase Player = aBkwaLPA17ld-GlMAAAG:alex ; 200€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue Lecourbe ; locator : aBkwaLPA17ld-GlMAAAG-alex ; 0 build ; brown ; cost: 60 ; rent: 4,8,20,60,180,320,450 ; mortgage: 30
+	 
+[19:24:22] Player is on property 
+[19:24:22] buy 
+[19:24:22] buy0 
+[19:24:23] confirmBuying :  Player = aBkwaLPA17ld-GlMAAAG:alex ; 200€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue Lecourbe ; locator : aBkwaLPA17ld-GlMAAAG-alex ; 0 build ; brown ; cost: 60 ; rent: 4,8,20,60,180,320,450 ; mortgage: 30
+	 
+[19:24:23] buy 
+[19:24:23] buy1 
+[19:24:23] Player is paying 
+[19:24:23] Player = aBkwaLPA17ld-GlMAAAG:alex ; 200€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -60 
+[19:24:23] Rue Lecourbe true
+	 true
+	 false
+	 
+[19:24:24] endTurn 
+[19:24:25] roolDices : Nathan 
+[19:24:25] goto Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 60€ ; 1 cards ; 3 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 20
+	 
+[19:24:25] actionCase Player = 0Mjrh4ajdKT18u7PAAAD:Nathan ; 60€ ; 1 cards ; 3 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Parc = 0€
+	 
+[19:24:25] Player is on parc 
+[19:24:28] endTurn 
+[19:24:29] roolDices : alex 
+[19:24:29] goto Player = aBkwaLPA17ld-GlMAAAG:alex ; 140€ ; 1 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 15
+	 
+[19:24:29] actionCase Player = aBkwaLPA17ld-GlMAAAG:alex ; 140€ ; 1 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = station ; Gare de Lyon ; locator : aBkwaLPA17ld-GlMAAAG-alex ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[19:24:29] Player is on station 
+[19:24:29] buy 
+[19:24:29] buy0 
+[19:24:29] start timer 
+[19:24:30] time left : 9
+	 
+[19:24:31] time left : 8
+	 
+[19:24:32] time left : 7
+	 
+[19:24:32] inputAuction 100 Auction = Gare de Lyon ; 99 ; 
+	 Player = aBkwaLPA17ld-GlMAAAG:alex ; 140€ ; 1 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:24:32] 99
+	 100 140
+	 100 true
+	 true
+	 
+[19:24:33] time left : 9
+	 
+[19:24:34] time left : 8
+	 
+[19:24:35] time left : 7
+	 
+[19:24:36] time left : 6
+	 
+[19:24:37] time left : 5
+	 
+[19:24:38] time left : 4
+	 
+[19:24:39] time left : 3
+	 
+[19:24:40] time left : 2
+	 
+[19:24:41] time left : 1
+	 
+[19:24:42] time left : 0
+	 
+[19:24:42] return 
+[19:24:42] end of timer 
+[19:24:42] Player is paying 
+[19:24:42] Player = aBkwaLPA17ld-GlMAAAG:alex ; 140€ ; 1 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	  : -100 
+[19:24:42] End of auction : Auction = Gare de Lyon ; 100 ; aBkwaLPA17ld-GlMAAAG-alex
+	 

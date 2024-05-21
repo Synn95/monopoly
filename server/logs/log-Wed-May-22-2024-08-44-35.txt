@@ -1,0 +1,20 @@
+Wed-May-22-2024-08-44-35
+[8:44:35] Server is running on http://0.0.0.0:8000 
+[8:44:38] user connected : BPN61gAmIKbSKxniAAAB 
+[8:44:39] user connected : MUuf7IepYlto1ZmrAAAD 
+[8:44:40] pseudo received : Nathan 
+[8:44:40] Player = MUuf7IepYlto1ZmrAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[8:44:41] pseudo received : Alex 
+[8:44:41] Player = MUuf7IepYlto1ZmrAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = BPN61gAmIKbSKxniAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[8:45:58] user connected : 33zi5NwFKPIaRedFAAAF 
+[8:46:2] pseudo received : B 
+[8:46:2] Player = MUuf7IepYlto1ZmrAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = BPN61gAmIKbSKxniAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = 33zi5NwFKPIaRedFAAAF:B ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[8:46:9] user disconnected :  
+[8:46:9] user connected : 8s-YqlSmfyeU3kz4AAAH 
+[8:46:10] numDisconnectedPlayer : 1 
+[8:46:31] user disconnected :  
+[8:46:31] user connected : r8tI0mnyWckfc8_sAAAJ 
+[8:46:32] numDisconnectedPlayer : 0 

@@ -1,0 +1,9 @@
+Fri-May-31-2024-19-33-22
+[19:33:22] Server is running on http://0.0.0.0:8000 
+[19:33:23] user connected : wEPFizj7H-Fbu0ObAAAB 
+[19:33:23] user disconnected :  
+[19:33:23] user connected : pAT37Y5wQX5QOdZ3AAAD 
+[19:33:24] user connected : cvxSxzsTg60Px53HAAAF 
+[19:33:25] pseudo received : Nathan 
+[19:33:25] Player = pAT37Y5wQX5QOdZ3AAAD:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 

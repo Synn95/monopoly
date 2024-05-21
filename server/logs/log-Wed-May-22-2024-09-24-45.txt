@@ -1,0 +1,92 @@
+Wed-May-22-2024-09-24-45
+[9:24:45] Server is running on http://0.0.0.0:8000 
+[9:24:46] user connected : Ap2yGnZmljyvRglXAAAB 
+[9:24:46] user connected : CpMeToYHCpeW_R16AAAD 
+[9:24:48] pseudo received : Nathan 
+[9:24:48] Player = CpMeToYHCpeW_R16AAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[9:24:49] pseudo received : Alex 
+[9:24:49] Player = CpMeToYHCpeW_R16AAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = Ap2yGnZmljyvRglXAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[9:24:50] roolDices : Nathan 
+[9:24:50] goto Player = CpMeToYHCpeW_R16AAAD:Nathan ; 100€ ; 0 cards ; 1 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 6
+	 
+[9:24:50] actionCase Player = CpMeToYHCpeW_R16AAAD:Nathan ; 100€ ; 0 cards ; 1 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : CpMeToYHCpeW_R16AAAD-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[9:24:50] 0 
+[9:24:50] 1 
+[9:24:50] buy 
+[9:24:50] buy0 
+[9:24:51] confirmBuying :  Player = CpMeToYHCpeW_R16AAAD:Nathan ; 100€ ; 0 cards ; 1 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : CpMeToYHCpeW_R16AAAD-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[9:24:51] buy 
+[9:24:51] buy1 
+[9:24:51] Rue de Vaugirard true
+	 true
+	 false
+	 
+[9:24:52] endTurn 
+[9:24:53] roolDices : Alex 
+[9:24:53] goto Player = Ap2yGnZmljyvRglXAAAB:Alex ; 100€ ; 0 cards ; 4 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 7
+	 
+[9:24:53] actionCase Player = Ap2yGnZmljyvRglXAAAB:Alex ; 100€ ; 0 cards ; 4 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 [object Object]
+	 
+[9:24:53] 0 
+[9:24:53] 6 
+[9:24:53] Payez à l'hôpital : 100 $ 
+[9:24:55] endTurn 
+[9:24:56] roolDices : Nathan 
+[9:24:56] goto Player = CpMeToYHCpeW_R16AAAD:Nathan ; 0€ ; 1 cards ; 6 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 14
+	 
+[9:24:56] actionCase Player = CpMeToYHCpeW_R16AAAD:Nathan ; 0€ ; 1 cards ; 6 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Paradie ; locator : CpMeToYHCpeW_R16AAAD-Nathan ; 0 build ; pink ; cost: 160 ; rent: 12,24,60,180,500,700,900 ; mortgage: 80
+	 
+[9:24:56] 0 
+[9:24:56] 1 
+[9:24:56] buy 
+[9:24:56] buy0 
+[9:24:56] start timer 
+[9:24:57] time left : 9
+	 
+[9:24:58] time left : 8
+	 
+[9:24:59] time left : 7
+	 
+[9:25:0] time left : 6
+	 
+[9:25:0] inputAuction 80 Auction = Rue de Paradie ; 79 ; 
+	 Player = CpMeToYHCpeW_R16AAAD:Nathan ; 0€ ; 1 cards ; 6 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[9:25:0] 79
+	 80 0
+	 80 true
+	 false
+	 
+[9:25:1] time left : 5
+	 
+[9:25:2] time left : 4
+	 
+[9:25:2] inputAuction 80 Auction = Rue de Paradie ; 79 ; 
+	 Player = Ap2yGnZmljyvRglXAAAB:Alex ; 0€ ; 0 cards ; 4 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[9:25:2] 79
+	 80 0
+	 80 true
+	 false
+	 
+[9:25:3] time left : 3
+	 
+[9:25:4] time left : 2
+	 
+[9:25:5] time left : 1
+	 
+[9:25:6] time left : 0
+	 
+[9:25:6] return 
+[9:25:6] end of timer 

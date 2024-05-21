@@ -1,0 +1,98 @@
+Tue-May-21-2024-22-11-06
+[22:11:7] Server is running on http://0.0.0.0:8000 
+[22:11:9] user connected : hxjlGfuQUgYxWoOtAAAB 
+[22:11:10] user connected : gFWcB15U1VxWOZbWAAAD 
+[22:11:10] pseudo received : Alex 
+[22:11:10] Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[22:11:11] pseudo received : Nathan 
+[22:11:11] Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = gFWcB15U1VxWOZbWAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[22:11:13] roolDices : Alex 
+[22:11:13] goto Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 6 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 10
+	 
+[22:11:13] actionCase Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 6 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Jail = undefined ; id: undefined
+	 
+[22:11:13] 0 
+[22:11:15] endTurn 
+[22:11:17] roolDices : Nathan 
+[22:11:17] goto Player = gFWcB15U1VxWOZbWAAAD:Nathan ; 100€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 6
+	 
+[22:11:17] actionCase Player = gFWcB15U1VxWOZbWAAAD:Nathan ; 100€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : gFWcB15U1VxWOZbWAAAD-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[22:11:17] 0 
+[22:11:17] 1 
+[22:11:17] buy 
+[22:11:17] buy0 
+[22:11:19] confirmBuying :  Player = gFWcB15U1VxWOZbWAAAD:Nathan ; 100€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : gFWcB15U1VxWOZbWAAAD-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[22:11:19] buy 
+[22:11:19] buy1 
+[22:11:19] Rue de Vaugirard true
+	 true
+	 false
+	 
+[22:11:20] endTurn 
+[22:11:22] roolDices : Alex 
+[22:11:22] goto Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 15
+	 
+[22:11:22] actionCase Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = station ; Gare de Lyon ; locator : hxjlGfuQUgYxWoOtAAAB-Alex ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[22:11:22] 0 
+[22:11:22] 2 
+[22:11:22] buy 
+[22:11:22] buy0 
+[22:11:22] start timer 
+[22:11:23] time left : 9
+	 
+[22:11:24] time left : 8
+	 
+[22:11:25] inputAuction 70 Auction = Gare de Lyon ; 99 ; 
+	 Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[22:11:25] 99
+	 70 100
+	 70 false
+	 true
+	 
+[22:11:25] time left : 7
+	 
+[22:11:26] time left : 6
+	 
+[22:11:27] inputAuction 100 Auction = Gare de Lyon ; 99 ; 
+	 Player = hxjlGfuQUgYxWoOtAAAB:Alex ; 100€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[22:11:27] 99
+	 100 100
+	 100 true
+	 true
+	 
+[22:11:27] time left : 9
+	 
+[22:11:28] time left : 8
+	 
+[22:11:29] time left : 7
+	 
+[22:11:30] time left : 6
+	 
+[22:11:31] time left : 5
+	 
+[22:11:32] time left : 4
+	 
+[22:11:33] time left : 3
+	 
+[22:11:34] time left : 2
+	 
+[22:11:35] time left : 1
+	 
+[22:11:36] time left : 0
+	 
+[22:11:36] return 
+[22:11:36] end of timer 

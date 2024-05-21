@@ -1,0 +1,106 @@
+Fri-May-31-2024-19-36-43
+[19:36:43] Server is running on http://0.0.0.0:8000 
+[19:36:46] user connected : u2lW4_7wm3TYJaNGAAAB 
+[19:36:46] user connected : dZ7WmcRz8UnZQlv_AAAD 
+[19:36:48] pseudo received : Nathan 
+[19:36:48] Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:36:49] pseudo received : alex 
+[19:36:49] Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = dZ7WmcRz8UnZQlv_AAAD:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:36:51] roolDices : Nathan 
+[19:36:51] goto Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 200€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 6
+	 
+[19:36:51] actionCase Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 200€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : u2lW4_7wm3TYJaNGAAAB-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:36:51] Player is on property 
+[19:36:51] buy 
+[19:36:51] buy0 
+[19:36:52] confirmBuying :  Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 200€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : u2lW4_7wm3TYJaNGAAAB-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:36:52] buy 
+[19:36:52] buy1 
+[19:36:52] Player is paying 
+[19:36:52] Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 200€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -100 
+[19:36:52] Rue de Vaugirard true
+	 true
+	 false
+	 
+[19:36:54] endTurn 
+[19:36:56] roolDices : alex 
+[19:36:56] goto Player = dZ7WmcRz8UnZQlv_AAAD:alex ; 200€ ; 0 cards ; 3 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 8
+	 
+[19:36:56] actionCase Player = dZ7WmcRz8UnZQlv_AAAD:alex ; 200€ ; 0 cards ; 3 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Courcelles ; locator : dZ7WmcRz8UnZQlv_AAAD-alex ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:36:56] Player is on property 
+[19:36:56] buy 
+[19:36:56] buy0 
+[19:36:57] confirmBuying :  Player = dZ7WmcRz8UnZQlv_AAAD:alex ; 200€ ; 0 cards ; 3 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Courcelles ; locator : dZ7WmcRz8UnZQlv_AAAD-alex ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:36:57] buy 
+[19:36:57] buy1 
+[19:36:57] Player is paying 
+[19:36:57] Player = dZ7WmcRz8UnZQlv_AAAD:alex ; 200€ ; 0 cards ; 3 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -100 
+[19:36:57] Rue de Courcelles true
+	 true
+	 false
+	 
+[19:36:57] endTurn 
+[19:36:59] roolDices : Nathan 
+[19:36:59] goto Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 100€ ; 1 cards ; 2 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 14
+	 
+[19:36:59] actionCase Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 100€ ; 1 cards ; 2 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Paradie ; locator : u2lW4_7wm3TYJaNGAAAB-Nathan ; 0 build ; pink ; cost: 160 ; rent: 12,24,60,180,500,700,900 ; mortgage: 80
+	 
+[19:36:59] Player is on property 
+[19:36:59] buy 
+[19:36:59] buy0 
+[19:36:59] start timer 
+[19:37:1] time left : 9
+	 
+[19:37:2] time left : 8
+	 
+[19:37:2] inputAuction 80 Auction = Rue de Paradie ; 79 ; 
+	 Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 100€ ; 1 cards ; 2 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[19:37:2] 79
+	 80 100
+	 80 true
+	 true
+	 
+[19:37:3] time left : 9
+	 
+[19:37:4] time left : 8
+	 
+[19:37:5] time left : 7
+	 
+[19:37:6] time left : 6
+	 
+[19:37:7] time left : 5
+	 
+[19:37:8] time left : 4
+	 
+[19:37:9] time left : 3
+	 
+[19:37:10] time left : 2
+	 
+[19:37:11] time left : 1
+	 
+[19:37:12] time left : 0
+	 
+[19:37:12] return 
+[19:37:12] end of timer 
+[19:37:12] Player is paying 
+[19:37:12] Player = u2lW4_7wm3TYJaNGAAAB:Nathan ; 100€ ; 1 cards ; 2 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -80 
+[19:37:12] End of auction : Auction = Rue de Paradie ; 80 ; u2lW4_7wm3TYJaNGAAAB-Nathan
+	 

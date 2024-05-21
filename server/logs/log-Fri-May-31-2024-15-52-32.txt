@@ -1,0 +1,62 @@
+Fri-May-31-2024-15-52-32
+[15:52:33] Server is running on http://0.0.0.0:8000 
+[15:52:41] user connected : zB_c_wMMMimBdjshAAAB 
+[15:52:45] pseudo received : Nathan 
+[15:52:45] Player = zB_c_wMMMimBdjshAAAB:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[15:52:50] user connected : v3I3xftDh-CrpJ-rAAAD 
+[15:52:54] pseudo received : alex 
+[15:52:54] Player = zB_c_wMMMimBdjshAAAB:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = v3I3xftDh-CrpJ-rAAAD:alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[15:52:57] roolDices : Nathan 
+[15:52:57] goto Player = zB_c_wMMMimBdjshAAAB:Nathan ; 100€ ; 0 cards ; 3 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 9
+	 
+[15:52:57] actionCase Player = zB_c_wMMMimBdjshAAAB:Nathan ; 100€ ; 0 cards ; 3 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Avenue de la République ; locator : zB_c_wMMMimBdjshAAAB-Nathan ; 0 build ; cyan ; cost: 120 ; rent: 8,16,40,100,300,450,600 ; mortgage: 60
+	 
+[15:52:57] 0 
+[15:52:57] 1 
+[15:52:57] buy 
+[15:52:57] buy0 
+[15:52:57] start timer 
+[15:52:58] time left : 9
+	 
+[15:52:59] time left : 8
+	 
+[15:53:0] time left : 7
+	 
+[15:53:1] time left : 6
+	 
+[15:53:2] time left : 5
+	 
+[15:53:3] inputAuction 60 Auction = Avenue de la République ; 59 ; 
+	 Player = zB_c_wMMMimBdjshAAAB:Nathan ; 100€ ; 0 cards ; 3 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[15:53:3] 59
+	 60 100
+	 60 true
+	 true
+	 
+[15:53:3] time left : 9
+	 
+[15:53:4] time left : 8
+	 
+[15:53:5] time left : 7
+	 
+[15:53:6] time left : 6
+	 
+[15:53:7] time left : 5
+	 
+[15:53:8] time left : 4
+	 
+[15:53:9] time left : 3
+	 
+[15:53:10] time left : 2
+	 
+[15:53:11] time left : 1
+	 
+[15:53:12] time left : 0
+	 
+[15:53:12] return 
+[15:53:12] end of timer 

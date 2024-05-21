@@ -1,0 +1,21 @@
+Tue-May-21-2024-22-07-24
+[22:7:24] Server is running on http://0.0.0.0:8000 
+[22:7:28] user connected : wzkkL7c4bRBjyM__AAAB 
+[22:7:29] user connected : A_QifOa6QvwqIBplAAAD 
+[22:7:29] pseudo received : Alex 
+[22:7:29] Player = wzkkL7c4bRBjyM__AAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[22:7:31] pseudo received : Nathan 
+[22:7:31] Player = wzkkL7c4bRBjyM__AAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = A_QifOa6QvwqIBplAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[22:7:33] roolDices : Alex 
+[22:7:33] goto Player = wzkkL7c4bRBjyM__AAAB:Alex ; 100€ ; 0 cards ; 1 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 5
+	 
+[22:7:33] actionCase Player = wzkkL7c4bRBjyM__AAAB:Alex ; 100€ ; 0 cards ; 1 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = station ; Gare Montparnasse ; locator : wzkkL7c4bRBjyM__AAAB-Alex ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[22:7:33] 0 
+[22:7:33] 2 
+[22:7:33] buy 
+[22:7:33] buy0 

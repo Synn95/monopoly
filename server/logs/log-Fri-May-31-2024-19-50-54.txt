@@ -1,0 +1,12 @@
+Fri-May-31-2024-19-50-54
+[19:50:54] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:50:54] Server is running on http://0.0.0.0:8000 
+[19:50:55] user connected : r8vkGl0Si5VAysdVAAAB 
+[19:50:55] roolDices : Nathan 
+[19:50:59] user connected : 168liKb7GEI_s6anAAAD 
+[19:51:0] user disconnected :  
+[19:51:0] user connected : Q062yqsfJMPU6KFkAAAF 
+[19:51:2] user disconnected :  
+[19:51:2] user connected : WUNdDzHn9bGNpWVlAAAH 
+[19:51:8] numDisconnectedPlayer : 0 

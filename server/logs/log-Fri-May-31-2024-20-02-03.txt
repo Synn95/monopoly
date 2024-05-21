@@ -1,0 +1,95 @@
+Fri-May-31-2024-20-02-03
+[20:2:3] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[20:2:3] Property = property ; Boulevard de Belleville ; 0 build ; brown ; cost: 60 ; rent: 2,4,10,30,90,160,250 ; mortgage: 30
+	 
+[20:2:3] Property = property ; Rue Lecourbe ; 0 build ; brown ; cost: 60 ; rent: 4,8,20,60,180,320,450 ; mortgage: 30
+	 
+[20:2:3] Property = station ; Gare Montparnasse ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[20:2:3] Property = property ; Rue de Vaugirard ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[20:2:3] Property = property ; Rue de Courcelles ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[20:2:3] Property = property ; Avenue de la République ; 0 build ; cyan ; cost: 120 ; rent: 8,16,40,100,300,450,600 ; mortgage: 60
+	 
+[20:2:3] Property = property ; Boulevard de La Villette ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[20:2:3] Property = company ; Electricité ; 0 build ; company ; cost: 150 ; rent: null ; mortgage: 75
+	 
+[20:2:3] Property = property ; Avenue de Neuilly ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[20:2:3] Property = property ; Rue de Paradie ; 0 build ; pink ; cost: 160 ; rent: 12,24,60,180,500,700,900 ; mortgage: 80
+	 
+[20:2:3] Property = station ; Gare de Lyon ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[20:2:3] Property = property ; Avenue Mozart ; 0 build ; orange ; cost: 180 ; rent: 14,28,70,200,550,750,950 ; mortgage: 90
+	 
+[20:2:3] Property = property ; Boulevard Saint-Michel ; 0 build ; orange ; cost: 180 ; rent: 14,28,70,200,550,750,950 ; mortgage: 90
+	 
+[20:2:3] Property = property ; Place Pigale ; 0 build ; orange ; cost: 200 ; rent: 16,32,80,220,600,800,1000 ; mortgage: 100
+	 
+[20:2:3] Property = property ; Avenue Matignon ; 0 build ; red ; cost: 220 ; rent: 18,36,90,250,700,875,1050 ; mortgage: 110
+	 
+[20:2:3] Property = property ; Boulevard Malesherbes ; 0 build ; red ; cost: 220 ; rent: 18,36,90,250,700,875,1050 ; mortgage: 110
+	 
+[20:2:3] Property = property ; Avenue Henri-Martin ; 0 build ; red ; cost: 240 ; rent: 20,40,100,300,750,925,1100 ; mortgage: 120
+	 
+[20:2:3] Property = station ; Gare du Nord ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[20:2:3] Property = property ; Rue de Paradie ; 0 build ; yellow ; cost: 260 ; rent: 22,44,110,330,800,975,1150 ; mortgage: 130
+	 
+[20:2:3] Property = property ; Place de la Bourse ; 0 build ; yellow ; cost: 260 ; rent: 22,44,110,330,800,975,1150 ; mortgage: 130
+	 
+[20:2:3] Property = company ; Eaux ; 0 build ; company ; cost: 150 ; rent: null ; mortgage: 75
+	 
+[20:2:3] Property = property ; Rue La Fayette ; 0 build ; yellow ; cost: 280 ; rent: 24,48,120,360,850,1025,1200 ; mortgage: 140
+	 
+[20:2:3] Property = property ; Avenue de Breteuil ; 0 build ; green ; cost: 300 ; rent: 26,52,130,390,900,1100,1275 ; mortgage: 150
+	 
+[20:2:3] Property = property ; Avenue Foch ; 0 build ; green ; cost: 300 ; rent: 26,52,130,390,900,1100,1275 ; mortgage: 150
+	 
+[20:2:3] Property = property ; Boulevard des Capucines ; 0 build ; green ; cost: 320 ; rent: 28,56,150,450,1000,1200,1400 ; mortgage: 160
+	 
+[20:2:3] Property = station ; Gare Saint-Lazard ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[20:2:3] Property = property ; Avenue des Champs-Elysées ; 0 build ; blue ; cost: 350 ; rent: 35,70,175,500,1100,1300,1500 ; mortgage: 175
+	 
+[20:2:3] Property = property ; Rue de la Paix ; 0 build ; blue ; cost: 400 ; rent: 50,100,200,600,1400,1700,2000 ; mortgage: 200
+	 
+[20:2:3] Player = null:Nathan ; 200€ ; 28 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[20:2:3] Server is running on http://0.0.0.0:8000 
+[20:2:6] user connected : SqA4UUts3K8MC9HPAAAB 
+[20:2:7] user connected : o8GE-t3jkyPpIlGDAAAD 
+[20:2:14] user disconnected :  
+[20:2:14] user connected : l5ZqKq4nJiGoHMVlAAAF 
+[20:2:15] numDisconnectedPlayer : 0 
+[20:2:15] Boulevard de Belleville true
+	 true
+	 true
+	 
+[20:2:17] user disconnected :  
+[20:2:17] user connected : Ytx9AdISVOjfTlB6AAAH 
+[20:2:19] pseudo received : alex 
+[20:2:19] Player = l5ZqKq4nJiGoHMVlAAAF:Nathan ; 200€ ; 28 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = Ytx9AdISVOjfTlB6AAAH:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[20:2:24] roolDices : Nathan 
+[20:2:24] goto Player = l5ZqKq4nJiGoHMVlAAAF:Nathan ; 200€ ; 28 cards ; 3 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 5
+	 
+[20:2:24] actionCase Player = l5ZqKq4nJiGoHMVlAAAF:Nathan ; 200€ ; 28 cards ; 3 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = station ; Gare Montparnasse ; owner : l5ZqKq4nJiGoHMVlAAAF-Nathan ; locator : l5ZqKq4nJiGoHMVlAAAF-Nathan ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[20:2:24] Player is on station 
+[20:2:25] endTurn 
+[20:2:27] roolDices : alex 
+[20:2:27] goto Player = Ytx9AdISVOjfTlB6AAAH:alex ; 200€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 6
+	 
+[20:2:27] actionCase Player = Ytx9AdISVOjfTlB6AAAH:alex ; 200€ ; 0 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; owner : l5ZqKq4nJiGoHMVlAAAF-Nathan ; locator : Ytx9AdISVOjfTlB6AAAH-alex ; 5 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[20:2:27] Player is on property 
+[20:2:27] Taux possede : 3,3 
+[20:2:27] Player is paying 

@@ -1,0 +1,6 @@
+Fri-May-31-2024-19-34-03
+[19:34:3] Server is running on http://0.0.0.0:8000 
+[19:34:4] user connected : 7kX6KeYew813JEZtAAAB 
+[19:34:4] pseudo received : alex 
+[19:34:4] Player = 7kX6KeYew813JEZtAAAB:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 

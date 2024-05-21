@@ -37,7 +37,7 @@ function afficherCarte(idProperty, canClose) {
     switch(casesPlateau[idCarte].type)  {
         case "property":
             let headProp = carteProp.children.item(0)
-            let prix = Array.from(document.getElementsByClassName("prix"))
+            let prix = Array.from(carteProp.querySelectorAll(".prix"))
             
             headProp.style.backgroundColor = casesPlateau[idCarte].color
             headProp.innerHTML ="<h1>" + casesPlateau[idCarte].name + "</h1>"
@@ -1014,5 +1014,11 @@ socket.on("endAuction", function(winningPlayerId, propertyId, amount) {
         )
     }
 
+    socket.on("bankrupcy", function(playerId) {
+        console.log("bankrupcy", playerId)
+    })
 
+    socket.on("gameOver", function() {
+        console.log("gameOver")
+    })
 })

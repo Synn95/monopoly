@@ -1,0 +1,86 @@
+Fri-May-31-2024-17-11-59
+[17:11:59] Server is running on http://0.0.0.0:8000 
+[17:12:2] user connected : mockQrNfpSvs2AHJAAAB 
+[17:12:3] user connected : aa4bh6bzIo4cDlfGAAAD 
+[17:12:4] pseudo received : Nathan 
+[17:12:4] Player = mockQrNfpSvs2AHJAAAB:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[17:12:6] pseudo received : alex 
+[17:12:6] Player = mockQrNfpSvs2AHJAAAB:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = aa4bh6bzIo4cDlfGAAAD:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[17:12:9] roolDices : Nathan 
+[17:12:9] goto Player = mockQrNfpSvs2AHJAAAB:Nathan ; 200€ ; 0 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 12
+	 
+[17:12:9] actionCase Player = mockQrNfpSvs2AHJAAAB:Nathan ; 200€ ; 0 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = company ; Electricité ; locator : mockQrNfpSvs2AHJAAAB-Nathan ; 0 build ; company ; cost: 150 ; rent: null ; mortgage: 75
+	 
+[17:12:9] Player is on company 
+[17:12:9] buy 
+[17:12:9] buy0 
+[17:12:10] confirmBuying :  Player = mockQrNfpSvs2AHJAAAB:Nathan ; 200€ ; 0 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = company ; Electricité ; locator : mockQrNfpSvs2AHJAAAB-Nathan ; 0 build ; company ; cost: 150 ; rent: null ; mortgage: 75
+	 
+[17:12:10] buy 
+[17:12:10] buy1 
+[17:12:10] Player is paying 
+[17:12:10] Player = mockQrNfpSvs2AHJAAAB:Nathan ; 200€ ; 0 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	  : -150 
+[17:12:10] Electricité true
+	 false
+	 false
+	 
+[17:12:11] roolDices : Nathan 
+[17:12:11] goto Player = mockQrNfpSvs2AHJAAAB:Nathan ; 50€ ; 1 cards ; 6 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 19
+	 
+[17:12:11] actionCase Player = mockQrNfpSvs2AHJAAAB:Nathan ; 50€ ; 1 cards ; 6 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Place Pigale ; locator : mockQrNfpSvs2AHJAAAB-Nathan ; 0 build ; orange ; cost: 200 ; rent: 16,32,80,220,600,800,1000 ; mortgage: 100
+	 
+[17:12:11] Player is on property 
+[17:12:11] buy 
+[17:12:11] buy0 
+[17:12:11] start timer 
+[17:12:12] time left : 9
+	 
+[17:12:13] time left : 8
+	 
+[17:12:14] time left : 7
+	 
+[17:12:15] time left : 6
+	 
+[17:12:16] inputAuction 100 Auction = Place Pigale ; 99 ; 
+	 Player = aa4bh6bzIo4cDlfGAAAD:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[17:12:16] 99
+	 100 200
+	 100 true
+	 true
+	 
+[17:12:16] time left : 9
+	 
+[17:12:17] time left : 8
+	 
+[17:12:18] time left : 7
+	 
+[17:12:19] time left : 6
+	 
+[17:12:20] time left : 5
+	 
+[17:12:21] time left : 4
+	 
+[17:12:22] time left : 3
+	 
+[17:12:23] time left : 2
+	 
+[17:12:24] time left : 1
+	 
+[17:12:25] time left : 0
+	 
+[17:12:25] return 
+[17:12:25] end of timer 
+[17:12:25] Player is paying 
+[17:12:25] Player = aa4bh6bzIo4cDlfGAAAD:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	  : -100 
+[17:12:25] End of auction : Auction = Place Pigale ; 100 ; aa4bh6bzIo4cDlfGAAAD-alex
+	 

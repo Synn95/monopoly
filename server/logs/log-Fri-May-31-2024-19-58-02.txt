@@ -1,0 +1,46 @@
+Fri-May-31-2024-19-58-02
+[19:58:2] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:58:2] Property = property ; Boulevard de Belleville ; 0 build ; brown ; cost: 60 ; rent: 2,4,10,30,90,160,250 ; mortgage: 30
+	 
+[19:58:2] Property = property ; Rue Lecourbe ; 0 build ; brown ; cost: 60 ; rent: 4,8,20,60,180,320,450 ; mortgage: 30
+	 
+[19:58:2] Property = station ; Gare Montparnasse ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[19:58:2] Property = property ; Rue de Vaugirard ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:58:3] Property = property ; Rue de Courcelles ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:58:3] Property = property ; Avenue de la République ; 0 build ; cyan ; cost: 120 ; rent: 8,16,40,100,300,450,600 ; mortgage: 60
+	 
+[19:58:3] Player = null:Nathan ; 200€ ; 6 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:58:3] Server is running on http://0.0.0.0:8000 
+[19:58:3] user connected : xtbaeI5F9eGKj64dAAAC 
+[19:58:3] user connected : OT0H_PhQvK3xlWdQAAAD 
+[19:58:8] numDisconnectedPlayer : 0 
+[19:58:8] Boulevard de Belleville true
+	 true
+	 true
+	 
+[19:58:12] numDisconnectedPlayer : -1 
+[19:58:13] pseudo received : alex 
+[19:58:13] Player = xtbaeI5F9eGKj64dAAAC:Nathan ; 200€ ; 6 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = OT0H_PhQvK3xlWdQAAAD:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[19:58:18] roolDices : Nathan 
+[19:58:18] goto Player = xtbaeI5F9eGKj64dAAAC:Nathan ; 200€ ; 6 cards ; 3 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 8
+	 
+[19:58:18] actionCase Player = xtbaeI5F9eGKj64dAAAC:Nathan ; 200€ ; 6 cards ; 3 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Courcelles ; owner : xtbaeI5F9eGKj64dAAAC-Nathan ; locator : xtbaeI5F9eGKj64dAAAC-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[19:58:18] Player is on property 
+[19:58:21] endTurn 
+[19:58:23] roolDices : alex 
+[19:58:23] goto Player = OT0H_PhQvK3xlWdQAAAD:alex ; 200€ ; 0 cards ; 4 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 10
+	 
+[19:58:23] actionCase Player = OT0H_PhQvK3xlWdQAAAD:alex ; 200€ ; 0 cards ; 4 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Jail = undefined ; id: undefined
+	 
+[19:58:26] endTurn 

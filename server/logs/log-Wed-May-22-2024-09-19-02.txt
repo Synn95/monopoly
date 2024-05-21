@@ -1,0 +1,44 @@
+Wed-May-22-2024-09-19-02
+[9:19:2] Server is running on http://0.0.0.0:8000 
+[9:19:2] user connected : ZM-VPV2y8wfbjWiwAAAC 
+[9:19:2] user connected : dftxn1Op5dga-wkmAAAD 
+[9:19:51] pseudo received : Nathan 
+[9:19:51] Player = dftxn1Op5dga-wkmAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[9:19:53] pseudo received : Alex 
+[9:19:53] Player = dftxn1Op5dga-wkmAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = ZM-VPV2y8wfbjWiwAAAC:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[9:19:54] roolDices : Nathan 
+[9:19:54] goto Player = dftxn1Op5dga-wkmAAAD:Nathan ; 100€ ; 0 cards ; 5 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 9
+	 
+[9:19:54] actionCase Player = dftxn1Op5dga-wkmAAAD:Nathan ; 100€ ; 0 cards ; 5 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Avenue de la République ; locator : dftxn1Op5dga-wkmAAAD-Nathan ; 0 build ; cyan ; cost: 120 ; rent: 8,16,40,100,300,450,600 ; mortgage: 60
+	 
+[9:19:54] 0 
+[9:19:54] 1 
+[9:19:54] buy 
+[9:19:54] buy0 
+[9:19:54] start timer 
+[9:19:55] time left : 9
+	 
+[9:19:56] time left : 8
+	 
+[9:19:57] time left : 7
+	 
+[9:19:58] time left : 6
+	 
+[9:19:59] time left : 5
+	 
+[9:20:0] time left : 4
+	 
+[9:20:1] time left : 3
+	 
+[9:20:2] time left : 2
+	 
+[9:20:3] time left : 1
+	 
+[9:20:4] time left : 0
+	 
+[9:20:4] return 
+[9:20:4] end of timer 

@@ -1,6 +1,4 @@
-const plateauJson = require("./plateau.json")
-const {Property, Tax, Jail, Parc} = require("./classes.js")
-const Player = require("./run.js")
+const Jail = require("./Jail.js")
 const plateau = require("./plateau.js")
 
 const communityCards = [
@@ -107,8 +105,8 @@ const communityCards = [
     {
         "description": "Vous avez été élue président du comité. Payez à chaque joueur 50€",
         "action": function(player) {
-            player.pay(50 * player.playerList.length)
-            player.playerList.forEach(element => {
+            player.pay(50 * player.playerList().length)
+            player.playerList().forEach(element => {
                 element.earn(50)
             });
         }
@@ -116,11 +114,11 @@ const communityCards = [
     {
         "description": "C'est votre anniversaire ! Recevez 10€ de chaque joueur",
         "action": function(player) {
-            player.playerList.forEach(element => {
+            player.playerList().forEach(element => {
                 element.pay(10)
             });
 
-            player.earn(player.playerList.length * 10)
+            player.earn(player.playerList().length * 10)
         }
     }
 ]

@@ -1,0 +1,2 @@
+Fri-May-31-2024-19-33-00
+[19:33:0] Server is running on http://0.0.0.0:8000 

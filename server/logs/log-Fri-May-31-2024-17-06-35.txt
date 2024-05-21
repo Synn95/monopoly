@@ -1,0 +1,57 @@
+Fri-May-31-2024-17-06-35
+[17:6:35] Server is running on http://0.0.0.0:8000 
+[17:6:35] user connected : Tm-4k1Fm9ulTsoR7AAAC 
+[17:6:35] user connected : 5cuEh5FWUeTuaAk9AAAD 
+[17:6:36] user disconnected :  
+[17:6:37] user connected : s3APhM_VxhlI75nFAAAF 
+[17:6:37] user disconnected :  
+[17:6:37] user connected : blaJ9g5Y5hZSCKHQAAAH 
+[17:6:38] pseudo received : Nathan 
+[17:6:38] Player = s3APhM_VxhlI75nFAAAF:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[17:6:39] pseudo received : alex 
+[17:6:39] Player = s3APhM_VxhlI75nFAAAF:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = blaJ9g5Y5hZSCKHQAAAH:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[17:6:40] roolDices : Nathan 
+[17:6:40] goto Player = s3APhM_VxhlI75nFAAAF:Nathan ; 200€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 5
+	 
+[17:6:40] actionCase Player = s3APhM_VxhlI75nFAAAF:Nathan ; 200€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = station ; Gare Montparnasse ; locator : s3APhM_VxhlI75nFAAAF-Nathan ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[17:6:40] Player is on station 
+[17:6:40] buy 
+[17:6:40] buy0 
+[17:6:42] confirmBuying :  Player = s3APhM_VxhlI75nFAAAF:Nathan ; 200€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = station ; Gare Montparnasse ; locator : s3APhM_VxhlI75nFAAAF-Nathan ; 0 build ; station ; cost: 200 ; rent: null ; mortgage: 100
+	 
+[17:6:42] buy 
+[17:6:42] buy1 
+[17:6:42] Player is paying 
+[17:6:42] Player = s3APhM_VxhlI75nFAAAF:Nathan ; 200€ ; 0 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -200 
+[17:6:42] Gare Montparnasse false
+	 true
+	 false
+	 
+[17:6:43] endTurn 
+[17:6:45] roolDices : alex 
+[17:6:45] goto Player = blaJ9g5Y5hZSCKHQAAAH:alex ; 200€ ; 0 cards ; 6 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 7
+	 
+[17:6:45] actionCase Player = blaJ9g5Y5hZSCKHQAAAH:alex ; 200€ ; 0 cards ; 6 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 [object Object]
+	 
+[17:6:45] Player is on chance 
+[17:6:45] Vous avez gagné le prix de mots croisés : 100€ 
+[17:6:47] endTurn 
+[17:6:48] roolDices : Nathan 
+[17:6:48] goto Player = s3APhM_VxhlI75nFAAAF:Nathan ; 0€ ; 1 cards ; 1 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 11
+	 
+[17:6:48] actionCase Player = s3APhM_VxhlI75nFAAAF:Nathan ; 0€ ; 1 cards ; 1 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; locator : s3APhM_VxhlI75nFAAAF-Nathan ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[17:6:48] Player is on property 
+[17:6:48] buy 
+[17:6:48] buy0 

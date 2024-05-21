@@ -1,6 +1,4 @@
-const plateauJson = require("./plateau.json")
-const {Property, Tax, Jail, Parc} = require("./classes.js")
-const Player = require("./run.js")
+const Jail = require("./Jail.js")
 const plateau = require("./plateau.js")
 
 const communityCards = [

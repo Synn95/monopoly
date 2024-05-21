@@ -1,6 +1,9 @@
-const {Property, Tax, Jail, Parc} = require("./classes.js")
-const Player = require("./run.js")
+const Property = require("./Property.js")
+const Tax = require("./Tax.js")
+const Jail = require("./Jail.js")
 const plateau = require("./plateau.js")
+const log = require("./log.js")
+
 
 const chance = [
     {
@@ -18,7 +21,7 @@ const chance = [
         },
         "action": function(player) {
             let property = plateau[Property.prototype.getLastRandomPropertyId()]
-            console.log(property)
+            log(property)
             player.goTo(Property.prototype.getLastRandomPropertyId())
 
             if(property.owner === null) {

@@ -1,0 +1,5 @@
+Tue-May-21-2024-22-02-57
+[22:2:57] Server is running on http://0.0.0.0:8000 
+[22:2:58] user connected : 3QzuYW6w7NoJEK6gAAAB 
+[22:3:0] Error: ENOENT: no such file or directory, open 'C:\Users\natha\Bureau\monopoly\monopoly\/site/index.html'
+	 

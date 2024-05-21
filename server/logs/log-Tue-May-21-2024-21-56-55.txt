@@ -1,0 +1,14 @@
+Tue-May-21-2024-21-56-55
+[21:56:55] Server is running on http://0.0.0.0:8000 
+[21:56:59] user connected : 0P8X2brmuFDDO5yNAAAB 
+[21:57:0] user connected : APIlPjtJVu1dHLXUAAAD 
+[21:57:0] pseudo received : Alex 
+[21:57:0] Player = 0P8X2brmuFDDO5yNAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[21:57:2] pseudo received : Nathan 
+[21:57:2] Player = 0P8X2brmuFDDO5yNAAAB:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = APIlPjtJVu1dHLXUAAAD:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[21:57:3] roolDices : Alex 
+[21:57:3] goto Player = 0P8X2brmuFDDO5yNAAAB:Alex ; 100€ ; 0 cards ; 6 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 8
+	 

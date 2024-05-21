@@ -1,4 +1,8 @@
-const {Property, Tax, Jail, Parc} = require("./classes.js")
+const Property = require("./Property.js")
+const Tax = require("./Tax.js")
+const Jail = require("./Jail.js")
+const Parc = require("./Parc.js")
+const log = require("./log.js")
 
 function initPlateau() {
     let plateauJson = require("./plateau.json")
@@ -41,7 +45,7 @@ function initPlateau() {
                     break
             }
         } catch(e) {
-            console.log(e)
+            log(e)
         }
     });
     

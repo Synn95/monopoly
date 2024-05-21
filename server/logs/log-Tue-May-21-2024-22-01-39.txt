@@ -1,0 +1,9 @@
+Tue-May-21-2024-22-01-39
+[22:1:39] Server is running on http://0.0.0.0:8000 
+[22:1:39] user connected : mbeuHKh9_ELtO1rIAAAC 
+[22:1:39] user connected : mhdmACj1d9dLJQqfAAAD 
+[22:1:44] user disconnected :  
+[22:1:44] Error: ENOENT: no such file or directory, open '../site//index.html'
+	 
+[22:2:0] Error: ENOENT: no such file or directory, open '../site//index.html'
+	 

@@ -39,6 +39,24 @@ function Property(property) {
     }
 }
 
+Property.prototype.toString = function() {
+    let str = "Property = " + this.type + " ; " + this.name + " ; "
+
+    if(this.owner != null) {
+        str += "owner : " + this.owner.socket + "-" + this.owner.name  + " ; "
+    }
+    if(this.locator != null) {
+        str += "locator : " + this.locator.socket + "-" + this.locator.name + " ; "
+    }
+    str += this.nbBuilds + " build ; " 
+        + this.color + " ; "
+        + "cost: " + this.cost + " ; "
+        + "rent: " + this.rent + " ; "
+        + "mortgage: " + this.mortgage
+
+    return str
+}
+
 Property.prototype.getRent = function() {
     let rent = 0
     let tauxPossede = this.owner.colorGroup(this.color)
@@ -94,6 +112,14 @@ function Tax(name, cost) {
     this.locator = null
 }
 
+Tax.prototype.toString = function() {
+    let str = "Tax = " + this.name + " ; " + this.cost + "€ ; "
+
+    if(this.locator != null) {
+        str += "locator : " + this.locator.socket + "-" + this.locator.name
+    }
+}
+
 Tax.prototype.getRent = function(){
     return this.cost
 }
@@ -117,6 +143,10 @@ function Jail(idCase) {
     jailIdCase = idCase
 }
 
+Jail.prototype.toString = function() {
+    return "Jail = " + this.name + " ; id: " + this.idCase
+}
+
 Jail.prototype.sendToJail = function(player) {
     if(jailIdCase != -1) {
         player.idCase = jailIdCase
@@ -134,6 +164,10 @@ function Parc(id) {
     this.balance = 0
 
     idParc = id
+}
+
+Parc.prototype.toString = function() {
+    return "Parc = " + this.balance + "€"
 }
 
 Parc.prototype.incrementParcBalance = function(amount) {
@@ -156,6 +190,15 @@ function Auction(property) {
     this.timeLeft = 10
 
     Auction.prototype.currentAuction = this
+}
+
+Auction.prototype.toString = function() {
+    let str = "Auction = " + this.property.name + " ; " + this.bid + " ; "
+    if(this.lastPlayer != null) {
+        str += this.lastPlayer.socket + "-" + this.lastPlayer.name
+    }
+
+    return str
 }
 
 Auction.prototype.currentAuction = null

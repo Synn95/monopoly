@@ -165,14 +165,15 @@ function closeMenu() {
 
 function rollDices() {
     socket.emit("rollDices"); 
-    document.getElementById("rollDices").style.display = "none";
-    document.getElementById("endTurn").style.display = ""
 }
 
 function endTurn() {
     socket.emit("endTurn");
-    document.getElementById("endTurn").style.display = "none";
+    document.getElementById("endTurn").style.display = "none"
     document.getElementById("buttons").style.display = "none"
+
+    document.getElementById("addBuild").style.background = ""
+    document.getElementById("removeBuild").style.background = ""
     closeMenu()
 }
 
@@ -627,10 +628,16 @@ async function deniedAuction() {
     document.getElementById("deniedAuction").style.display = "none"
 }
 
+function payFreePrison() {
+    socket.emit("payFreePrison")
+}
+
 socket.on("activePlayer", function(id, hasRolledDices, isJailed) {
     console.log("activePlayer : " + id, hasRolledDices)
     document.querySelector(".active").classList.remove("active")
     document.querySelector("[data-num='"+id+"'].player").classList.add("active")
+
+    closeMenu()
 
     playerList[id].isJailed = isJailed
 
@@ -638,8 +645,10 @@ socket.on("activePlayer", function(id, hasRolledDices, isJailed) {
         document.getElementById("buttons").style.display = ""
         if(hasRolledDices) {
             document.getElementById("endTurn").style.display = ""
+            document.getElementById("rollDices").style.display = "none"
         } else {
             document.getElementById("rollDices").style.display = ""
+            document.getElementById("endTurn").style.display = "none"
             if(isJailed > 0) {
                 document.getElementById("payFreePrison").style.display = ""
                 document.getElementById("addBuild").style.display = "none"
@@ -652,9 +661,9 @@ socket.on("activePlayer", function(id, hasRolledDices, isJailed) {
     }
 })
 
-socket.on("resultRollDice", async function(score) {
+socket.on("resultRollDice", async function(score, canPlayAgain) {
     let activePlayer = getActivePlayer()
-    console.log("ResultRollDice : " + score, activePlayer)
+    console.log("ResultRollDice : " + score, activePlayer, canPlayAgain)
 
     let dices = document.getElementById("dices")
     let firstDice = document.getElementById("firstDice")
@@ -662,6 +671,11 @@ socket.on("resultRollDice", async function(score) {
 
     firstDice.src = "img/icons8-dice" + score[0] + "-96.png"
     secondDice.src = "img/icons8-dice" + score[1] + "-96.png"
+
+    if(!canPlayAgain) {
+        document.getElementById("rollDices").style.display = "none";
+        document.getElementById("endTurn").style.display = ""
+    }
 
     dices.style.display = ""
     await sleep(2000)
@@ -705,15 +719,22 @@ socket.on("notEnoughMoney", function() {
 })
 
 socket.on("gatherMoney", function(amount) {
-    let gatherRemainAmount = document.getElementById("gathreRemainAmount")
+    console.log("gatherMoney", amount)
+    let gatherRemainAmount = document.getElementById("gatherRemainAmount")
     gatherRemainAmount.innerHTML = "<h1>Vous devez encore collecter " + amount + "€</h1>"
     gatherRemainAmount.style.display = ""
+})
 
-    cases.forEach(uneCase => {
-        if(uneCase.dataset.owner == numPlayer) {
+socket.on("freeFromJail", function(idPlayer, canBuild) {
+    console.log("freeFromJail", idPlayer, canBuild)
+    createDisplayCard('<div class="pionDisplayCard" data-num="'+ idPlayer +'"></div><h1>' + playerList[idPlayer].pseudo + ' est sorti de prison</h1>')
+    playerList[idPlayer].isJailed = 0
+    document.getElementById("payFreePrison").style.display = "none"
 
-        }
-    })
+    if(canBuild) {
+        document.getElementById("addbuild").style.display = ""
+        document.getElementById("removeBuild").style.display = ""
+    }
 })
 
 socket.on("chance", function(description) {
@@ -945,6 +966,7 @@ socket.on("tradeError", function() {
 })
 
 socket.on("initiateAuction", function(property, initialAmount) {
+    document.getElementById("auctionTimer").dataset.time = 10
     auctionTimer()
     afficherCarte(property, false)
     document.getElementById("cartesEncheres").style.display = ""
@@ -973,6 +995,8 @@ socket.on("endAuction", function(winningPlayerId, propertyId, amount) {
 
     closeMenu()
     document.getElementById("cartesEncheres").style.display = "none"
+    document.getElementById("cartesBoutons").style.display = ""
+
 
     if(winningPlayerId != null) {
         createDisplayCard(

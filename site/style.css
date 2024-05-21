@@ -388,7 +388,7 @@ button, input {
     position: fixed;
     z-index: 4;
     background-color: rgba(0,0,0,0.4);
-    height: 110%;
+    height: 105%;
     width: 100%;
     top: -10px;
     display: flex;
@@ -426,6 +426,7 @@ button, input {
 #choosePossessions, #waitTradeAnswer {
     min-height: 50%;
     justify-content: space-between;
+    max-height: 89%;
 }
 
 .possessions {
@@ -442,7 +443,7 @@ button, input {
     display: flex;
     justify-content: space-between;
     width: 90%;
-    height: 100%;
+    height: 75%;
 }
 
 #possessionsLists .player {

@@ -1,0 +1,84 @@
+[20:22:20] Server is running on http://0.0.0.0:8000 
+[20:22:20] user connected : nOrg6jg0DXrNj3IwAAAC 
+[20:22:20] user connected : 7iOIevxz4bgvV73qAAAD 
+[20:22:28] user disconnected :  
+[20:22:29] user connected : cIKUuPpg_Y6V7qWaAAAF 
+[20:22:29] user disconnected :  
+[20:22:30] user connected : NCtvZHnv4xS5ZdhiAAAH 
+[20:22:30] pseudo received : Alex 
+[20:22:30] Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: falseis bankrupt: false
+	 
+[20:22:31] pseudo received : Nathan 
+[20:22:31] Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: falseis bankrupt: false,Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 100€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: falseis bankrupt: false
+	 
+[20:22:32] roolDices : Alex 
+[20:22:32] goto Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 100€ ; 0 cards ; 2 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 7
+	 
+[20:22:32] actionCase Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 100€ ; 0 cards ; 2 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 [object Object]
+	 
+[20:22:32] 0 
+[20:22:32] 6 
+[20:22:32] Payez à l'hôpital : 100 $ 
+[20:22:34] endTurn 
+[20:22:34] roolDices : Nathan 
+[20:22:34] goto Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 100€ ; 0 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 6
+	 
+[20:22:34] actionCase Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 100€ ; 0 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : NCtvZHnv4xS5ZdhiAAAH-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[20:22:34] 0 
+[20:22:34] 1 
+[20:22:34] buy 
+[20:22:34] buy0 
+[20:22:35] confirmBuying :  Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 100€ ; 0 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 Property = property ; Rue de Vaugirard ; locator : NCtvZHnv4xS5ZdhiAAAH-Nathan ; 0 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[20:22:35] buy 
+[20:22:35] buy1 
+[20:22:35] Rue de Vaugirard true
+	 true
+	 false
+	 
+[20:22:36] endTurn 
+[20:22:37] roolDices : Alex 
+[20:22:37] goto Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 0€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 10
+	 
+[20:22:37] actionCase Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 0€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 Jail = undefined ; id: undefined
+	 
+[20:22:37] 0 
+[20:22:38] endTurn 
+[20:22:39] roolDices : Nathan 
+[20:22:39] goto Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 0€ ; 1 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 11
+	 
+[20:22:39] actionCase Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 0€ ; 1 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 Property = property ; Boulevard de La Villette ; locator : NCtvZHnv4xS5ZdhiAAAH-Nathan ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[20:22:39] 0 
+[20:22:39] 1 
+[20:22:39] buy 
+[20:22:39] buy0 
+[20:22:39] start timer 
+[20:22:42] inputAuction 70 Auction = Boulevard de La Villette ; 69 ; 
+	 Player = NCtvZHnv4xS5ZdhiAAAH:Nathan ; 0€ ; 1 cards ; 2 + 3 ; 0 free prison cards ; 0 state for jail ; has rolled dices: trueis bankrupt: false
+	 
+[20:22:42] 69
+	 70 0
+	 70 true
+	 false
+	 
+[20:22:44] inputAuction 70 Auction = Boulevard de La Villette ; 69 ; 
+	 Player = cIKUuPpg_Y6V7qWaAAAF:Alex ; 0€ ; 0 cards ; 2 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: falseis bankrupt: false
+	 
+[20:22:44] 69
+	 70 0
+	 70 true
+	 false
+	 
+[20:22:49] end of timer 
+[20:22:52] endTurn 

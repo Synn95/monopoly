@@ -4,17 +4,16 @@ const { Server } = require("socket.io");
 const host = '0.0.0.0';
 const port = 8000;
 
+const log = require("./log.js")
 const {Property, Tax, Jail, Parc, Auction} = require("./classes.js")
 const plateau = require("./plateau.js")
 const communityCards = require("./communityCards.js")
 const chance = require("./chance.js");
-const { emitKeypressEvents } = require("readline");
-const { on, prototype } = require("events");
 
 function Player(socket, name, num) {
     this.socket = socket
     this.name = name
-    this.money = 1500
+    this.money = 100
     this.deck = new Array()
     this.lastScore = new Array(0, 0)
     this.numberOfDoubles = 0
@@ -27,7 +26,17 @@ function Player(socket, name, num) {
 
     Player.prototype.playerList.splice(num, 0, this)
 
-    console.log(Player.prototype.playerList)
+    log(Player.prototype.playerList)
+}
+
+Player.prototype.toString = function() {
+    return "Player = " + this.socket + ":" + this.name + " ; " 
+        + this.money + "€ ; " + this.deck.length + " cards ; " 
+        + this.lastScore[0] + " + " + this.lastScore[1] + " ; "
+        + this.nbFreePrisonCards + " free prison cards ; "
+        + this.isJailed + " state for jail ; "
+        + "has rolled dices: " + this.hasRolledDices + " ; "
+        + "is bankrupt: " + this.isBankrupt
 }
 
 Player.prototype.getPlayerById = function(id) {
@@ -52,10 +61,11 @@ Player.prototype.setName = function(name) {
 Player.prototype.rollDices = function() {
     this.lastScore[0] = Math.floor(Math.random() * 6) +1
     this.lastScore[1] = Math.floor(Math.random() * 6) +1
-    io.emit("resultRollDice", this.lastScore)
 
     if(this.lastScore[0] == this.lastScore[1]) {
         this.numberOfDoubles += 1
+    } else {
+        this.hasRolledDices = true
     }
 
     if(this.numberOfDoubles == 3) {
@@ -66,21 +76,25 @@ Player.prototype.rollDices = function() {
         } else {
             io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
         }
+        this.hasRolledDices = true
     } else if(this.isJailed > 0) {
+        this.hasRolledDices = true
         if(this.lastScore[0] == this.lastScore[1]) {
-            io.emit("freeFromJailed", Player.prototype.playerList.indexOf(this))
+            io.emit("freeFromJail", Player.prototype.playerList.indexOf(this), this.canBuild())
             this.isJailed = 0
             this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
             this.actionCase(plateau[this.idCase])
-        } else {
-
+        } else if(this.isJailed == 1) {
+            this.pay(50)
+            io.emit("freeFromJail", Player.prototype.playerList.indexOf(this), this.canBuild())
         }
+        this.isJailed--
     } else {
         this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
         this.actionCase(plateau[this.idCase])
     }
 
-    this.hasRolledDices = true
+    io.emit("resultRollDice", this.lastScore, !this.hasRolledDices)
 }
 
 Player.prototype.getTotalLastScore = function() {
@@ -88,10 +102,10 @@ Player.prototype.getTotalLastScore = function() {
 }
 
 Player.prototype.buy = function(property, state) {
-    console.log("buy")
+    log("buy")
     switch(state) {
         case 0: //player is on the property
-            console.log("buy0")
+            log("buy0")
             if(property.owner === null && property.locator == this) {
                 if(this.money >= property.cost) {
                     this.currentAction = {"function": "buy", "params": [property, 0]}
@@ -106,7 +120,7 @@ Player.prototype.buy = function(property, state) {
             }
             break
         case 1: //player want to buy it
-            console.log("buy1")
+            log("buy1")
             if(property.owner === null && property.locator == this) {
                 this.pay(property.cost).then(() => {
                     this.deck.push(property)
@@ -194,12 +208,12 @@ Player.prototype.gatherMoney =  function(amount) {
             currentMoney = this.money
         }
 
-        console.log("money gathered")
+        log("money gathered")
     })
 }
 
 Player.prototype.goTo = function(idCaseDest) {
-    console.log("goto", this, idCaseDest)
+    log("goto", this, idCaseDest)
     if(idCaseDest < 0) {
         idCaseDest += plateau.length
     } else if(idCaseDest >= plateau.length) {
@@ -218,12 +232,12 @@ Player.prototype.goTo = function(idCaseDest) {
 }
 
 Player.prototype.actionCase = function(caseDest) {
-    console.log("actionCase", this, caseDest)
-    console.log("0")
+    log("actionCase", this, caseDest)
+    log("0")
     if(this == caseDest.locator) {
         switch(caseDest.type) {
             case "property":
-                console.log("1")
+                log("1")
                 if(caseDest.owner === null) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this && caseDest.nbBuilds != -1) {
@@ -234,7 +248,7 @@ Player.prototype.actionCase = function(caseDest) {
                 }
                 break
             case "station":
-                console.log("2")
+                log("2")
                 if(caseDest.owner === null) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
@@ -246,7 +260,7 @@ Player.prototype.actionCase = function(caseDest) {
 
                 break
             case "company":
-                console.log("3")
+                log("3")
                 if(caseDest.owner === null) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
@@ -257,19 +271,20 @@ Player.prototype.actionCase = function(caseDest) {
                 }
                 break
             case "start":
-                console.log("4")
+                log("4")
                 // this.earn(200)
                 break
             case "tax":
-                console.log("5")
+                log("5")
                 this.pay(caseDest.getRent()).then(() => {
                     plateau[Parc.prototype.getParcId()].incrementParcBalance(caseDest.getRent())
                 }).catch(this.bankrupcy)
                 break
             case "chance":
-                console.log("6")
+                log("6")
                 let randChance = Math.floor(Math.random() * chance.length)
     
+                log(chance[randChance].description())
                 io.emit("chance", chance[randChance].description())
                 let retChance = chance[randChance].action(this)
                 if(retChance != undefined) {
@@ -285,9 +300,10 @@ Player.prototype.actionCase = function(caseDest) {
                 }
                 break
             case "community":
-                console.log("7")
+                log("7")
                 let randCommunity = Math.floor(Math.random() * communityCards.length)
     
+                log(communityCards[randCommunity].description)
                 io.emit("community", communityCards[randCommunity].description)
                 let retCommunity = communityCards[randCommunity].action(this)
 
@@ -309,18 +325,18 @@ Player.prototype.actionCase = function(caseDest) {
                 }
                 break
             case "gotojail":
-                console.log("8")
+                log("8")
                 Jail.prototype.sendToJail(this)
                 io.emit("sendToJail", Player.prototype.activePlayer, Jail.prototype.getJailId(), true)
                 break
             case "parc":
-                console.log("9")
+                log("9")
                 caseDest.transferParcBalance(this)
                 break
         }
     
     } else {
-        console.log("ERROR : locator is null")
+        log("ERROR : locator is null")
     }
 }
 
@@ -346,7 +362,7 @@ Player.prototype.canBuild = function() {
     let i = 0
     while(i < this.deck.length && !canBuild) {
         let colorPropertyRate = this.colorGroup(this.deck[i].color)
-        console.log(this.deck[i].name, this.deck[i].color != "station", this.deck[i].color != "company", colorPropertyRate[0] == colorPropertyRate[1])
+        log(this.deck[i].name, this.deck[i].color != "station", this.deck[i].color != "company", colorPropertyRate[0] == colorPropertyRate[1])
         canBuild = canBuild || (
             this.deck[i].color != "station" && 
             this.deck[i].color != "company" && 
@@ -428,15 +444,15 @@ function getPropertyByIdCase(id) {
 
 
 async function awaitAuctionEnd(auction) {
-    console.log("start timer")
+    log("start timer")
     auction.timer().then(() => {
-        console.log("end of timer")
+        log("end of timer")
     
         if(auction.lastPlayer != null) {
             auction.lastPlayer.pay(auction.bid).then(() => {
                 auction.property.owner = auction.lastPlayer
             
-                io.emit("endAuction", Player.prototype.playerList.indexOf(auction.lastPlayer), auction.bid)
+                io.emit("endAuction", Player.prototype.playerList.indexOf(auction.lastPlayer), plateau.indexOf(auction.property), auction.bid)
                 io.emit("changeOwner", Player.prototype.playerList.indexOf(auction.lastPlayer), plateau.indexOf(auction.property), true)
             }).catch(auction.lastPlayer.bankrupcy)
         } else {
@@ -450,8 +466,8 @@ async function awaitAuctionEnd(auction) {
 
 
 const requestListener = function (req, res) {
-    // console.log(req.url)
-    // console.log(req.rawHeaders.slice(0,4))
+    // log(req.url)
+    // log(req.rawHeaders.slice(0,4))
     let fileContent;
     if(req.url == "/") {
         res.writeHead(301, {
@@ -488,7 +504,7 @@ const requestListener = function (req, res) {
             res.writeHead(200);
             res.end(fileContent);
         } catch(err) {
-            console.log(err);
+            log(err);
             res.setHeader("Content-Type", "text/html");
             res.writeHead(404);
             res.end("Page not found");
@@ -505,13 +521,13 @@ const io = new Server(server)
 
 
 server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
+    log(`Server is running on http://${host}:${port}`);
 });
 
 io.on("connection", (socket) => {
     let playerList = Player.prototype.playerList
     let isDisconnectedPlayer = false
-    console.log("user connected : " + socket.id)
+    log("user connected : " + socket.id)
     
     socket.emit("clientPlayerList", Player.prototype.getClientPlayerList()) //envoyer la liste des joueurs au client
 
@@ -544,7 +560,7 @@ io.on("connection", (socket) => {
     socket.on("numDisconnectedPlayer", function(num) { //le client dit quel joueur déconnecté il est, ou un nouveau
         let activePlayerId = Player.prototype.activePlayer
         let activePlayer = playerList[activePlayerId] 
-        console.log("numDisconnectedPlayer : " + num)
+        log("numDisconnectedPlayer : " + num)
         if(num == -1) {
             if(playerList.length < 4) {
                 socket.emit("numPlayer", playerList.length) //envoyer le numero de joueur
@@ -575,10 +591,10 @@ io.on("connection", (socket) => {
         });
 
         if(activePlayer.currentAction != null) {
-            console.log("currentAction :")
+            log("currentAction :")
             switch(activePlayer.currentAction.function) {
                 case "buy":
-                    console.log("buy")
+                    log("buy")
                     activePlayer.buy(activePlayer.currentAction.params[0], activePlayer.currentAction.params[1])
                     break
             }
@@ -591,7 +607,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("disconnect", function() {
-        console.log("user disconnected : ")
+        log("user disconnected : ")
         let player = Player.prototype.getPlayerBySocket(socket.id)
         if(player !== null) {
             player.socket = null
@@ -603,7 +619,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("pseudo", function(pseudo) {
-        console.log("pseudo received : " + pseudo)
+        log("pseudo received : " + pseudo)
         let numPlayer = playerList.length
         let player = new Player(socket.id, pseudo, numPlayer)
 
@@ -633,35 +649,46 @@ io.on("connection", (socket) => {
 
     socket.on("rollDices", function() {
         let activePlayer = playerList[Player.prototype.activePlayer]
-        console.log("roolDices : " + activePlayer.name)
+        log("roolDices : " + activePlayer.name)
         if(socket.id == activePlayer.socket) {
             activePlayer.rollDices()
         }
     })
 
-    socket.on("confirmBuying", function(idPlayer, idProperty) {
-        console.log("confirmBuying : ", Player.prototype.playerList[idPlayer], plateau[idProperty])
-        Player.prototype.playerList[idPlayer].buy(plateau[idProperty], 1)
-    })
-
-    socket.on("denyBuying", function(idPlayer, idProperty) {
-        console.log("denyBuying : ", Player.prototype.playerList[idPlayer], plateau[idProperty])
-        Player.prototype.playerList[idPlayer].buy(plateau[idProperty], 2)
-    })
-
     socket.on("endTurn", function() {
-        console.log("endTurn")
+        log("endTurn")
         playerList[Player.prototype.activePlayer].numberOfDoubles = 0
+        playerList[Player.prototype.activePlayer].hasRolledDices = false
+        
         Player.prototype.nextActivePlayer()
         io.emit("activePlayer", Player.prototype.activePlayer, false, playerList[Player.prototype.activePlayer].isJailed)
     })
 
+    socket.on("confirmBuying", function(idPlayer, idProperty) {
+        log("confirmBuying : ", Player.prototype.playerList[idPlayer], plateau[idProperty])
+        Player.prototype.playerList[idPlayer].buy(plateau[idProperty], 1)
+    })
+
+    socket.on("denyBuying", function(idPlayer, idProperty) {
+        log("denyBuying : ", Player.prototype.playerList[idPlayer], plateau[idProperty])
+        Player.prototype.playerList[idPlayer].buy(plateau[idProperty], 2)
+    })
+
+    socket.on("payFreePrison", function() {
+        let player = Player.prototype.getPlayerBySocket(socket.id)
+        if(player.isJailed > 0) {
+            player.pay(50)
+            player.isJailed = 0
+            io.emit("freeFromJail", Player.prototype.playerList.indexOf(player), playe.canBuild)
+        }
+    })
+
     socket.on("clientMortgage", function(idCase, idPlayer) {
-        console.log("clientMortgage", idCase, idPlayer)
+        log("clientMortgage", idCase, idPlayer)
         let player = Player.prototype.getPlayerById(idPlayer)
         let casePlateau = plateau[idCase]
 
-        console.log(player.socket == socket.id, casePlateau.owner != null, casePlateau.owner.socket == socket.id)
+        log(player.socket == socket.id, casePlateau.owner != null, casePlateau.owner.socket == socket.id)
         if(player.socket == socket.id && casePlateau.owner != null && casePlateau.owner.socket == socket.id) {
             if(casePlateau.nbBuilds == 0) {
                 casePlateau.nbBuilds = -1
@@ -709,9 +736,9 @@ io.on("connection", (socket) => {
                 if(buildMode == 1 && property.nbBuilds > 0) {
                     buildPrice /= 2
                     while(i < plateau.length && canBuild) {
-                        console.log(plateau[i])
-                        console.log(i, plateau[i].name, plateau[i].color, plateau[i].nbBuilds, property.name, property.color, property.nbBuilds)
-                        // console.log(plateau[i].color == property.color, plateau[i].nbBuilds <= property.nbBuilds, plateau[i].nbBuilds >= property.nbBuilds-1)
+                        log(plateau[i])
+                        log(i, plateau[i].name, plateau[i].color, plateau[i].nbBuilds, property.name, property.color, property.nbBuilds)
+                        // log(plateau[i].color == property.color, plateau[i].nbBuilds <= property.nbBuilds, plateau[i].nbBuilds >= property.nbBuilds-1)
                         if(plateau[i].color == property.color 
                             && !(plateau[i].nbBuilds >= property.nbBuilds 
                             && plateau[i].nbBuilds <= property.nbBuilds+1)) {
@@ -796,7 +823,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("offerTrade", function(trade) {
-        console.log("offerTrade", trade)
+        log("offerTrade", trade)
 
         let playerList = Player.prototype.playerList
         let otherPlayerId = trade.other.id
@@ -833,7 +860,7 @@ io.on("connection", (socket) => {
     })
     
     socket.on("acceptTrade", function() {
-        console.log("acceptTrade")
+        log("acceptTrade")
         let trade = Player.prototype.currentTrade
         let initPlayer = Player.prototype.getPlayerById(trade.init.id)
         let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
@@ -851,18 +878,18 @@ io.on("connection", (socket) => {
 
             trade.init.properties.forEach(i => {
                 plateau[i].owner = otherPlayer
-                io.emit("changeOwner", otherPlayer, i, true)
+                io.emit("changeOwner", trade.other.id, i, true)
             });
 
             trade.other.properties.forEach(i => {
                 plateau[i].owner = initPlayer
-                io.emit("changeOwner", initPlayer, i, true)
+                io.emit("changeOwner", trade.init.id, i, true)
             })
         }
     })
 
     socket.on("offerNewTrade", function() {
-        console.log("offerNewTrade")
+        log("offerNewTrade")
 
         let trade = Player.prototype.currentTrade
         let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
@@ -873,7 +900,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("denyTrade", function() {
-        console.log("denyTrade")
+        log("denyTrade")
 
         let trade = Player.prototype.currentTrade
         let otherPlayer = Player.prototype.getPlayerById(trade.other.id)
@@ -881,7 +908,7 @@ io.on("connection", (socket) => {
         if(socket.id == otherPlayer.socket) {
             io.emit("tradeDenied", trade.init.id, trade.other.id)
             trade = null
-            console.log(Player.prototype.currentTrade)
+            log(Player.prototype.currentTrade)
         }
     }) 
 
@@ -889,9 +916,9 @@ io.on("connection", (socket) => {
         let auction = Auction.prototype.currentAuction
         let player = Player.prototype.getPlayerBySocket(socket.id)        
 
-        console.log("inputAuction", bid, auction, player)
+        log("inputAuction", bid, auction, player)
 
-        console.log(auction.bid, bid, player.money, bid, auction.bid < bid, player.money >= bid)
+        log(auction.bid, bid, player.money, bid, auction.bid < bid, player.money >= bid)
         if(auction.bid < bid && player.money >= bid) {
             auction.lastPlayer = player
             auction.bid = bid

@@ -17,7 +17,7 @@ This game is not expected to be play secured. Please, make sure to know the host
 
 ## License
 
-This project is under GNU general public licence. See `LICENSE` file for more information
+This project is under GPL 3.0 licence. See `LICENSE` file for more information
 
 ## Copyrights
 

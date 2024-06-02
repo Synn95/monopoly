@@ -113,7 +113,7 @@ if(saveFiles.length > 0) {
         save(saveFiles.length)
         saveNum = saveFiles.length
     } else {
-        log("Loading save n°" + answer-1)
+        log("Loading save n°" + Number.parseInt(answer)-1)
         numberOfPlayers = load(answer-1)
         save(answer-1)
         saveNum = answer-1

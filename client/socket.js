@@ -82,9 +82,9 @@ socket.on("playerIsDisconnected", function(serverPlayerList) { //lors de la conn
     showNewGameWindow(playerIsDisconnected)
 }) 
 
-socket.on("clientPlayerList", function(clientPlayerList, numberOfPlayers) {
-    console.log("clientPlayerList", clientPlayerList, numberOfPlayers)
-    numberOfPlayers = numberOfPlayers
+socket.on("clientPlayerList", function(clientPlayerList, n) {
+    console.log("clientPlayerList", clientPlayerList, n)
+    numberOfPlayers = n
     playerList = clientPlayerList
     playerList.forEach(player => {
         setPlayerPseudo(player.id, player.pseudo)

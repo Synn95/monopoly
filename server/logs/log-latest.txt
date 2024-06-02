@@ -1,5 +1,0 @@
-Sun-Jun-02-2024-19-12-22
-[19:12:22] Loading new save 
-[19:12:24] Server is running on http://0.0.0.0:8000 
-[19:12:26] user connected : kOrYlqD6vXZXn5zdAAAB 
-[19:12:26] user connected : pffHLVZyJ3CX517_AAAD 

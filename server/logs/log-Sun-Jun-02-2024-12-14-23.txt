@@ -1,9 +1,0 @@
-Sun-Jun-02-2024-12-14-23
-[12:14:23] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
-	 
-[12:14:23] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
-	 
-[12:14:23] Server is running on http://0.0.0.0:8000 
-[12:14:24] user connected : Mp2Y__je2f103hbfAAAC 
-[12:14:25] numDisconnectedPlayer : 0 
-[12:14:26] user connected : IHIO3cfJGJMF5ATtAAAE 

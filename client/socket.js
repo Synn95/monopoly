@@ -1,5 +1,6 @@
 const socket = io()
 let clientRuntimeId = null
+let numberOfPlayers = 0
 
 function enterPseudo() {
     let waiting= document.getElementById("waiting")
@@ -81,8 +82,9 @@ socket.on("playerIsDisconnected", function(serverPlayerList) { //lors de la conn
     showNewGameWindow(playerIsDisconnected)
 }) 
 
-socket.on("clientPlayerList", function(clientPlayerList) {
-    console.log("clientPlayerList", clientPlayerList)
+socket.on("clientPlayerList", function(clientPlayerList, numberOfPlayers) {
+    console.log("clientPlayerList", clientPlayerList, numberOfPlayers)
+    numberOfPlayers = numberOfPlayers
     playerList = clientPlayerList
     playerList.forEach(player => {
         setPlayerPseudo(player.id, player.pseudo)
@@ -130,7 +132,7 @@ socket.on("playerDisconnected", function(serverPlayerList) { //Lorsqu'un joueur 
     if(numPlayer != -1) {
         if(isDisconnectedPlayer) {
             showNewGameWindow(document.getElementById("playerDisconnected"))
-        } else if(playerList.length < 2) {
+        } else if(playerList.length < numberOfPlayers) {
             showNewGameWindow(document.getElementById("waiting"))
         } else {
             document.getElementById("newGame").style.display = "none"

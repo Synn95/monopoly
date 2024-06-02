@@ -9,12 +9,9 @@ const log = require("./log.js")
 const ioConnection = require("./events.js")
 const save = require("./save.js")
 const load = require("./load.js")
-const Player = require("./Player.js");
-const Auction = require("./Auction.js");
-
-const plateau = require("./plateau.js")
 
 const runtimeId = Math.floor(Math.random()*1000000)
+let numberOfPlayers = 0
 
 /*
 function getPropertyByIdCase(id) {
@@ -115,7 +112,7 @@ if(saveFiles.length > 0) {
         saveNum = saveFiles.length
     } else {
         log("Loading save n°" + answer-1)
-        load(answer-1)
+        numberOfPlayers = load(answer-1)
         save(answer-1)
         saveNum = answer-1
     }
@@ -123,6 +120,10 @@ if(saveFiles.length > 0) {
     log("Loading new save")
     save(0)
     saveNum = 0
+}
+
+while(numberOfPlayers < 2 || numberOfPlayers > 4) {
+    numberOfPlayers = prompt("How many players will play ? (Choose a number between 2 and 4) ")
 }
 
 server.listen(port, host, () => {
@@ -135,7 +136,7 @@ io.on("connection", (socket) => {
     Player.prototype.setIo(io)
 
     socket.emit("runtimeId", runtimeId)
-    ioConnection(socket, io)
+    ioConnection(socket, io, numberOfPlayers)
 })
 
 

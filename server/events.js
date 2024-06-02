@@ -5,12 +5,12 @@ const plateau = require("./plateau.js")
 
 const log = require("./log.js")
 
-function ioConnection(socket, io) {
+function ioConnection(socket, io, numberOfPlayers) {
     let playerList = Player.prototype.playerList()
     let isDisconnectedPlayer = false
     log("user connected : " + socket.id)
     
-    socket.emit("clientPlayerList", Player.prototype.getClientPlayerList()) //envoyer la liste des joueurs au client
+    socket.emit("clientPlayerList", Player.prototype.getClientPlayerList(), numberOfPlayers) //envoyer la liste des joueurs au client
 
     for(let i = 0 ; i < playerList.length ; i++) { //pour chaque joueur dans la liste
         if(playerList[i].socket === null) { //vérifier s'il est déconnecter
@@ -32,7 +32,7 @@ function ioConnection(socket, io) {
     if(isDisconnectedPlayer) { //Si un joueur s'est déconnecté
         socket.emit("playerIsDisconnected", Player.prototype.getDisconnectedPlayerIdList())
     } 
-    else if(playerList.length < 4 ) { //Si la liste n'est pas pleine
+    else if(playerList.length < numberOfPlayers ) { //Si la liste n'est pas pleine
         socket.emit("askPseudo") //Demander pseudo au client
     } else {
         socket.emit("numPlayer", -1) //sinon donner le n° de joueur -1
@@ -43,7 +43,7 @@ function ioConnection(socket, io) {
         let activePlayer = playerList[activePlayerId] 
         log("numDisconnectedPlayer : " + num)
         if(num == -1) {
-            if(playerList.length < 4) {
+            if(playerList.length < numberOfPlayers) {
                 socket.emit("numPlayer", playerList.length) //envoyer le numero de joueur
                 socket.emit("askPseudo") //Demander pseudo au client
             } else {

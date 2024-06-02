@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 function initiateLog() {
-    if(!fs.existsSync("./saves")) {
+    if(!fs.existsSync("./logs")) {
         fs.mkdirSync("logs")
     }
     if(fs.existsSync("logs/log-latest.txt")) {

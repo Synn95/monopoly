@@ -95,11 +95,12 @@ let saveFiles = fs.readdirSync("saves")
 if(saveFiles.length > 0) {
     console.log("Please choose a save file :")
     console.log("0 -> New Game")
-    for(let i = 0 ; i < saveFiles.length ; i++) {
-        let save = require("./saves/save"+i+".json")
+    saveFiles.forEach(savePath => {
+        let save = require("./saves/"+ savePath)
         let date = new Date(save.date)
-        console.log((i+1) + " -> " + date.toUTCString())
-    }
+        console.log(savePath.slice(4,5) + " -> " + date.toUTCString())
+    });
+
 
     let answer = "-1"
     while(Number.parseInt(answer) < 0 || Number.parseInt(answer) > saveFiles.length) {

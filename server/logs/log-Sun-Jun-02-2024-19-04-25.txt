@@ -1,7 +1,0 @@
-Sun-Jun-02-2024-19-04-25
-[19:4:25] Loading new save 
-[19:4:27] Server is running on http://0.0.0.0:8000 
-[19:4:27] user connected : ns82NMVAquthtKtQAAAB 
-[19:4:31] pseudo received : Nathan 
-[19:4:31] Player = ns82NMVAquthtKtQAAAB:Nathan ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
-	 

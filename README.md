@@ -5,7 +5,7 @@ This projet is still in developement. Some bugs are still present in the game.
 
 ## How to install/play
 
-1. Clone the repository on your computer
+1. Download the source code
 2. Make sure to have the latest version of `Node.js` installed, otherwise it won't work
 3. Open a terminal in the server folder, and run : `node run.js`
 4. If you have already played a game without finishing it, you can retreive it by selecting the save's number (game is automatically saved each two minutes). You can also start a new game.

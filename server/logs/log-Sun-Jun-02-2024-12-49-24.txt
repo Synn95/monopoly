@@ -1,0 +1,18 @@
+Sun-Jun-02-2024-12-49-24
+[12:49:24] Player = null:Nathan ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:49:24] Player = null:Nathan ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:49:24] Server is running on http://0.0.0.0:8000 
+[12:49:24] user connected : v-1xEPeXyPfr2IzBAAAC 
+[12:49:24] user connected : UWFXiAv-1aVw2jxNAAAD 
+[12:49:25] user disconnected :  
+[12:49:26] user connected : xbA9CCIDdT5rWrSVAAAF 
+[12:49:27] numDisconnectedPlayer : 0 
+[12:49:27] Boulevard de Belleville true true true 
+[12:49:28] numDisconnectedPlayer : 1 
+[12:49:28] Avenue de Breteuil true true true 
+[12:49:30] user disconnected :  
+[12:49:30] user connected : zYgscK_OXvKhMPgUAAAH 
+[12:49:31] numDisconnectedPlayer : 1 
+[12:49:31] Avenue de Breteuil true true true 

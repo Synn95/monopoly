@@ -13,7 +13,7 @@ Jail.prototype.toString = function() {
 Jail.prototype.sendToJail = function(player) {
     if(jailIdCase != -1) {
         player.idCase = jailIdCase
-        player.isJailed = true
+        player.isJailed = 3
         jailedList.push(player)
     }
 }

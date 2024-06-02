@@ -76,17 +76,20 @@ const requestListener = function (req, res) {
 
 // ------------Scenario de test--------------
 let test = new Player(null, "Nathan", 0)
-let testPropArray = [1,3,5,6,8,9,11,12,13,14,15,16,18,19,21,23,24,25,26,27,28,29,31,32,34,35,37,39]
+let test1 = new Player(null, "alex", 1)
+let testPropArray = [1,3,5,6,8,9,11,12,13,14,15,16,18,19,21,23,24,25,26,27,28,29]
+let test1PropArray = [31,32,34,35,37,39]
 testPropArray.forEach(element => {
-    log(plateau[element])
-
     if(plateau[element].type == "property") {
         plateau[element].nbBuilds = 5
     }
     plateau[element].owner = test
     test.deck.push(plateau[element])
 });
-log(test)
+test1PropArray.forEach(element => {
+    plateau[element].owner = test1
+    test1.deck.push(plateau[element])
+})
 
 
 

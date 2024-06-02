@@ -1,0 +1,25 @@
+Sun-Jun-02-2024-12-47-15
+[12:47:15] Player = null:Nathan ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:47:15] Player = null:Nathan ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 1500€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:47:15] Server is running on http://0.0.0.0:8000 
+[12:47:16] user connected : 6XyHF232Y0y6bFVAAAAC 
+[12:47:16] user connected : R2G7d7Yj6maaZ5RgAAAD 
+[12:47:17] user disconnected :  
+[12:47:17] user connected : 6LFkhJQRvScaC7DdAAAF 
+[12:47:18] numDisconnectedPlayer : 0 
+[12:47:18] Boulevard de Belleville true true true 
+[12:47:19] numDisconnectedPlayer : 1 
+[12:47:19] Avenue de Breteuil true true true 
+[12:47:23] roolDices : Nathan 
+[12:47:23] goto Player = 6LFkhJQRvScaC7DdAAAF:Nathan ; 1500€ ; 22 cards ; 1 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 7 
+[12:47:23] actionCase Player = 6LFkhJQRvScaC7DdAAAF:Nathan ; 1500€ ; 22 cards ; 1 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 [object Object]
+	 
+[12:47:23] Player is on chance 
+[12:47:23] Payez à l'hôpital : 100 $ 
+[12:47:23] Player is paying 100 
+[12:47:23] Player = 6LFkhJQRvScaC7DdAAAF:Nathan ; 1500€ ; 22 cards ; 1 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -100 

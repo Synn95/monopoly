@@ -1,0 +1,37 @@
+Sun-Jun-02-2024-11-54-44
+[11:54:44] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:54:44] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:54:44] Server is running on http://0.0.0.0:8000 
+[11:54:44] user connected : 4PEBxtl6_ylx7TCkAAAC 
+[11:54:45] user connected : SbBdcwmxLi4u8jJ1AAAD 
+[11:54:48] user disconnected :  
+[11:54:48] user connected : wWgUQ8RB3donMCsvAAAF 
+[11:54:49] numDisconnectedPlayer : 1 
+[11:54:49] Avenue de Breteuil true
+	 true
+	 true
+	 
+[11:54:49] user disconnected :  
+[11:54:49] user connected : xiGpPKcqAzGHnJL5AAAH 
+[11:54:50] numDisconnectedPlayer : 0 
+[11:54:50] Boulevard de Belleville true
+	 true
+	 true
+	 
+[11:54:51] roolDices : Nathan 
+[11:54:51] goto Player = xiGpPKcqAzGHnJL5AAAH:Nathan ; 200€ ; 22 cards ; 2 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 4
+	 
+[11:54:51] actionCase Player = xiGpPKcqAzGHnJL5AAAH:Nathan ; 200€ ; 22 cards ; 2 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 undefined
+	 
+[11:54:51] Player is on tax 
+[11:54:51] Player is paying 200 
+[11:54:51] Player = xiGpPKcqAzGHnJL5AAAH:Nathan ; 200€ ; 22 cards ; 2 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	  : -200 
+[11:54:51] bankrupcy for  Player = xiGpPKcqAzGHnJL5AAAH:Nathan ; 0€ ; 22 cards ; 2 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:54:51] 1 player(s) bankrupted 
+[11:54:51] Game is over 

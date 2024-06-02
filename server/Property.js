@@ -60,7 +60,21 @@ Property.prototype.getRent = function() {
 
     switch(this.color) {
         case "station":
-            rent = tauxPossede[0] * 50
+            switch(tauxPossede[0]) {
+                case 1:
+                    rent = 25
+                    break
+                case 2:
+                    rent = 50
+                    break
+                case 3:
+                    rent = 100
+                    break
+                case 4:
+                    rent = 100
+                    break
+
+            }
             break
         case "company":
             if(tauxPossede[0] == 1) {

@@ -29,30 +29,31 @@ Auction.prototype.timer = async function() {
         this.timeLeft--
         log("time left :", this.timeLeft)
     }
-    log("return")
     return new Promise(callback => {callback()})
 }
 
 Auction.prototype.awaitAuctionEnd = async function() {
     log("start timer")
-    this.timer().then(() => {
-        log("end of timer")
-    
-        if(this.lastPlayer != null) {
-            this.lastPlayer.pay(this.bid).then(function() {
-                this.property.owner = this.lastPlayer
-            }).catch(this.lastPlayer.bankrupcy)
+    await this.timer()
+    log("end of timer")
 
-            log("End of auction :", this)
-            io.emit("endAuction", this.lastPlayer.getId(), plateau.indexOf(this.property), this.bid)
-            io.emit("changeOwner", this.lastPlayer.getId(), plateau.indexOf(this.property), true)
-            console.log("test")
+    if(this.lastPlayer != null) {
+        let resPay = await this.lastPlayer.pay(this.bid)
+        if(resPay == 0) {
+            this.property.owner = this.lastPlayer
         } else {
-            io.emit("endAuction", null, plateau.indexOf(this.property), 0)
+            this.lastPlayer.bankrupcy()
         }
-    
-        Auction.prototype.currentAuction = null
-    })
+
+        log("End of auction :", this)
+        io.emit("endAuction", this.lastPlayer.getId(), plateau.indexOf(this.property), this.bid)
+        io.emit("changeOwner", this.lastPlayer.getId(), plateau.indexOf(this.property), true)
+        console.log("test")
+    } else {
+        io.emit("endAuction", null, plateau.indexOf(this.property), 0)
+    }
+
+    Auction.prototype.currentAuction = null
 }
 
 Auction.prototype.setIo = function(server) {io = server}

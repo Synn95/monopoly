@@ -1,0 +1,43 @@
+Sun-Jun-02-2024-11-27-23
+[11:27:23] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:27:23] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:27:23] Server is running on http://0.0.0.0:8000 
+[11:27:24] user connected : HpP44mhL9YHUSmWtAAAB 
+[11:27:27] user connected : ADpu3XVNMFLTW6eDAAAD 
+[11:27:29] user disconnected :  
+[11:27:30] user connected : aRGh-0pnz4thY6J-AAAF 
+[11:27:31] numDisconnectedPlayer : 0 
+[11:27:31] Boulevard de Belleville true
+	 true
+	 true
+	 
+[11:27:32] user disconnected :  
+[11:27:34] user connected : ioV0q8WKdgB1FtAEAAAH 
+[11:27:35] numDisconnectedPlayer : 1 
+[11:27:35] Avenue de Breteuil true
+	 true
+	 true
+	 
+[11:27:38] roolDices : Nathan 
+[11:27:38] goto Player = aRGh-0pnz4thY6J-AAAF:Nathan ; 200€ ; 22 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 11
+	 
+[11:27:38] actionCase Player = aRGh-0pnz4thY6J-AAAF:Nathan ; 200€ ; 22 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; owner : aRGh-0pnz4thY6J-AAAF-Nathan ; locator : aRGh-0pnz4thY6J-AAAF-Nathan ; 5 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[11:27:38] Player is on property 
+[11:27:41] endTurn 
+[11:27:43] roolDices : alex 
+[11:27:43] goto Player = ioV0q8WKdgB1FtAEAAAH:alex ; 200€ ; 6 cards ; 4 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 8
+	 
+[11:27:43] actionCase Player = ioV0q8WKdgB1FtAEAAAH:alex ; 200€ ; 6 cards ; 4 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = property ; Rue de Courcelles ; owner : aRGh-0pnz4thY6J-AAAF-Nathan ; locator : ioV0q8WKdgB1FtAEAAAH-alex ; 5 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[11:27:43] Player is on property 
+[11:27:43] Taux possede : 3,3 
+[11:27:43] Player is paying 550 
+[11:27:43] Player = ioV0q8WKdgB1FtAEAAAH:alex ; 200€ ; 6 cards ; 4 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	  : Not enough to pay 550 

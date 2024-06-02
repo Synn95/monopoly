@@ -1,0 +1,18 @@
+Sun-Jun-02-2024-12-07-57
+[12:7:57] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:7:57] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:7:57] Server is running on http://0.0.0.0:8000 
+[12:7:57] user connected : TeDiAwUH0c5KUJiyAAAC 
+[12:7:57] user connected : -hFol94-eCaxNrG8AAAD 
+[12:8:0] user disconnected :  
+[12:8:1] user connected : l0H8PYkmQVXftE18AAAF 
+[12:8:2] numDisconnectedPlayer : 1 
+[12:8:2] user disconnected :  
+[12:8:3] user connected : 2y3Y17hMxo_MLShnAAAH 
+[12:8:3] numDisconnectedPlayer : 0 
+[12:8:5] roolDices : Nathan 
+[12:8:5] Player is paying 50 
+[12:8:5] Player = 2y3Y17hMxo_MLShnAAAH:Nathan ; 200€ ; 0 cards ; 2 + 4 ; 0 free prison cards ; true state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -50 

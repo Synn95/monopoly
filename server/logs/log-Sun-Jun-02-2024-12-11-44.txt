@@ -1,0 +1,46 @@
+Sun-Jun-02-2024-12-11-44
+[12:11:44] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:11:44] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:11:44] Server is running on http://0.0.0.0:8000 
+[12:11:44] user connected : 1x-4ZLPeG5jtcEkgAAAB 
+[12:11:45] user connected : rw9sNL4LqHWZFIGaAAAD 
+[12:11:45] user disconnected :  
+[12:11:46] user connected : H67LseD6ni-bkQI3AAAF 
+[12:11:46] numDisconnectedPlayer : 0 
+[12:11:47] user disconnected :  
+[12:11:47] user connected : yQ9dKVvggszbySYOAAAH 
+[12:11:47] numDisconnectedPlayer : 1 
+[12:11:49] roolDices : Nathan 
+[12:11:50] endTurn 
+[12:11:51] roolDices : alex 
+[12:11:51] goto Player = yQ9dKVvggszbySYOAAAH:alex ; 200€ ; 0 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 11
+	 
+[12:11:51] actionCase Player = yQ9dKVvggszbySYOAAAH:alex ; 200€ ; 0 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; locator : yQ9dKVvggszbySYOAAAH-alex ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[12:11:51] Player is on property 
+[12:11:51] Player is on property Boulevard de La Villette 
+[12:11:55] confirmBuying :  Player = yQ9dKVvggszbySYOAAAH:alex ; 200€ ; 0 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; locator : yQ9dKVvggszbySYOAAAH-alex ; 0 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[12:11:55] Player want to buy 
+[12:11:55] Player is paying 140 
+[12:11:55] Player = yQ9dKVvggszbySYOAAAH:alex ; 200€ ; 0 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -140 
+[12:11:55] Boulevard de La Villette true
+	 true
+	 false
+	 
+[12:11:56] endTurn 
+[12:11:57] roolDices : Nathan 
+[12:11:57] goto Player = H67LseD6ni-bkQI3AAAF:Nathan ; 200€ ; 0 cards ; 1 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 12
+	 
+[12:11:57] actionCase Player = H67LseD6ni-bkQI3AAAF:Nathan ; 200€ ; 0 cards ; 1 + 1 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = company ; Electricité ; locator : H67LseD6ni-bkQI3AAAF-Nathan ; 0 build ; company ; cost: 150 ; rent: null ; mortgage: 75
+	 
+[12:11:57] Player is on company 
+[12:11:57] Player is on property Electricité 

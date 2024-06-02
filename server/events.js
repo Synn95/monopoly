@@ -75,9 +75,13 @@ function ioConnection(socket, io) {
             log("currentAction :")
             switch(activePlayer.currentAction.function) {
                 case "buy":
-                    log("buy")
                     activePlayer.buy(activePlayer.currentAction.params[0], activePlayer.currentAction.params[1])
                     break
+                case "gatherMoney":
+                    if(activePlayer.socket == socket.id) {
+                        socket.emit("gatherMoney", this.money *-1)
+                    }
+
             }
         }
 
@@ -159,6 +163,7 @@ function ioConnection(socket, io) {
         let player = Player.prototype.getPlayerBySocket(socket.id)
         if(player.isJailed > 0) {
             player.pay(50)
+            
             player.isJailed = 0
             io.emit("freeFromJail", Player.prototype.playerList().indexOf(player), player.canBuild)
         }
@@ -178,9 +183,8 @@ function ioConnection(socket, io) {
             } else if(casePlateau.nbBuilds == -1) {
                 if(player.money >= plateau[idCase].mortgage*1.1) {
                     casePlateau.nbBuilds = 0
-                    player.pay(plateau[idCase].mortgage*1.1).then(() => {
-                        io.emit("mortgage", idCase, false, true)
-                    }).catch(player.bankrupcy)
+                    player.pay(plateau[idCase].mortgage*1.1)
+                    io.emit("mortgage", idCase, false, true)
                 } else {
                     socket.emit("notEnoughMoney")
                 }
@@ -217,12 +221,9 @@ function ioConnection(socket, io) {
                 if(buildMode == 1 && property.nbBuilds > 0) {
                     buildPrice /= 2
                     while(i < plateau.length && canBuild) {
-                        log(plateau[i])
-                        log(i, plateau[i].name, plateau[i].color, plateau[i].nbBuilds, property.name, property.color, property.nbBuilds)
-                        // log(plateau[i].color == property.color, plateau[i].nbBuilds <= property.nbBuilds, plateau[i].nbBuilds >= property.nbBuilds-1)
                         if(plateau[i].color == property.color 
-                            && !(plateau[i].nbBuilds >= property.nbBuilds 
-                            && plateau[i].nbBuilds <= property.nbBuilds+1)) {
+                            && !(plateau[i].nbBuilds <= property.nbBuilds
+                            && plateau[i].nbBuilds >= property.nbBuilds-1)) {
                                 canBuild = false
                         }
                         i++
@@ -267,7 +268,18 @@ function ioConnection(socket, io) {
 
         if(property.owner == player && property.canBuild && property.nbBuilds > 0) {
             property.nbBuilds--
-            property.canBuild = false
+            plateau.forEach(element => {
+                let i = 0
+                while(i < plateau.length && element.canBuild) {
+                    if(plateau[i].color == element.color 
+                        && !(plateau[i].nbBuilds <= element.nbBuilds
+                        && plateau[i].nbBuilds >= element.nbBuilds-1)) {
+                            element.canBuild = false
+                    }
+                    i++
+                }
+            });
+            
 
             io.emit("removeBuild", idProperty, false)
             player.earn(buildPrice)
@@ -291,12 +303,21 @@ function ioConnection(socket, io) {
 
         if(property.owner == player && property.canBuild && property.nbBuilds < 5) {
             if(player.money >= buildPrice) {
-                player.pay(buildPrice).then(() => {
-                    property.nbBuilds++
-                    property.canBuild = false
+                player.pay(buildPrice)
+                property.nbBuilds++
+                plateau.forEach(element => {
+                    let i = 0
+                    while(i < plateau.length && element.canBuild) {
+                        if(plateau[i].color == element.color 
+                            && !(plateau[i].nbBuilds >= element.nbBuilds 
+                            && plateau[i].nbBuilds <= element.nbBuilds+1)) {
+                                element.canBuild = false
+                        }
+                    }
+                });
+
         
-                    io.emit("addBuild", idProperty, false)
-                })
+                io.emit("addBuild", idProperty, false)
             } else {
                 socket.emit("notEnoughMoney")
             }

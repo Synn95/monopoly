@@ -105,20 +105,26 @@ const communityCards = [
     {
         "description": "Vous avez été élue président du comité. Payez à chaque joueur 50€",
         "action": function(player) {
-            player.pay(50 * player.playerList().length)
+            player.pay(50 * (player.playerList().length-1))
             player.playerList().forEach(element => {
-                element.earn(50)
+                if(player !== element) {
+                    element.earn(50)
+                }
             });
         }
     },
     {
         "description": "C'est votre anniversaire ! Recevez 10€ de chaque joueur",
         "action": function(player) {
+            let ret = undefined
             player.playerList().forEach(element => {
-                element.pay(10)
+                if(element !== player) {
+                    element.pay(10)
+                }
             });
 
-            player.earn(player.playerList().length * 10)
+            player.earn((player.playerList().length-1) * 10)
+            return ret
         }
     }
 ]

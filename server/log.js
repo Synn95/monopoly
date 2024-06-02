@@ -20,13 +20,18 @@ function log() {
     let timecode = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
     let string = "[" + timecode + "] "
 
-    Array.from(arguments).forEach(arg => {
-        if(typeof(arg) == "string") {
-            string += arg + " "
-        } else {
-            string += arg.toString() + "\n\t "
-        }
-    });
+    try {
+        Array.from(arguments).forEach(arg => {
+            if(typeof(arg) != "object") {
+                string += arg + " "
+            } else {
+                string += arg.toString() + "\n\t "
+            }
+        });
+    } catch (error) {
+        console.log(error)
+    }
+    
     console.log(string)
 
     fs.appendFileSync("logs/log-latest.txt", string + "\n")

@@ -12,7 +12,7 @@ let playerList = new Array()
 function Player(socket, name, num) {
     this.socket = socket
     this.name = name
-    this.money = 200
+    this.money = 1500
     this.deck = new Array()
     this.lastScore = new Array(0, 0)
     this.numberOfDoubles = 0
@@ -90,6 +90,7 @@ Player.prototype.rollDices = function() {
         } else if(this.isJailed == 1) {
             this.pay(50)
             io.emit("freeFromJail", Player.prototype.playerList().indexOf(this), this.canBuild())
+            this.goTo(this.idCase + this.lastScore[0] + this.lastScore[1])
         }
         this.isJailed--
     } else {
@@ -105,10 +106,9 @@ Player.prototype.getTotalLastScore = function() {
 }
 
 Player.prototype.buy = function(property, state) {
-    log("buy")
     switch(state) {
         case 0: //player is on the property
-            log("buy0")
+            log("Player is on property " + property.name)
             if(property.owner === null && property.locator == this) {
                 if(this.money >= property.cost) {
                     this.currentAction = {"function": "buy", "params": [property, 0]}
@@ -125,7 +125,8 @@ Player.prototype.buy = function(property, state) {
         case 1: //player want to buy it
             log("Player want to buy")
             if(property.owner === null && property.locator == this) {
-                this.pay(property.cost).then(() => {
+                if(this.money >= property.cost) { 
+                    this.pay(property.cost)
                     this.deck.push(property)
                     property.owner = this
                     io.emit("changeOwner", Player.prototype.activePlayer, plateau.indexOf(property), true)
@@ -135,17 +136,17 @@ Player.prototype.buy = function(property, state) {
                     }
 
                     io.to(this.socket).emit("canBuild", this.canBuild())
-                }).catch(() => {
+                } else {
                     let auction = new Auction(property)
                     auction.awaitAuctionEnd()
                     io.emit("initiateAuction", plateau.indexOf(property), Math.floor(property.cost / 2))
-                })
+                }
                 
                 
             }
             break
         case 2:
-            log("Player cannot buy")
+            log("Player cannot/don't want to buy")
             let auction = new Auction(property)
             auction.awaitAuctionEnd()
             io.emit("initiateAuction", plateau.indexOf(property), Math.floor(property.cost / 2))
@@ -154,33 +155,39 @@ Player.prototype.buy = function(property, state) {
 }
 
 Player.prototype.pay = function(amount) {
+    let res = 0
     log("Player is paying " + amount)
-    return new Promise((success, fail) => {
-        if(amount <= this.money) {
-            log(this, " : -" + amount)
-            this.money -= amount
-            io.emit("pay", Player.prototype.playerList().indexOf(this), amount)
-            success()
-        } else if(this.getAssets() >= amount) {
+    
+    log(this, " : -" + amount)
+    this.money -= amount
+    io.emit("pay", Player.prototype.playerList().indexOf(this), amount)
+    if(this.money < 0) {
+        if( this.getAssets() >= this.money) {
             log(this, " : Not enough to pay " + amount)
             this.currentAction = {"function": "gatherMoney", "params": [amount]}
-            io.to(this.socket).emit("gatherMoney", amount)
-            this.gatherMoney(amount).then(() => {
-                success()
-            })
+            io.to(this.socket).emit("gatherMoney", this.money * -1)
         } else {
-            fail()
+            this.bankrupcy()
         }
-    })
+    }
+        
 }
 
 Player.prototype.earn = function(amount) {
     this.money += amount
     io.emit("earn", Player.prototype.playerList().indexOf(this), amount)
+    if(this.currentAction !== null && this.currentAction.function == "gatherMoney") {
+        if(this.money >= 0) {
+            this.currentAction = null
+            io.to(this.socket).emit("moneyGathered")
+        } else {
+            io.to(this.socket).emit("gatherMoney", this.money *-1)
+        }
+    }
 }
 
 Player.prototype.getAssets = function() {
-    let assets = this.money
+    let assets = 0
 
     this.deck.forEach(prop => {
         let idProperty = plateau.indexOf(prop)
@@ -202,18 +209,8 @@ Player.prototype.getAssets = function() {
         }
     })
 
+    log("Current assets :",assets)
     return assets
-}
-
-Player.prototype.gatherMoney =  function(amount) {
-    return new Promise(() => {
-        let currentMoney = this.money
-        while(currentMoney < amount) {
-            currentMoney = this.money
-        }
-
-        log("money gathered")
-    })
 }
 
 Player.prototype.goTo = function(idCaseDest) {
@@ -245,9 +242,7 @@ Player.prototype.actionCase = function(caseDest) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this && caseDest.nbBuilds != -1) {
                     let rent = caseDest.getRent()
-                    this.pay(rent).then(() => {
-                        caseDest.owner.earn(rent)
-                    }).catch(this.bankrupcy)
+                    this.pay(rent)
                 }
                 break
             case "station":
@@ -256,9 +251,7 @@ Player.prototype.actionCase = function(caseDest) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
                     let rent = caseDest.getRent()
-                    this.pay(rent).then(() => {
-                        caseDest.owner.earn(rent)
-                    }).catch(this.bankrupcy)
+                    this.pay(rent)
                 }
 
                 break
@@ -268,9 +261,7 @@ Player.prototype.actionCase = function(caseDest) {
                     this.buy(caseDest, 0)
                 } else if(caseDest.owner != this) {
                     let rent = caseDest.getRent()
-                    this.pay(rent).then(() => {
-                        caseDest.owner.earn(rent)
-                    }).catch(this.bankrupcy)
+                    this.pay(rent)
                 }
                 break
             case "start":
@@ -279,9 +270,7 @@ Player.prototype.actionCase = function(caseDest) {
                 break
             case "tax":
                 log("Player is on tax")
-                this.pay(caseDest.getRent()).then(() => {
-                    plateau[Parc.prototype.getParcId()].incrementParcBalance(caseDest.getRent())
-                }).catch(this.bankrupcy)
+                this.pay(caseDest.getRent())
                 break
             case "chance":
                 log("Player is on chance")
@@ -427,7 +416,8 @@ Player.prototype.bankrupcy = function() {
     log(nbBankrupcy + " player(s) bankrupted")
     if(nbBankrupcy == Player.prototype.playerList().length - 1) {
         io.emit("gameOver")
-        io.close()
+        log("Game is over")
+        process.exit(0)
     }
 }
 

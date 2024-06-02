@@ -1,0 +1,98 @@
+Sun-Jun-02-2024-12-05-33
+[12:5:33] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:5:33] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:5:33] Server is running on http://0.0.0.0:8000 
+[12:5:33] user connected : 1aPa7VppwgRiuoyAAAAB 
+[12:5:34] user connected : 5fSLwGjYUTf1rnlSAAAD 
+[12:5:37] user disconnected :  
+[12:5:37] user connected : C_rOoBFlDwdN4x4lAAAF 
+[12:5:38] numDisconnectedPlayer : 1 
+[12:5:38] Avenue de Breteuil true
+	 true
+	 true
+	 
+[12:5:39] user disconnected :  
+[12:5:39] user connected : 0EklIb0HZS9Nz2UdAAAH 
+[12:5:40] numDisconnectedPlayer : 0 
+[12:5:40] Boulevard de Belleville true
+	 true
+	 true
+	 
+[12:5:40] roolDices : Nathan 
+[12:5:40] goto Player = 0EklIb0HZS9Nz2UdAAAH:Nathan ; 200€ ; 22 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 6
+	 
+[12:5:40] actionCase Player = 0EklIb0HZS9Nz2UdAAAH:Nathan ; 200€ ; 22 cards ; 4 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; owner : 0EklIb0HZS9Nz2UdAAAH-Nathan ; locator : 0EklIb0HZS9Nz2UdAAAH-Nathan ; 5 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[12:5:40] Player is on property 
+[12:5:42] endTurn 
+[12:5:44] roolDices : alex 
+[12:5:44] goto Player = C_rOoBFlDwdN4x4lAAAF:alex ; 200€ ; 6 cards ; 4 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 9
+	 
+[12:5:44] actionCase Player = C_rOoBFlDwdN4x4lAAAF:alex ; 200€ ; 6 cards ; 4 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Avenue de la République ; owner : 0EklIb0HZS9Nz2UdAAAH-Nathan ; locator : C_rOoBFlDwdN4x4lAAAF-alex ; 5 build ; cyan ; cost: 120 ; rent: 8,16,40,100,300,450,600 ; mortgage: 60
+	 
+[12:5:44] Player is on property 
+[12:5:44] Taux possede : 3,3 
+[12:5:44] Player is paying 600 
+[12:5:44] Player = C_rOoBFlDwdN4x4lAAAF:alex ; 200€ ; 6 cards ; 4 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -600 
+[12:5:44] Current assets : 935
+	 
+[12:5:44] Player = C_rOoBFlDwdN4x4lAAAF:alex ; -400€ ; 6 cards ; 4 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : Not enough to pay 600 
+[12:5:58] clientMortgage 39 1
+	 
+[12:5:58] true
+	 true
+	 true
+	 
+[12:5:58] Avenue de Breteuil true
+	 true
+	 true
+	 
+[12:6:1] clientMortgage 37 1
+	 
+[12:6:1] true
+	 true
+	 true
+	 
+[12:6:1] Avenue de Breteuil true
+	 true
+	 true
+	 
+[12:6:12] clientMortgage 31 1
+	 
+[12:6:12] true
+	 true
+	 true
+	 
+[12:6:12] Avenue de Breteuil true
+	 true
+	 false
+	 
+[12:6:12] Avenue Foch true
+	 true
+	 false
+	 
+[12:6:12] Boulevard des Capucines true
+	 true
+	 false
+	 
+[12:6:12] Gare Saint-Lazard false
+	 true
+	 false
+	 
+[12:6:12] Avenue des Champs-Elysées true
+	 true
+	 false
+	 
+[12:6:12] Rue de la Paix true
+	 true
+	 false
+	 
+[12:6:21] endTurn 

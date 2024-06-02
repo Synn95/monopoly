@@ -720,9 +720,16 @@ socket.on("notEnoughMoney", function() {
 
 socket.on("gatherMoney", function(amount) {
     console.log("gatherMoney", amount)
+    document.getElementById("buttons").style.display = "none"
     let gatherRemainAmount = document.getElementById("gatherRemainAmount")
     gatherRemainAmount.innerHTML = "<h1>Vous devez encore collecter " + amount + "€</h1>"
     gatherRemainAmount.style.display = ""
+})
+
+socket.on("moneyGathered", function() {
+    console.log("moneyGathered")
+    document.getElementById("buttons").style.display = ""
+    document.getElementById("gatherRemainAmount").style.display = "none"
 })
 
 socket.on("freeFromJail", function(idPlayer, canBuild) {

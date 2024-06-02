@@ -652,12 +652,12 @@ img.button:hover {
     margin: auto;
 }
 
-.ouest .house, .est .house {
+.ouest .house, .est .house, .ouest .hotel, .est .hotel {
     height: 15%;
     width: 70%;
 }
 
-.nord .house, .sud .house {
+.nord .house, .sud .house, .nord .hotel, .sud .hotel {
     height: 70%;
     width: 15%;
 }

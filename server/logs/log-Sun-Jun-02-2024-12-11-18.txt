@@ -1,0 +1,43 @@
+Sun-Jun-02-2024-12-11-18
+[12:11:18] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:11:18] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[12:11:19] Server is running on http://0.0.0.0:8000 
+[12:11:19] user connected : 3TJAOdZDJcubHtRiAAAB 
+[12:11:20] user disconnected :  
+[12:11:20] user connected : -02ujACoel9Cwl0xAAAD 
+[12:11:22] numDisconnectedPlayer : 0 
+[12:11:23] user connected : ON2QCiOk4PqERv7HAAAF 
+[12:11:24] numDisconnectedPlayer : 1 
+[12:11:25] roolDices : Nathan 
+[12:11:27] endTurn 
+[12:11:29] roolDices : alex 
+[12:11:29] goto Player = ON2QCiOk4PqERv7HAAAF:alex ; 200€ ; 0 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 7
+	 
+[12:11:29] actionCase Player = ON2QCiOk4PqERv7HAAAF:alex ; 200€ ; 0 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 [object Object]
+	 
+[12:11:29] Player is on chance 
+[12:11:29] Avancez jusqu'à la case Taxe de Luxe. Si vous passez par la case Départ, recevez 200€ 
+[12:11:29] goto Player = ON2QCiOk4PqERv7HAAAF:alex ; 200€ ; 0 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 38
+	 
+[12:11:29] actionCase Player = ON2QCiOk4PqERv7HAAAF:alex ; 200€ ; 0 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 undefined
+	 
+[12:11:29] Player is on tax 
+[12:11:29] Player is paying 100 
+[12:11:29] Player = ON2QCiOk4PqERv7HAAAF:alex ; 200€ ; 0 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -100 
+[12:11:35] endTurn 
+[12:11:37] roolDices : Nathan 
+[12:11:37] goto Player = -02ujACoel9Cwl0xAAAD:Nathan ; 200€ ; 0 cards ; 4 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 18
+	 
+[12:11:37] actionCase Player = -02ujACoel9Cwl0xAAAD:Nathan ; 200€ ; 0 cards ; 4 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard Saint-Michel ; locator : -02ujACoel9Cwl0xAAAD-Nathan ; 0 build ; orange ; cost: 180 ; rent: 14,28,70,200,550,750,950 ; mortgage: 90
+	 
+[12:11:37] Player is on property 
+[12:11:37] Player is on property Boulevard Saint-Michel 

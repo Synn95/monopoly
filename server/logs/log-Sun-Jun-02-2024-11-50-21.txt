@@ -1,0 +1,47 @@
+Sun-Jun-02-2024-11-50-21
+[11:50:21] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:50:21] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:50:21] Server is running on http://0.0.0.0:8000 
+[11:50:21] user connected : LBeX9JWQmwMMFvCEAAAj 
+[11:50:23] user connected : HlAbMaoyVnYl3rx_AAAl 
+[11:50:24] user disconnected :  
+[11:50:24] user connected : WiEEigAQ7Y4WTVl-AAAn 
+[11:50:24] user disconnected :  
+[11:50:25] user connected : QV7QH7R1lbV9-9U7AAAp 
+[11:50:26] numDisconnectedPlayer : 0 
+[11:50:26] Boulevard de Belleville true
+	 true
+	 true
+	 
+[11:50:27] numDisconnectedPlayer : 1 
+[11:50:27] Avenue de Breteuil true
+	 true
+	 true
+	 
+[11:50:29] roolDices : Nathan 
+[11:50:29] goto Player = WiEEigAQ7Y4WTVl-AAAn:Nathan ; 200€ ; 22 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 7
+	 
+[11:50:29] actionCase Player = WiEEigAQ7Y4WTVl-AAAn:Nathan ; 200€ ; 22 cards ; 5 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 [object Object]
+	 
+[11:50:29] Player is on chance 
+[11:50:29] Allez en prison. Ne franchissez pas la case Départ. Ne recevez pas 200€ 
+[11:50:31] endTurn 
+[11:50:33] roolDices : alex 
+[11:50:33] goto Player = QV7QH7R1lbV9-9U7AAAp:alex ; 200€ ; 6 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 11
+	 
+[11:50:33] actionCase Player = QV7QH7R1lbV9-9U7AAAp:alex ; 200€ ; 6 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Boulevard de La Villette ; owner : WiEEigAQ7Y4WTVl-AAAn-Nathan ; locator : QV7QH7R1lbV9-9U7AAAp-alex ; 5 build ; pink ; cost: 140 ; rent: 10,20,50,150,450,625,750 ; mortgage: 70
+	 
+[11:50:33] Player is on property 
+[11:50:33] Taux possede : 3,3 
+[11:50:33] Player is paying 750 
+[11:50:33] Player = QV7QH7R1lbV9-9U7AAAp:alex ; 200€ ; 6 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -750 
+[11:50:33] bankrupcy for  Player = QV7QH7R1lbV9-9U7AAAp:alex ; -550€ ; 6 cards ; 6 + 5 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[11:50:33] 1 player(s) bankrupted 

@@ -1,0 +1,58 @@
+Sun-Jun-02-2024-11-53-46
+[11:53:46] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:53:46] Player = null:Nathan ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false,Player = null:alex ; 200€ ; 0 cards ; 0 + 0 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 
+[11:53:46] Server is running on http://0.0.0.0:8000 
+[11:53:46] user connected : aIvYgJsnafeWHzqbAAAC 
+[11:53:47] user connected : VHryuIRsW-DGegi1AAAD 
+[11:53:48] user disconnected :  
+[11:53:49] user connected : U66XV5ZI5-1fobYFAAAF 
+[11:53:49] user disconnected :  
+[11:53:49] user connected : y-_Pubp1KsWRur5xAAAH 
+[11:53:50] user disconnected :  
+[11:53:50] user connected : kBdlz-wRM9cZefdmAAAJ 
+[11:53:51] numDisconnectedPlayer : 0 
+[11:53:51] Boulevard de Belleville true
+	 true
+	 true
+	 
+[11:53:52] numDisconnectedPlayer : 1 
+[11:53:52] Avenue de Breteuil true
+	 true
+	 true
+	 
+[11:53:53] roolDices : Nathan 
+[11:53:53] goto Player = y-_Pubp1KsWRur5xAAAH:Nathan ; 200€ ; 22 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 12
+	 
+[11:53:53] actionCase Player = y-_Pubp1KsWRur5xAAAH:Nathan ; 200€ ; 22 cards ; 6 + 6 ; 0 free prison cards ; 0 state for jail ; has rolled dices: false ; is bankrupt: false
+	 Property = company ; Electricité ; owner : y-_Pubp1KsWRur5xAAAH-Nathan ; locator : y-_Pubp1KsWRur5xAAAH-Nathan ; 0 build ; company ; cost: 150 ; rent: null ; mortgage: 75
+	 
+[11:53:53] Player is on company 
+[11:53:55] roolDices : Nathan 
+[11:53:55] goto Player = y-_Pubp1KsWRur5xAAAH:Nathan ; 200€ ; 22 cards ; 3 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 17
+	 
+[11:53:55] actionCase Player = y-_Pubp1KsWRur5xAAAH:Nathan ; 200€ ; 22 cards ; 3 + 2 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 [object Object]
+	 
+[11:53:55] Player is on community 
+[11:53:55] Rendez-vous à la case Départ, mais ne recevez pas votre salaire. 
+[11:53:59] endTurn 
+[11:54:0] roolDices : alex 
+[11:54:0] goto Player = kBdlz-wRM9cZefdmAAAJ:alex ; 200€ ; 6 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 6
+	 
+[11:54:0] actionCase Player = kBdlz-wRM9cZefdmAAAJ:alex ; 200€ ; 6 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 Property = property ; Rue de Vaugirard ; owner : y-_Pubp1KsWRur5xAAAH-Nathan ; locator : kBdlz-wRM9cZefdmAAAJ-alex ; 5 build ; cyan ; cost: 100 ; rent: 6,12,30,90,270,400,550 ; mortgage: 50
+	 
+[11:54:0] Player is on property 
+[11:54:0] Taux possede : 3,3 
+[11:54:0] Player is paying 550 
+[11:54:0] Player = kBdlz-wRM9cZefdmAAAJ:alex ; 200€ ; 6 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	  : -550 
+[11:54:0] bankrupcy for  Player = kBdlz-wRM9cZefdmAAAJ:alex ; -350€ ; 6 cards ; 2 + 4 ; 0 free prison cards ; 0 state for jail ; has rolled dices: true ; is bankrupt: false
+	 
+[11:54:0] 1 player(s) bankrupted 
+[11:54:0] Game is over 

@@ -112,7 +112,7 @@ function ioConnection(socket, io, numberOfPlayers) {
         socket.emit("canBuild", player.canBuild())
 
         io.emit("broadcastPseudo", numPlayer, pseudo)
-        io.emit("clientPlayerList", Player.prototype.getClientPlayerList())
+        io.emit("clientPlayerList", Player.prototype.getClientPlayerList(), numberOfPlayers)
 
         if(Player.prototype.activePlayer < Player.prototype.playerList().length) {
             socket.emit("activePlayer", Player.prototype.activePlayer,

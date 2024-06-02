@@ -9,6 +9,8 @@ const log = require("./log.js")
 const ioConnection = require("./events.js")
 const save = require("./save.js")
 const load = require("./load.js")
+const Player = require("./Player.js")
+const Auction = require("./Auction.js")
 
 const runtimeId = Math.floor(Math.random()*1000000)
 let numberOfPlayers = 0

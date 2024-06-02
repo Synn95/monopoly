@@ -1,4 +1,5 @@
 const socket = io()
+let clientRuntimeId = null
 
 function enterPseudo() {
     let waiting= document.getElementById("waiting")
@@ -18,6 +19,14 @@ function setPlayerPseudo(numPlayer, pseudo) {
 function setPlayerBalance(numPlayer, balance) {
     document.querySelector("[data-num='"+numPlayer+"'].player .balance").innerText = balance + "€"
 }
+
+socket.on("runtimeId", function(runtimeId) {
+    if(clientRuntimeId == null) {
+        clientRuntimeId = runtimeId
+    } else if(clientRuntimeId != runtimeId) {
+        location.reload()
+    }
+})
 
 socket.on("numPlayer", function(num) {
     console.log("player number received : " + num)

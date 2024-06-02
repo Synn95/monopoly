@@ -1,3 +1,0 @@
-Fri-May-31-2024-17-07-12
-[17:7:12] Server is running on http://0.0.0.0:8000 
-[17:7:12] user connected : 3AGo8W4WP86aBs6FAAAB 

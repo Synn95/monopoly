@@ -1,3 +1,4 @@
+const prompt = require("prompt-sync")({ sigint: true });
 const fs = require("fs");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -6,11 +7,14 @@ const port = 8000;
 
 const log = require("./log.js")
 const ioConnection = require("./events.js")
+const save = require("./save.js")
+const load = require("./load.js")
 const Player = require("./Player.js");
 const Auction = require("./Auction.js");
 
 const plateau = require("./plateau.js")
 
+const runtimeId = Math.floor(Math.random()*1000000)
 
 /*
 function getPropertyByIdCase(id) {
@@ -23,6 +27,15 @@ function getPropertyByIdCase(id) {
     return i
 }
 */
+
+let saveNum = -1
+
+function endGame() {
+    io.emit("gameOver")
+    log("Game is over")
+    fs.rm("saves/save"+saveNum+".json")
+    process.exit(0)
+}
 
 
 
@@ -74,29 +87,40 @@ const requestListener = function (req, res) {
 }
 
 
-// ------------Scenario de test--------------
-let test = new Player(null, "Nathan", 0)
-let test1 = new Player(null, "alex", 1)
-let testPropArray = [1,3,5,6,8,9,11,12,13,14,15,16,18,19,21,23,24,25,26,27,28,29]
-let test1PropArray = [31,32,34,35,37,39]
-testPropArray.forEach(element => {
-    if(plateau[element].type == "property") {
-        plateau[element].nbBuilds = 5
-    }
-    plateau[element].owner = test
-    test.deck.push(plateau[element])
-});
-test1PropArray.forEach(element => {
-    plateau[element].owner = test1
-    test1.deck.push(plateau[element])
-})
-
-
-
-
 const server = http.createServer(requestListener);
 const io = new Server(server)
 
+
+let saveFiles = fs.readdirSync("saves")
+if(saveFiles.length > 0) {
+    console.log("Please choose a save file :")
+    console.log("0 -> New Game")
+    for(let i = 0 ; i < saveFiles.length ; i++) {
+        let save = require("./saves/save"+i+".json")
+        let date = new Date(save.date)
+        console.log((i+1) + " -> " + date.toUTCString())
+    }
+
+    let answer = "-1"
+    while(Number.parseInt(answer) < 0 || Number.parseInt(answer) > saveFiles.length) {
+        answer = prompt()
+    }
+
+    if(answer == 0) {
+        log("Loading new save")
+        save(saveFiles.length)
+        saveNum = saveFiles.length
+    } else {
+        log("Loading save n°" + answer-1)
+        load(answer-1)
+        save(answer-1)
+        saveNum = answer-1
+    }
+} else {
+    log("Loading new save")
+    save(0)
+    saveNum = 0
+}
 
 server.listen(port, host, () => {
     log(`Server is running on http://${host}:${port}`);
@@ -106,5 +130,10 @@ server.listen(port, host, () => {
 io.on("connection", (socket) => {
     Auction.prototype.setIo(io)
     Player.prototype.setIo(io)
+
+    socket.emit("runtimeId", runtimeId)
     ioConnection(socket, io)
 })
+
+
+module.exports = endGame

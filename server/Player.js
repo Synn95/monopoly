@@ -5,6 +5,7 @@ const Jail = require("./Jail.js")
 const Auction = require("./Auction.js")
 const log = require("./log.js")
 const plateau = require("./plateau.js")
+const endGame = require("./run.js")
 
 let io = null
 let playerList = new Array()
@@ -415,9 +416,7 @@ Player.prototype.bankrupcy = function() {
 
     log(nbBankrupcy + " player(s) bankrupted")
     if(nbBankrupcy == Player.prototype.playerList().length - 1) {
-        io.emit("gameOver")
-        log("Game is over")
-        process.exit(0)
+        endGame()
     }
 }
 

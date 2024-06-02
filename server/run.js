@@ -90,7 +90,9 @@ const requestListener = function (req, res) {
 const server = http.createServer(requestListener);
 const io = new Server(server)
 
-
+if(!fs.existsSync("./saves")) {
+    fs.mkdirSync("saves")
+}
 let saveFiles = fs.readdirSync("saves")
 if(saveFiles.length > 0) {
     console.log("Please choose a save file :")

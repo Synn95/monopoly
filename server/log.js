@@ -1,6 +1,9 @@
 const fs = require("fs");
 
 function initiateLog() {
+    if(!fs.existsSync("./saves")) {
+        fs.mkdirSync("logs")
+    }
     if(fs.existsSync("logs/log-latest.txt")) {
         let data = fs.readFileSync("logs/log-latest.txt", 'utf8')
         let previousDate = data.slice(0, data.indexOf("\n"))

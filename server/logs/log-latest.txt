@@ -1,3 +1,0 @@
-Sun-Jun-02-2024-18-20-30
-[18:20:30] Loading new save 
-[18:20:30] Server is running on http://0.0.0.0:8000 

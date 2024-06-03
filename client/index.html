@@ -227,14 +227,29 @@
         </div>
     </div>
 
-    <div id="events">
-        <div id="eventsTransparency">
+    <div id="left">
+        <div id="events">
+            <div id="eventsTransparency">
+            </div>
         </div>
-    </div>
 
-    <div id="dices" style="display: none;">
-        <img src="" alt="1er dé" id="firstDice">
-        <img src="" alt="2er dé" id="secondDice">
+        <div id="bottomLeft">
+            <div id="dices" style="display: none;">
+                <img src="" alt="1er dé" id="firstDice">
+                <img src="" alt="2er dé" id="secondDice">
+            </div>
+            <div id="buttons" style="display: none;">
+                <img src="img/icons8-add-home-64.png" alt="Acheter des maisons" class="button" id="addBuild" title="Acheter des maisons" style="display: none;" onclick="buildMode(0)">
+                <img src="img/icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger" onclick="tradeChoosePlayer()">
+                <img src="img/icons8-euro-64.png" alt="Payer 50€" class="button" id="payFreePrison" title="Payer 50€" onclick="payFreePrison()" style="display: none;">
+                <img src="img/icons8-red-card-60.png" alt="Utiliser une carte sortie de prison" class="button" id="useFreeCard" title="Utiliser une carte sortie de prison" onclick="useFreeCard()" style="display: none;">
+                <img src="img/icons8-dice-60.png" alt="Lancer les dés" class="button" id="rollDices" title="Lancer les dés" onclick="rollDices()" style="display: none;">
+                <img src="img/icons8-end-60.png" alt="Fin du tour" class="button" id="endTurn" title="Finir le tour" onclick="endTurn()" style="display: none;">
+                <img src="img/icons8-remove-home-64.png" alt="Vendre des maisons" class="button" id="removeBuild" title="Vendre des maisons" style="display: none;" onclick="buildMode(1)">
+            </div>
+        </div>
+        
+        
     </div>
 
     <div id="plateau">
@@ -242,6 +257,13 @@
             <img src="img/monopoly.png" alt="Monopoly">
         </div>
 
+        <div class="pion" data-num="0"></div>
+        <div class="pion" data-num="1"></div>
+        <div class="pion" data-num="2"></div>
+        <div class="pion" data-num="3"></div>
+    </div>
+
+    <div id="right">
         <div class="player active" data-num="0">
             <div class="pseudo">Joueur1</div>
             <div class="balance">1500€</div>
@@ -257,21 +279,6 @@
         <div class="player" data-num="3">
             <div class="pseudo">Joueur4</div>
             <div class="balance">1500€</div>
-        </div>
-
-        <div class="pion" data-num="0"></div>
-        <div class="pion" data-num="1"></div>
-        <div class="pion" data-num="2"></div>
-        <div class="pion" data-num="3"></div>
-      
-        <div id="buttons" style="display: none;">
-            <img src="img/icons8-add-home-64.png" alt="Acheter des maisons" class="button" id="addBuild" title="Acheter des maisons" style="display: none;" onclick="buildMode(0)">
-            <img src="img/icons8-trade-48.png" alt="Echanger" class="button" id="trade" title="Echanger" onclick="tradeChoosePlayer()">
-            <img src="img/icons8-euro-64.png" alt="Payer 50€" class="button" id="payFreePrison" title="Payer 50€" onclick="payFreePrison()" style="display: none;">
-            <img src="img/icons8-red-card-60.png" alt="Utiliser une carte sortie de prison" class="button" id="useFreeCard" title="Utiliser une carte sortie de prison" onclick="useFreeCard()" style="display: none;">
-            <img src="img/icons8-dice-60.png" alt="Lancer les dés" class="button" id="rollDices" title="Lancer les dés" onclick="rollDices()" style="display: none;">
-            <img src="img/icons8-end-60.png" alt="Fin du tour" class="button" id="endTurn" title="Finir le tour" onclick="endTurn()" style="display: none;">
-            <img src="img/icons8-remove-home-64.png" alt="Vendre des maisons" class="button" id="removeBuild" title="Vendre des maisons" style="display: none;" onclick="buildMode(1)">
         </div>
     </div>
 

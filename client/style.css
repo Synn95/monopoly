@@ -24,16 +24,62 @@
 
 body {
     display: flex;
-    align-items: center;
+    align-items: start;
+    margin: 0;
+    justify-content: space-between;
+}
+
+
+#left {
+    width: 25vw;
+    height: 100vh;
+
+    display: flex;
     flex-direction: column;
+    justify-content: space-between;
+}
+
+#bottomLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#events {
+    overflow: scroll;
+    height: 70vh;
+}
+
+#eventsTransparency {
+    position: absolute;
+    height: 50%;
+    width: 25vw;
+    bottom: 30vh;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, white);
+}
+
+.event {
+    display: flex;
+    gap: 10px;
+
+    background-color: gainsboro;
+    padding: 20px;
+    font-size: 0.7em;
+    font-family: monopoly;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px 10px;
+    transform: translateX(-110%);
+
+    animation: showInfoCard 200ms ease-in-out forwards;
+}
+
+.hideEvent {
+    animation: hideInfoCard 200ms ease-in-out forwards;
 }
 
 #dices {
-    position: absolute;
-    bottom: 0px;
-    top: 0px;
-    left: 0px;
-    right: 0px;
     margin: auto;
     width: fit-content;
     height: fit-content;
@@ -48,6 +94,89 @@ body {
     height: 100px;
     width: 100px;
 }
+
+#buttons {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#buttons button {
+    max-height: 100%;
+}
+
+#buttons * {
+    cursor: pointer;
+}
+
+img.button {
+    height: 33px;
+    margin: auto;
+    background-color: gainsboro;
+    padding: 10px;
+    border: 1px solid #e9e9ed;
+    border-radius: 7px;
+}
+
+img.button:hover {
+    background-color: #d0d0d7;
+}
+
+
+#right {
+    width: 25vw;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    overflow: scroll;
+    max-height: calc(100vh - 20px);
+}
+
+.player {
+    border: solid black 2px;
+    border-radius: 10px;
+    font-family: monopoly;
+    width: calc(100% - 20px)
+}
+
+.player[data-num="0"] {
+    background-color: var(--player-1-color);
+}
+
+.player[data-num="1"] {
+    background-color: var(--player-2-color);
+}
+
+.player[data-num="2"] {
+    background-color: var(--player-3-color);
+}
+
+.player[data-num="3"] {
+    background-color: var(--player-4-color);
+}
+
+.player.active {
+    border-color: springgreen;
+}
+
+.pseudo {
+    margin: 10px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 93%;
+}
+
+.balance {
+    font-size: 0.9em;
+    text-align: right;
+    margin-right: 10px;
+}
+
+
 
 #plateau {
     background-color: green;
@@ -300,53 +429,6 @@ h2 {
 
 
 
-.player {
-    border: solid black 2px;
-    border-radius: 10px;
-    font-family: monopoly;
-}
-
-.player[data-num="0"] {
-    grid-area: 3 / 3 / 4 / 6;
-    background-color: var(--player-1-color);
-}
-
-.player[data-num="1"] {
-    grid-area: 3 / 7 / 4 / 10;
-    background-color: var(--player-2-color);
-}
-
-.player[data-num="2"] {
-    grid-area: 9 / 3 / 10 / 6;
-    background-color: var(--player-3-color);
-}
-
-.player[data-num="3"] {
-    grid-area: 9 / 7 / 10 / 10;
-    background-color: var(--player-4-color);
-}
-
-.player.active {
-    border-color: springgreen;
-}
-
-.pseudo {
-    margin: 10px;
-    font-size: 0.9em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 93%;
-}
-
-.balance {
-    font-size: 0.9em;
-    text-align: right;
-    margin-right: 10px;
-}
-
-
-
 
 #newGame {
     position: fixed;
@@ -357,6 +439,8 @@ h2 {
     top: -10px;
     display: flex;
     flex-direction: column;
+
+    display: none;
 }
 
 #newGame h1, #tradeWin h1 {
@@ -532,77 +616,8 @@ button, input {
     right: 60px;
 }
 
-#buttons {
-    grid-area: 7 / 2 / 8 / 11;
-    display: flex;
-    justify-content: space-around;
-}
 
-#buttons button {
-    max-height: 100%;
-}
 
-#buttons * {
-    cursor: pointer;
-}
-
-img.button {
-    height: 33px;
-    margin: auto;
-    background-color: gainsboro;
-    padding: 10px;
-    border: 1px solid #e9e9ed;
-    border-radius: 7px;
-}
-
-img.button:hover {
-    background-color: #d0d0d7;
-}
-
-#events {
-    position: fixed;
-    z-index: 3;
-    top: 10px;
-    left: 0;
-    max-width: 25%;
-    max-height: 300px;
-}
-
-#eventsTransparency {
-    height: 300px;
-    overflow: hidden;
-    position: relative;
-}
-
-#eventsTransparency::after {
-    content: "";
-    position: absolute;
-    height: 50%;
-    width: 100%;
-    bottom: 0;
-    pointer-events: none;
-    background: linear-gradient(to bottom, transparent, white);
-}
-
-.event {
-    display: flex;
-    gap: 10px;
-
-    background-color: gainsboro;
-    padding: 20px;
-    font-size: 0.7em;
-    font-family: monopoly;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 10px 10px;
-    transform: translateX(-110%);
-
-    animation: showInfoCard 200ms ease-in-out forwards;
-}
-
-.hideEvent {
-    animation: hideInfoCard 200ms ease-in-out forwards;
-}
 
 @keyframes showInfoCard {
     0% {

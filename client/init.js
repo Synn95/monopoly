@@ -352,6 +352,8 @@ function checkBidSubmit(e) { //Pour la validation du pseudo avec la touche entr√
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    document.body.style.minWidth = Math.floor(window.innerHeight*2.1849217638691325)+"px"
+
     //cr√©ation du plateau et des cases
     creerPlateau()
 
@@ -370,4 +372,7 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 })
 
-window.onresize = initTaillePlateau;
+window.addEventListener("resize", function() {
+    initTaillePlateau()
+    document.body.style.minWidth = Math.floor(window.innerHeight*2.1849217638691325)+"px"
+});

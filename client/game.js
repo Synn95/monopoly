@@ -1,5 +1,4 @@
 let player = null
-let timeoutFunction = null
 
 function sleep(ms) { //Use : await sleep(ms);
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -229,35 +228,21 @@ async function movePlayer(playerId, caseDest, backward) {
 function createDisplayCard(innerHTML) {
     let displayCard = document.createElement("div")
     let closeDisplayCard = document.createElement("img")
+    let events = document.getElementById("events")
 
     displayCard.classList.add("event")
     displayCard.innerHTML = innerHTML
 
     closeDisplayCard.src = "img/icons8-close-48.png"
     closeDisplayCard.addEventListener("click", async function() {
-        document.querySelector(".event").classList.add("hideEvent") 
+        displayCard.classList.add("hideEvent") 
         await sleep(200)
-        document.querySelector(".event").remove()
+        displayCard.remove()
     })
 
     displayCard.appendChild(closeDisplayCard)
-    document.getElementById("eventsTransparency").appendChild(displayCard)
+    events.insertBefore(displayCard, events.firstChild)
 
-    if(timeoutFunction == null) {
-        timeoutFunction = setInterval(showHideDisplayCard, 1200)
-    }
-}
-
-async function showHideDisplayCard() {
-    if(document.getElementById("eventsTransparency").children.length == 1) {
-        clearInterval(timeoutFunction)
-        timeoutFunction = null
-    } else {
-        await sleep(1000)
-        document.querySelector(".event").classList.add("hideEvent") 
-        await sleep(200)
-        document.querySelector(".event").remove()
-    }
 }
 
 function mortgage() {

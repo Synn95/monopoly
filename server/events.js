@@ -75,7 +75,7 @@ function ioConnection(socket, io, numberOfPlayers) {
             log("currentAction :")
             switch(activePlayer.currentAction.function) {
                 case "buy":
-                    activePlayer.buy(activePlayer.currentAction.params[0], activePlayer.currentAction.params[1])
+                    activePlayer.buy(plateau[activePlayer.currentAction.params[0]], activePlayer.currentAction.params[1])
                     break
                 case "gatherMoney":
                     if(activePlayer.socket == socket.id) {

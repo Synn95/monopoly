@@ -352,7 +352,11 @@ function checkBidSubmit(e) { //Pour la validation du pseudo avec la touche entr√
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.body.style.minWidth = Math.floor(window.innerHeight*2.1849217638691325)+"px"
+    if(window.matchMedia("(orientation: landscape)").matches) {
+        document.body.style.minWidth = Math.floor(window.innerHeight*2.1849217638691325)+"px"
+    } else {
+        document.body.style.minHeight = ""
+    }
 
     //cr√©ation du plateau et des cases
     creerPlateau()
@@ -374,5 +378,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 window.addEventListener("resize", function() {
     initTaillePlateau()
-    document.body.style.minWidth = Math.floor(window.innerHeight*2.1849217638691325)+"px"
+    if(window.matchMedia("(orientation: landscape)").matches) {
+        document.body.style.minWidth = Math.floor(window.innerHeight*2.1849217638691325)+"px"
+    } else {
+        document.body.style.minHeight = ""
+    }
 });

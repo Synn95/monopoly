@@ -112,7 +112,7 @@ Player.prototype.buy = function(property, state) {
             log("Player is on property " + property.name)
             if(property.owner === null && property.locator == this) {
                 if(this.money >= property.cost) {
-                    this.currentAction = {"function": "buy", "params": [property, 0]}
+                    this.currentAction = {"function": "buy", "params": [plateau.indexOf(property), 0]}
                     io.emit("buy", plateau.indexOf(property))
                 } else {
                     let auction = new Auction(property)
@@ -156,7 +156,6 @@ Player.prototype.buy = function(property, state) {
 }
 
 Player.prototype.pay = function(amount) {
-    let res = 0
     log("Player is paying " + amount)
     
     log(this, " : -" + amount)
@@ -244,6 +243,7 @@ Player.prototype.actionCase = function(caseDest) {
                 } else if(caseDest.owner != this && caseDest.nbBuilds != -1) {
                     let rent = caseDest.getRent()
                     this.pay(rent)
+                    caseDest.owner.earn(rent)
                 }
                 break
             case "station":
@@ -253,6 +253,8 @@ Player.prototype.actionCase = function(caseDest) {
                 } else if(caseDest.owner != this) {
                     let rent = caseDest.getRent()
                     this.pay(rent)
+                    caseDest.owner.earn(rent)
+
                 }
 
                 break
@@ -263,6 +265,8 @@ Player.prototype.actionCase = function(caseDest) {
                 } else if(caseDest.owner != this) {
                     let rent = caseDest.getRent()
                     this.pay(rent)
+                    caseDest.owner.earn(rent)
+
                 }
                 break
             case "start":

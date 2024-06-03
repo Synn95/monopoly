@@ -1,0 +1,815 @@
+@font-face {
+    font-family: Monopoly;
+    src: url("./Monopoly.ttf");
+}
+
+@font-face {
+    font-family: Coolvetica;
+    src: url("./coolvetica.otf");
+}
+
+:root {
+    --player-1-color: #e72b2b;
+    --player-2-color: #2be7c5;
+    --player-3-color: #b72be7;
+    --player-4-color: #31e72b;
+}
+
+.verticalLine {
+    border-left: 4px solid black;
+    height: 30%;
+    margin: 0 15px;
+    padding: 15% 0px;
+}
+
+body {
+    display: flex;
+    align-items: start;
+    margin: 0;
+    justify-content: space-between;
+}
+
+#left {
+    width: 25vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#bottomLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#events {
+    overflow: scroll;
+    height: 50vh;
+}
+
+#eventsTransparency {
+    position: absolute;
+    height: 50%;
+    width: 25vw;
+    top: 8vh;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, white);
+}
+
+.event {
+    display: flex;
+    gap: 10px;
+
+    background-color: gainsboro;
+    padding: 20px;
+    font-size: 0.5em;
+    font-family: monopoly;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px 10px;
+    transform: translateX(-110%);
+
+    animation: showInfoCard 200ms ease-in-out forwards;
+}
+
+.hideEvent {
+    animation: hideInfoCard 200ms ease-in-out forwards;
+}
+
+#dices {
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+#dices img {
+    height: 50px;
+    width: 50px;
+}
+
+#buttons {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#buttons button {
+    max-height: 100%;
+}
+
+#buttons * {
+    cursor: pointer;
+}
+
+img.button {
+    height: 33px;
+    margin: auto;
+    background-color: gainsboro;
+    padding: 10px;
+    border: 1px solid #e9e9ed;
+    border-radius: 7px;
+}
+
+img.button:hover {
+    background-color: #d0d0d7;
+}
+
+
+#right {
+    width: 25vw;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    overflow: scroll;
+    max-height: calc(100vh - 20px);
+}
+
+.player {
+    border: solid black 2px;
+    border-radius: 10px;
+    font-family: monopoly;
+    width: calc(100% - 20px)
+}
+
+.player[data-num="0"] {
+    background-color: var(--player-1-color);
+}
+
+.player[data-num="1"] {
+    background-color: var(--player-2-color);
+}
+
+.player[data-num="2"] {
+    background-color: var(--player-3-color);
+}
+
+.player[data-num="3"] {
+    background-color: var(--player-4-color);
+}
+
+.player.active {
+    border-color: springgreen;
+}
+
+.pseudo {
+    margin: 10px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 93%;
+}
+
+.balance {
+    font-size: 0.9em;
+    text-align: right;
+    margin-right: 10px;
+}
+
+
+
+#plateau {
+    background-color: green;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(9, 1fr) 1.5fr;
+    grid-template-rows: 1.5fr repeat(9, 1fr) 1.5fr;
+}
+
+.case {
+    background-color: bisque;
+    border: 1px black solid;
+
+    display: grid;
+}
+
+.bodyCase, .headerCase {
+    text-align: center;
+    font-size: 0.2em;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    min-width: 20%;
+
+    grid-column: 1 / 2;
+}
+
+.headerCase {
+    grid-row: 1 / 2;
+}
+
+.ouest .headerCase, .est .headerCase {
+    flex-direction: column;
+}
+
+.nord .headerCase, .sud .headerCase {
+    flex-direction: row;
+}
+
+.bodyCase {
+    grid-row: 2 / 3;
+}
+
+.nord {
+    grid-template-rows: 2fr 8fr;
+    grid-template-columns: 1fr;
+
+    rotate: 180deg;
+}
+
+.sud {
+    grid-template-rows: 2fr 8fr;
+    grid-template-columns: 1fr;
+}
+
+.station.sud .bodyCase, .station.nord .bodyCase,
+.company.sud .bodyCase, .company.nord .bodyCase,
+.chance.sud .bodyCase, .chance.nord .bodyCase,
+.community.sud .bodyCase, .community.nord .bodyCase,
+.tax.sud .bodyCase, .tax.nord .bodyCase {
+    grid-row: 1 / span 3;
+}
+
+.ouest {
+    grid-template-columns: 8fr 2fr;
+    grid-template-rows: 1fr;
+}
+
+.ouest .headerCase {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.ouest .bodyCase {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    max-height: min-content;
+    min-height: fit-content;
+    align-self: center;
+}
+
+.est {
+    grid-template-columns: 2fr 8fr;
+    grid-template-rows: 1fr;
+}
+
+.est .bodyCase {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    rotate: 180deg;
+    max-height: min-content;
+    min-height: fit-content;
+    align-self: center;
+    grid-column: 2/3;
+    grid-row: 1 / 2;
+}
+
+.est .bodyCase img {
+    margin: auto;
+    max-height: 70%;
+    rotate: 90deg;
+}
+
+.ouest .bodyCase img {
+    margin: auto;
+    max-height: 70%;
+    rotate: 90deg;
+}
+
+.sud .bodyCase img, .nord .bodyCase img  {
+    max-width: 70%;
+    margin: auto;
+}
+
+.station.ouest .bodyCase, .station.est .bodyCase, 
+.company.ouest .bodyCase, .company.est .bodyCase,
+.chance.ouest .bodyCase, .chance.est .bodyCase,
+.community.ouest .bodyCase, .community.est .bodyCase,
+.tax.ouest .bodyCase, .tax.est .bodyCase {
+    grid-column: 1 / span 3;
+}
+
+.company, .property, .station {
+    cursor: pointer;
+}
+
+.case[data-owner="0"] {
+    background-color: var(--player-1-color);
+}
+.case[data-owner="1"] {
+    background-color: var(--player-2-color);
+}
+.case[data-owner="2"] {
+    background-color: var(--player-3-color);
+}
+.case[data-owner="3"] {
+    background-color: var(--player-4-color);
+}
+
+
+
+.coin {
+    background-color: cadetblue;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    rotate: 0deg;
+}
+
+.coin .bodyCase {
+    grid-column: 1 / span 3;
+}
+
+#logo {
+    grid-row: 2 / -2;
+    grid-column: 2 / -2;
+    display: flex;
+}
+
+#logo img {
+    width: 80%;
+    margin: auto;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+#cartes {
+    position: fixed;
+    height: 355px;
+    width: 355px;
+    z-index: 4;
+
+    top: -10px;
+    padding: 20px;
+}
+
+#cartes img {
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+#carteProp, #carteStation, #carteCompany {
+    background-color: white;
+    border: 2px black solid;
+    border-radius: 10px;
+
+    height: 280px;
+    width: 220px;
+    font-size: 82%;
+
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    font-family: "Monopoly"
+}
+
+#cartes .text {
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+#cartes hr {
+    margin: 10px;
+}
+
+#cartes .head, #fermerCarte{
+    margin: 10px;
+    border-radius: 10px;
+    font-size: 0.7em;
+    text-align: center;
+
+    font-family: "Coolvetica"
+}
+
+#fermerCarte {
+    background: red;
+    border: black 1px solid;
+    padding: 10px;
+    cursor: pointer;
+    width: 50%;
+}
+
+#cartesBoutons {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+#mortgageButton {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    border: 2px solid black;
+}
+
+#carteChance, #carteCommunity {
+    background-color: white;
+    border: 2px black solid;
+    border-radius: 10px;
+    height: 220px;
+    width: 355px;
+    display: flex;
+    flex-direction: row;
+    margin: auto 0;
+    font-family: "Monopoly";
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    padding: 10px;
+}
+
+
+
+
+#newGame {
+    position: fixed;
+    z-index: 5;
+    background-color: rgba(0,0,0,0.4);
+    height: 110%;
+    width: 100%;
+    top: -10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#newGame h1, #tradeWin h1 {
+    margin: 10px;
+    text-align: center;
+    font-family: monopoly;
+}
+
+button, input {
+    margin: 5px;
+    font-family: monopoly;
+    font-size: 1.5em;
+}
+
+.fenetre {
+    margin: auto;
+    background-color: white;
+    display: flex;
+    border-radius: 5px;
+}
+
+#playerIsDisconnected {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#tradeWin {
+    position: fixed;
+    z-index: 4;
+    background-color: rgba(0,0,0,0.4);
+    height: 105%;
+    width: 100%;
+    top: -10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#closeTradeWin {
+    height: 60px;
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+}
+
+#choosePlayer, #choosePossessions, #waitTradeAnswer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#choosePlayer .player {
+    padding: 20px;
+    margin: 5px;
+    font-size: larger;
+    cursor: pointer;
+    width: 40%;
+    text-align: center;
+}
+
+#choosePlayer .player:hover {
+    border-color: white;
+    color: white;
+}
+
+#choosePossessions, #waitTradeAnswer {
+    min-height: 50%;
+    justify-content: space-between;
+    max-height: 89%;
+}
+
+.possessions {
+    max-height: 80%;
+    width: 45%;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#possessionsLists {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    height: 75%;
+}
+
+#possessionsLists .player {
+    text-align: center;
+    padding: 10px;
+    font-size: 1.5em;
+    font-weight: bolder;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#possessionsLists .player input {
+    font-size: 1em;
+    width: 30%;
+    margin: 0;
+}
+
+.aPossession {
+    text-align: center;
+    font-family: Coolvetica;
+    font-size: larger;
+    border-radius: 20px;
+    padding: 5px;
+
+    border: solid 3px;
+}
+
+.aPossession[data-selected=true] {
+    background-color: green;
+}
+
+#choosePossessions .aPossession:hover {
+    background: rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+
+.casePion {
+    grid-row: 2 / 3 ;
+    grid-column: 1/2;
+    z-index: 2;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.ouest .casePion {
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+.est .casePion {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+.pion, .pionDisplayCard {
+    width: 15px;
+    height: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.pion[data-num="0"], .pionDisplayCard[data-num="0"] {
+    background-color: var(--player-1-color);
+    bottom: 0px;
+    right: 35px;
+}
+.pion[data-num="1"], .pionDisplayCard[data-num="1"] {
+    background-color: var(--player-2-color);
+    bottom: 0px;
+    right: 60px;
+}
+.pion[data-num="2"], .pionDisplayCard[data-num="2"] {
+    background-color: var(--player-3-color);
+    bottom: 24px;
+    right: 35px;
+}
+.pion[data-num="3"], .pionDisplayCard[data-num="3"] {
+    background-color: var(--player-4-color);
+    bottom: 24px;
+    right: 60px;
+}
+
+
+
+
+@keyframes showInfoCard {
+    0% {
+        transform: translateX(-110%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes hideInfoCard {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-110%);
+    }
+}
+
+
+
+
+
+.event * {
+    margin: auto 0;
+}
+
+.event img {
+    position: absolute;
+    height: 25px;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.pay {
+    color: red;
+}
+
+.earn {
+    color: green;
+}
+
+.house {
+    background-color: green;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.ouest .house, .est .house, .ouest .hotel, .est .hotel {
+    height: 15%;
+    width: 70%;
+}
+
+.nord .house, .sud .house, .nord .hotel, .sud .hotel {
+    height: 70%;
+    width: 15%;
+}
+
+.hotel {
+    height: 70%;
+    width: 15%;
+    background-color: red;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.case.canBuyBuild::before, .case.canSellBuild::before {
+    content: attr(buildPrice);
+    background-color: gainsboro;
+    position: absolute;
+    padding: 10px;
+    justify-self: center;
+    align-self: end;
+    margin: 3px;
+    border-radius: 10px;
+    font-family: monopoly;
+    border: 1px solid black;
+    z-index: 3;
+}
+
+.mortgage .bodyCase{
+    background-color: black;
+    font-size: 0.2em;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20%;
+}
+
+.mortgage h1 {
+    color: white;
+}
+
+/* .mortgage h2 {
+    color: red;
+    rotate: 45deg;
+} */
+
+.mortgage .bodyCase::after {
+    content: "HYPOTHEQUE";
+    rotate: 45deg;
+    color: red;
+    font-size: 3em;
+    position: absolute;
+    bottom: 20px;
+    align-self: center;
+}
+
+.ouest.mortgage .bodyCase::after {
+    bottom: initial;
+    transform: translate(-35px, 35px)
+}
+
+.est.mortgage .bodyCase::after {
+    bottom: initial;
+    transform: translate(-25px, 25px)
+}
+
+#cartesEncheres {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+}
+
+#auctionTimer {
+    background: white;
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    top: 10px;
+    left: 25px;
+}
+
+#currentBid {
+    background: white;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 70% ;
+}
+
+#inputBid {
+    width: 20%;
+}
+
+#submitBid {
+    display:  none;
+}
+
+#deniedAuction {
+    border-radius: 20px;
+    background-color: #ff8080;
+    color: red;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+}
+
+#gatherRemainAmount {
+    position: absolute;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.bodyCase h1 {
+    display: none;
+}
+
+.bodyCase h2 {
+    justify-self: end;
+}
+
+
+#verticalWarn {
+    display: none;
+}

@@ -16,6 +16,8 @@ function afficherCarte(idProperty, canClose) {
         let cartes = document.getElementById("cartes")
         cartes.style.height = "100%"
         cartes.style.width = "100%"
+        cartes.style.left = ""
+
         cartes.style.backgroundColor = "rgba(0,0,0,0.4)"
         document.getElementById("fermerCarte").style.display = "none"
         document.getElementById("mortgageButton").style.display = "none"
@@ -159,6 +161,7 @@ function closeMenu() {
     cartes.style.display = "none"
     cartes.style.height = "355px"
     cartes.style.width = "355px"
+    cartes.style.left = "calc(50% - 395px/2)"
     cartes.style.backgroundColor = ""
 }
 

@@ -38,12 +38,8 @@ Auction.prototype.awaitAuctionEnd = async function() {
     log("end of timer")
 
     if(this.lastPlayer != null) {
-        let resPay = await this.lastPlayer.pay(this.bid)
-        if(resPay == 0) {
-            this.property.owner = this.lastPlayer
-        } else {
-            this.lastPlayer.bankrupcy()
-        }
+       this.lastPlayer.pay(this.bid)
+       this.property.owner = this.lastPlayer
 
         log("End of auction :", this)
         io.emit("endAuction", this.lastPlayer.getId(), plateau.indexOf(this.property), this.bid)

@@ -326,12 +326,14 @@ img.button:hover {
 }
 
 #logo {
-    grid-row: 3 / 7;
+    grid-row: 2 / -2;
     grid-column: 2 / -2;
+    display: flex;
 }
 
 #logo img {
     width: 100%;
+    margin: auto;
 }
 
 h2 {
@@ -439,8 +441,6 @@ h2 {
     top: -10px;
     display: flex;
     flex-direction: column;
-
-    display: none;
 }
 
 #newGame h1, #tradeWin h1 {
@@ -787,4 +787,10 @@ button, input {
     background: white;
     border: 1px solid black;
     border-radius: 20px;
+}
+
+
+
+#verticalWarn {
+    display: none;
 }

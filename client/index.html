@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monopoly</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css" media="screen and (min-width: 1536px) and (orientation: landscape)">
+    <link rel="stylesheet" href="style2.css" media="screen and (max-width: 1408px) and (min-width: 1184px) and (orientation: landscape)">
+    <link rel="stylesheet" href="style3.css" media="screen and (max-width: 1184px) and (orientation: landscape)">
+    <link rel="stylesheet" href="style4.css" media="screen and (orientation: portrait)">
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="socket.js"></script>
     <script src="init.js" defer></script>
     <script src="game.js" defer></script>
 </head>
 <body>
+    <h1 id="verticalWarn">Tournez votre ecran</h1>
+
     <div id="newGame">
         <div class="fenetre" id="waiting">
             <h1>Veuillez patienter...</h1>
@@ -86,7 +91,7 @@
         </div>
     </div>
 
-    <div id="cartes" style="display: none;">
+    <div id="cartes" style="display: none; left: calc(50% - 395px/2);">
         <div id="carteProp" style="display: none;">
             <div class="head">
                 <h1></h1>

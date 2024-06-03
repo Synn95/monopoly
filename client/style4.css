@@ -1,0 +1,22 @@
+@font-face {
+    font-family: Monopoly;
+    src: url("./Monopoly.ttf");
+}
+
+body * {
+    display: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#verticalWarn {
+    display: block;
+    font-family: monopoly;
+    transform: rotate(90deg);
+}
